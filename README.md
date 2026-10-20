@@ -25,13 +25,22 @@ Built for PromptWars Virtual, Challenge 5.
 | Planning **assistant**                | Chat in any language. It **calls typed tools** to propose changes (move budget, log a payment, add a task, book a vendor…), shows each in plain words, and applies only what you approve                                                       | [`Assistant.tsx`](src/ui/assistant/Assistant.tsx), [`tools.ts`](src/ai/tools.ts), [`changes.ts`](src/core/changes.ts)                                            |
 | Beyond the brief                      | Guest list with RSVP, side and diet that tells the caterer how many plates; WhatsApp share; printable summary; family sharing with editor / viewer roles                                                                                       | [`guests.ts`](src/core/guests.ts), [`share.ts`](src/core/share.ts), [`ShareFamily.tsx`](src/ui/dashboard/ShareFamily.tsx)                                        |
 
+## The experience: a street strung with serial lights
+
+Every Indian celebration starts the same way: the lights go up. Subham's whole interface is a night street strung with serial lights.
+
+- **Landing page:** a live Three.js scene of swaying strands with chasing bulbs, rooftops and out-of-focus bokeh. It responds to the pointer, and the street flashes when you submit your description. [`StreetLights.tsx`](src/ui/scene/StreetLights.tsx) draws it, and the pure, tested geometry lives in [`strands.ts`](src/ui/scene/strands.ts).
+- **Progress is light:** every function is a strand, and its bulbs come on as tasks get done. The same [`BulbStrand`](src/ui/common/BulbStrand.tsx) meter shows tasks, budget, vendors and guests in the app. Tabs carry a bulb that lights when selected.
+- **Motion:** Motion (Framer Motion) springs drive the reveals, tab changes, wizard steps and the assistant. Animations run through the CSSOM, so the strict nonce CSP needs no inline-style exemption. Content is visible by default.
+- **Performance and comfort:** the WebGL scene is lazy-loaded, renders at a capped pixel ratio, pauses when off screen, and is a single still frame under `prefers-reduced-motion`.
+
 ## Built for India, in Indian languages
 
 - **Interface in English, हिन्दी, தமிழ் and తెలుగు**, switchable anywhere and remembered. Every string goes through a typed dictionary, and a test checks the four have identical keys and placeholders.
 - **Plans and replies in 10 languages**: English, Hindi, Tamil, Telugu, Kannada, Malayalam, Bengali, Marathi, Gujarati and Punjabi. The assistant answers in the language you write in.
 - **Voice input** uses the browser's speech recognition in the plan's language (e.g. `ta-IN`).
 - Function names are localised (மஞ்சள் நீராட்டு, పసుపు వేడుక, हल्दी) and still recognised as the same function for timing and budgeting.
-- Indic text carries the right `lang` attribute, and Noto Sans Devanagari, Tamil and Telugu are self-hosted, so each script downloads only when it appears.
+- Indic text carries the right `lang` attribute. One type family covers every script, all from Indian foundries: Baloo 2 / Baloo Thambi 2 / Baloo Tammudu 2 for display and Hind / Hind Madurai / Hind Guntur for reading. The fonts are self-hosted, so each script downloads only when it appears.
 
 ## How generative AI is used
 
@@ -64,7 +73,7 @@ offsets and proposed changes. Pure, tested code turns that into the plan:
 - **Cloud Firestore**: synced plans with family sharing. [Security rules](firestore.rules) enforce owner, editor and viewer roles and the document shape, and are tested on the emulator.
 - **Google Cloud Run**: a container deployment ([`Dockerfile`](Dockerfile)) with a health check at `/api/health`.
 - **Google Calendar**: `.ics` export and one-click "add to Google Calendar" links.
-- **Google Fonts**: Fraunces and Noto Sans (Devanagari, Tamil, Telugu) via `next/font`, self-hosted at build time.
+- **Google Fonts**: Baloo and Hind families (Latin, Devanagari, Tamil, Telugu) via `next/font`, self-hosted at build time.
 
 ## Architecture
 
@@ -162,4 +171,4 @@ gcloud run deploy subham --image $IMAGE --region $REGION --allow-unauthenticated
 firebase deploy --only firestore:rules
 ```
 
-Tech: Next.js 16 (App Router), React 19, TypeScript (strict), zod 4, `@google/genai`, Firebase, Vitest, Playwright, axe-core.
+Tech: Next.js 16 (App Router), React 19, TypeScript (strict), zod 4, `@google/genai`, Firebase, Three.js + React Three Fiber, Motion, Vitest, Playwright, axe-core.
