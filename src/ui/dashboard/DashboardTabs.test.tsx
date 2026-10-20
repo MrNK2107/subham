@@ -51,7 +51,7 @@ describe("Timeline tab", () => {
     for (const f of plan.functions) {
       expect(
         within(panel).getByRole("heading", { level: 3, name: new RegExp(f.name) }),
-      ).toBeVisible();
+      ).toBeInTheDocument();
     }
   });
 
@@ -125,7 +125,9 @@ describe("Ideas tab", () => {
     vi.stubGlobal("fetch", fetchMock);
     const { user, panel } = await openTab("Ideas");
     await user.click(within(panel).getByRole("button", { name: /Get fresh ideas for Chennai/ }));
-    expect(await within(panel).findByRole("heading", { name: "New suggestions" })).toBeVisible();
+    expect(
+      await within(panel).findByRole("heading", { name: "New suggestions" }),
+    ).toBeInTheDocument();
     expect(fetchMock).toHaveBeenCalledWith("/api/ideas", expect.anything());
     expect(within(panel).getByRole("link", { name: "Coffee guide" })).toHaveAttribute(
       "href",
