@@ -39,8 +39,8 @@ export function parseCalls(calls: RawCall[]): Change[] {
         return [];
       }
     }
-    if (typeof args !== "object" || args === null) args = {};
-    const parsed = ChangeSchema.safeParse({ ...args, op: call.name });
+    const fields = typeof args === "object" && args !== null ? (args as object) : {};
+    const parsed = ChangeSchema.safeParse({ ...fields, op: call.name });
     return parsed.success ? [parsed.data] : [];
   });
 }
