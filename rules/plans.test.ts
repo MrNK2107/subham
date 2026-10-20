@@ -4,12 +4,13 @@ import {
   initializeTestEnvironment,
   type RulesTestEnvironment,
 } from "@firebase/rules-unit-testing";
-import { doc, getDoc, setDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import * as fs from "firebase/firestore";
+import { doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { readFileSync } from "node:fs";
-import { afterAll, beforeAll, beforeEach, describe, it } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { assemblePlan } from "@/core/assemble";
 import { templateBlueprint } from "@/core/templates";
-import { toRecord } from "@/store/cloud";
+import { planQueries, toRecord } from "@/store/cloud";
 import { TODAY, weddingBrief } from "@/test/fixtures";
 
 let env: RulesTestEnvironment;
@@ -87,6 +88,22 @@ describe("plans/{planId}", () => {
       updateDoc(doc(db, "plans/p1"), { data: { ...data, brief: { ...data.brief, guests: 0 } } }),
     );
     await assertFails(updateDoc(doc(db, "plans/p1"), { data: { ...data, id: "other" } }));
+  });
+
+  it("allows the exact queries sync runs, for owner, editor and viewer (mixed-case email)", async () => {
+    const run = async (uid: string, email: string | null) => {
+      const db = env
+        .authenticatedContext(uid, email ? { email, email_verified: true } : {})
+        .firestore();
+      const snaps = await Promise.all(
+        planQueries(fs, db as unknown as fs.Firestore, uid, email).map((q) => getDocs(q)),
+      );
+      return snaps.reduce((n, s) => n + s.size, 0);
+    };
+    expect(await run("owner", null)).toBe(1);
+    expect(await run("aunt", "Aunt@Example.com")).toBe(1);
+    expect(await run("cousin", "cousin@example.com")).toBe(1);
+    expect(await run("stranger", "stranger@example.com")).toBe(0);
   });
 
   it("keeps every other collection closed", async () => {

@@ -56,29 +56,70 @@ export async function removePlan(id: string): Promise<void> {
   await fs.deleteDoc(fs.doc(db, "plans", id));
 }
 
-/** Plans this person owns or that family members shared with them. */
-export async function pullPlans(user: User): Promise<Plan[]> {
-  const { db, fs } = await firestore();
+type FirestoreModule = typeof import("firebase/firestore");
+
+/**
+ * The queries sync runs: plans owned by this person, and plans shared with their email as editor or
+ * viewer. Emails are stored lowercase, matching the rules' `email.lower()`.
+ */
+export function planQueries(
+  fs: FirestoreModule,
+  db: import("firebase/firestore").Firestore,
+  uid: string,
+  email: string | null,
+) {
   const plans = fs.collection(db, "plans");
-  const queries = [fs.query(plans, fs.where("ownerId", "==", user.uid))];
-  if (user.email) {
-    queries.push(fs.query(plans, fs.where("editors", "array-contains", user.email)));
-    queries.push(fs.query(plans, fs.where("viewers", "array-contains", user.email)));
+  const queries = [fs.query(plans, fs.where("ownerId", "==", uid))];
+  if (email) {
+    const lower = email.toLowerCase();
+    queries.push(fs.query(plans, fs.where("editors", "array-contains", lower)));
+    queries.push(fs.query(plans, fs.where("viewers", "array-contains", lower)));
   }
-  const snaps = await Promise.all(queries.map((q) => fs.getDocs(q)));
-  return snaps.flatMap((s) =>
-    s.docs.flatMap((d) => {
-      const plan = PlanSchema.safeParse(d.data().data);
-      return plan.success ? [plan.data] : [];
-    }),
-  );
+  return queries;
 }
 
-export async function sharePlan(id: string, email: string, role: Role): Promise<void> {
+/** Plans this person owns or that family shared with them. One failed query doesn't block the rest. */
+export async function pullPlans(user: User): Promise<Plan[]> {
   const { db, fs } = await firestore();
-  await fs.updateDoc(fs.doc(db, "plans", id), {
-    [role === "editor" ? "editors" : "viewers"]: fs.arrayUnion(email.trim().toLowerCase()),
+  const results = await Promise.allSettled(
+    planQueries(fs, db, user.uid, user.email).map((q) => fs.getDocs(q)),
+  );
+  return results.flatMap((r) => {
+    if (r.status === "rejected") {
+      console.warn("A plan query failed", r.reason);
+      return [];
+    }
+    return r.value.docs.flatMap((d) => {
+      const plan = PlanSchema.safeParse(d.data().data);
+      return plan.success ? [plan.data] : [];
+    });
   });
+}
+
+/** Why sharing failed, so the person sees the right message. */
+export class ShareError extends Error {
+  constructor(readonly reason: "signed-out" | "failed") {
+    super(reason);
+  }
+}
+
+/**
+ * Shares a plan by email. Saves the latest version to the cloud first, so the document exists and
+ * belongs to this person before the sharing list changes (only owners may change it).
+ */
+export async function sharePlan(plan: Plan, email: string, role: Role): Promise<void> {
+  const fb = await getFirebase();
+  const user = fb?.auth.currentUser;
+  if (!fb || !user) throw new ShareError("signed-out");
+  try {
+    await pushPlan(user.uid, plan);
+    const fs = await import("firebase/firestore");
+    await fs.updateDoc(fs.doc(fb.db, "plans", plan.id), {
+      [role === "editor" ? "editors" : "viewers"]: fs.arrayUnion(email.trim().toLowerCase()),
+    });
+  } catch {
+    throw new ShareError("failed");
+  }
 }
 
 /** After sign-in: merge cloud and device plans (newest wins) and mirror future saves. */

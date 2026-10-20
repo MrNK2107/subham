@@ -26,6 +26,18 @@ describe("Wizard", () => {
     expect(within(list).getByText("Sangeet")).toBeInTheDocument();
   });
 
+  it("adds a typed function on Enter instead of skipping ahead", async () => {
+    const user = userEvent.setup();
+    render(<Wizard />);
+    await user.click(screen.getByRole("radio", { name: /wedding/i }));
+    await user.click(screen.getByRole("button", { name: "Next" }));
+    await user.type(screen.getByLabelText("Add a function"), "Nalangu{Enter}");
+    expect(screen.getByRole("heading", { name: /which functions/i })).toBeInTheDocument();
+    expect(
+      within(screen.getByRole("list", { name: /functions/i })).getByText("Nalangu"),
+    ).toBeInTheDocument();
+  });
+
   it("asks for a type before moving on", async () => {
     const user = userEvent.setup();
     render(<Wizard />);

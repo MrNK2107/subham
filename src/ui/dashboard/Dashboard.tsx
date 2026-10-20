@@ -197,7 +197,7 @@ export function Dashboard({ id }: { id: string }) {
           </div>
         )}
 
-        <ShareFamily planId={plan.id} />
+        <ShareFamily plan={plan} />
 
         <Tabs tabs={tabs} active={tab} onChange={setTab} label={plan.brief.title} />
       </div>

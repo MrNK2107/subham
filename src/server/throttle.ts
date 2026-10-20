@@ -41,7 +41,10 @@ export function createThrottle({
   };
 }
 
-/** Client address as reported by the hosting proxy (Cloud Run sets x-forwarded-for). */
+/**
+ * Client address for rate limiting. Google's front end appends the real client address to any
+ * x-forwarded-for the client sent, so only the last entry can be trusted; earlier ones are spoofable.
+ */
 export function ipOf(req: Request): string {
-  return req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  return req.headers.get("x-forwarded-for")?.split(",").at(-1)?.trim() || "unknown";
 }

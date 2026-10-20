@@ -29,7 +29,7 @@ Never mention internal ids to the person. Keep function names exactly as given, 
 
 export function blueprintPrompt(brief: Brief, today: string): string {
   return `Today is ${today}. Write every category, title, activity, question and description in ${languageName(brief)}.
-The functions are: ${brief.functions.map((f) => `"${f}"`).join(", ")}.
+Plan exactly the functions listed under "functions" in the brief, using those names unchanged.
 
 ${fence("brief", brief)}`;
 }
@@ -84,8 +84,8 @@ ${fence("plan", snapshot(plan))}`;
 
 export function ideasPrompt(brief: Brief, grounded: boolean): string {
   const local = grounded
-    ? `Search the web for what ${brief.city} is known for around ${brief.date}: local specialities, crafts, flowers, sweets and seasonal produce, and use them.`
-    : `Use what ${brief.city} and its region are known for: local specialities, crafts, flowers, sweets and seasonal produce around ${brief.date}.`;
+    ? "Search the web for what the brief's city is known for around its date: local specialities, crafts, flowers, sweets and seasonal produce, and use them."
+    : "Use what the brief's city and its region are known for: local specialities, crafts, flowers, sweets and seasonal produce around its date.";
   return `Suggest 6 fresh, specific ideas for this celebration, mixing theme, decor, food, activity and gift.
 ${local}
 Respect the food preference. Write in ${languageName(brief)}.

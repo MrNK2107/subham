@@ -106,6 +106,14 @@ export function Wizard() {
     router.push(`/plan/${res.data.plan.id}`);
   }
 
+  function addFunction() {
+    const name = newFunction.trim();
+    if (name && !draft.functions.includes(name) && draft.functions.length < 8) {
+      update({ functions: [...draft.functions, name] });
+    }
+    setNewFunction("");
+  }
+
   const err = (field: DraftField) => (errors[field] ? t(errors[field]) : undefined);
   const budgetValue = parseAmount(draft.budget);
 
@@ -213,19 +221,20 @@ export function Wizard() {
                   maxLength={40}
                   placeholder={t("wizard.addFunctionPlaceholder")}
                   onChange={(e) => setNewFunction(e.target.value)}
+                  onKeyDown={(e) => {
+                    // Enter adds the function rather than submitting the step.
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      addFunction();
+                    }
+                  }}
                 />
               </div>
               <button
                 type="button"
                 className="btn btn-secondary"
                 disabled={!newFunction.trim() || draft.functions.length >= 8}
-                onClick={() => {
-                  const name = newFunction.trim();
-                  if (name && !draft.functions.includes(name)) {
-                    update({ functions: [...draft.functions, name] });
-                  }
-                  setNewFunction("");
-                }}
+                onClick={addFunction}
               >
                 {t("wizard.add")}
               </button>

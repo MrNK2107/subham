@@ -41,8 +41,8 @@ describe("createThrottle scale", () => {
 });
 
 describe("ipOf", () => {
-  it("takes the first forwarded address", () => {
-    const req = new Request("http://x", { headers: { "x-forwarded-for": "1.2.3.4, 10.0.0.1" } });
+  it("takes the address appended by the Google front end, not one the client supplied", () => {
+    const req = new Request("http://x", { headers: { "x-forwarded-for": "6.6.6.6, 1.2.3.4" } });
     expect(ipOf(req)).toBe("1.2.3.4");
   });
   it("falls back when no address is known", () => {

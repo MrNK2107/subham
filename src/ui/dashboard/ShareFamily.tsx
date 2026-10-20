@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import type { Plan } from "@/core/types";
 import { useI18n } from "@/i18n";
 import { firebaseEnabled } from "@/store/firebase";
 import styles from "./Dashboard.module.css";
 
 /** Share a synced plan with family by email, as an editor or a viewer (enforced by Firestore rules). */
-export function ShareFamily({ planId }: { planId: string }) {
+export function ShareFamily({ plan }: { plan: Plan }) {
   const { t } = useI18n();
   const [email, setEmail] = useState("");
   const [role, setRole] = useState<"editor" | "viewer">("editor");
@@ -18,12 +19,17 @@ export function ShareFamily({ planId }: { planId: string }) {
     e.preventDefault();
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) return setStatus(t("error.required"));
     try {
-      const { sharePlan } = await import("@/store/cloud");
-      await sharePlan(planId, email, role);
-      setStatus(t("family.done", { email: email.trim() }));
-      setEmail("");
+      const { sharePlan, ShareError } = await import("@/store/cloud");
+      try {
+        await sharePlan(plan, email, role);
+        setStatus(t("family.done", { email: email.trim() }));
+        setEmail("");
+      } catch (error) {
+        const signedOut = error instanceof ShareError && error.reason === "signed-out";
+        setStatus(t(signedOut ? "family.signIn" : "error.generic"));
+      }
     } catch {
-      setStatus(t("family.signIn"));
+      setStatus(t("error.network"));
     }
   }
 
