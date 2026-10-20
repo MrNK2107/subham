@@ -11,6 +11,21 @@ Built for PromptWars Virtual, Challenge 5.
 > _Create a GenAI-powered planning assistant that helps users organize weddings, birthdays, and community
 > events with budgets, timelines, vendor checklists, and personalized ideas._
 
+## Screenshots
+
+![Landing page: a night lane strung with serial lights, with the one-line describe box](docs/screenshots/landing.jpg)
+
+| Wizard                                                                           | Dashboard overview                                                                           |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| ![Step 2 of the wizard: choosing wedding functions](docs/screenshots/wizard.jpg) | ![Plan dashboard with task, budget, vendor and guest meters](docs/screenshots/dashboard.jpg) |
+| **Budget**                                                                       | **Timeline and run sheet**                                                                   |
+| ![Budget tab with planned, spent and left per line](docs/screenshots/budget.jpg) | ![Timeline tab with to-do list and run sheet](docs/screenshots/timeline.jpg)                 |
+
+<img src="docs/screenshots/landing-mobile.jpg" alt="Landing page on a phone" width="280">
+
+Screenshots come from a production build with the mock AI (`AI_PROVIDER=mock`); regenerate them with
+[`scripts/screenshots.mjs`](scripts/screenshots.mjs).
+
 ---
 
 ## What it does, mapped to the brief
@@ -32,7 +47,7 @@ Every Indian celebration starts the same way: the lights go up. Subham's whole i
 - **Landing page:** a live Three.js scene of a narrow Indian lane at night, dressed for a wedding. Strands of serial lights cross the street and chase, jhalar curtains of lights pour down the houses, and warm haze fills the distance. A bloom pass makes the bulbs glow like real light. The nearest five strands each carry a function's name (Haldi, Mehendi, Sangeet and so on) as a hanging signboard. The camera drifts slowly into the lane, follows the pointer, and the whole street flashes when you submit. [`StreetLights.tsx`](src/ui/scene/StreetLights.tsx) draws it; the geometry is pure and tested in [`lane.ts`](src/ui/scene/lane.ts) and [`strands.ts`](src/ui/scene/strands.ts).
 - **Progress is light:** every function is a strand, and its bulbs come on as tasks get done. The same [`BulbStrand`](src/ui/common/BulbStrand.tsx) meter shows tasks, budget, vendors and guests in the app. Tabs carry a bulb that lights when selected.
 - **Motion:** Motion (Framer Motion) springs drive the reveals, tab changes, wizard steps and the assistant. Animations run through the CSSOM, so the strict nonce CSP needs no inline-style exemption. Content is visible by default.
-- **Performance and comfort:** the WebGL scene is lazy-loaded, renders at a capped pixel ratio, pauses when off screen, and is a single still frame under `prefers-reduced-motion`.
+- **Performance and comfort:** the WebGL scene is lazy-loaded and only mounts once the page has loaded and the browser is idle, so the headline paints and hydrates first (the headline itself is never faded in, since it is the largest paint). It renders at a capped pixel ratio, pauses when off screen, is a single still frame under `prefers-reduced-motion`, and is skipped entirely for Data Saver users.
 
 ## Built for India, in Indian languages
 
