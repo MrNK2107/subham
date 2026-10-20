@@ -469,7 +469,7 @@
   font-size: clamp(2rem, 5vw, 3.8rem);
   max-width: 18ch;
 }
-.close .hint {
+.close :global(.hint) {
   margin-top: 1.5rem;
 }
 

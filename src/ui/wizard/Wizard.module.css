@@ -120,7 +120,7 @@
   align-items: flex-end;
   flex-wrap: wrap;
 }
-.addRow .field {
+.addRow :global(.field) {
   flex: 1;
   min-width: 200px;
   margin-bottom: 0;

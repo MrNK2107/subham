@@ -229,14 +229,14 @@
 .inlineForm h3 {
   width: 100%;
 }
-.inlineForm .field {
+.inlineForm :global(.field) {
   flex: 1;
   min-width: 180px;
 }
 .inlineForm button {
   margin-bottom: 1rem;
 }
-.inlineForm .error-text {
+.inlineForm :global(.error-text) {
   width: 100%;
 }
 .tasks {
@@ -327,7 +327,7 @@
   align-items: end;
 }
 .guestForm h2,
-.guestForm .error-text {
+.guestForm :global(.error-text) {
   grid-column: 1 / -1;
 }
 .guestForm button {
