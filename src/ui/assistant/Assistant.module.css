@@ -3,19 +3,20 @@
   right: 1rem;
   bottom: 1rem;
   z-index: 30;
-  box-shadow: 0 10px 30px rgb(158 27 50 / 30%);
+  box-shadow: 0 10px 30px rgb(255 183 3 / 35%);
 }
 .panel {
   position: sticky;
+  border-top: 1px solid rgb(255 183 3 / 55%);
   top: 80px;
   align-self: start;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: var(--panel);
+  border: 1px solid var(--wire);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--lift);
   padding: 1rem;
   max-height: calc(100vh - 100px);
 }
@@ -49,13 +50,13 @@
   white-space: pre-wrap;
 }
 .bot {
-  background: var(--surface-2);
+  background: var(--night-2);
   align-self: flex-start;
   border-bottom-left-radius: 4px;
 }
 .user {
-  background: var(--primary);
-  color: #fff;
+  background: var(--amber);
+  color: var(--on-amber);
   align-self: flex-end;
   border-bottom-right-radius: 4px;
 }
@@ -64,7 +65,7 @@
 }
 .proposals {
   margin-top: 0.6rem;
-  border-top: 1px dashed var(--line);
+  border-top: 1px dashed var(--wire);
   padding-top: 0.5rem;
 }
 .proposals ul {
@@ -83,8 +84,8 @@
 .proposal {
   display: grid;
   gap: 0.35rem;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: var(--panel);
+  border: 1px solid var(--wire);
   border-radius: 10px;
   padding: 0.5rem 0.65rem;
 }

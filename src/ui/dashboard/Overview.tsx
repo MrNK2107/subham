@@ -7,6 +7,7 @@ import { formatINR } from "@/core/money";
 import type { Plan } from "@/core/types";
 import { useI18n, type MessageKey } from "@/i18n";
 import { localToday } from "@/ui/api";
+import { BulbStrand } from "@/ui/common/BulbStrand";
 import styles from "./Dashboard.module.css";
 
 export function Overview({ plan }: { plan: Plan }) {
@@ -39,10 +40,15 @@ export function Overview({ plan }: { plan: Plan }) {
                 ? `${formatINR(s.value)} / ${formatINR(s.max)}`
                 : t("overview.ofTotal", { done: s.value, total: s.max })}
             </p>
-            <progress
-              value={Math.min(s.value, s.max)}
-              max={Math.max(s.max, 1)}
-              aria-label={s.label}
+            <BulbStrand
+              value={s.value}
+              max={s.max}
+              label={s.label}
+              valueText={
+                s.money
+                  ? `${formatINR(s.value)} / ${formatINR(s.max)}`
+                  : t("overview.ofTotal", { done: s.value, total: s.max })
+              }
             />
           </li>
         ))}

@@ -17,7 +17,11 @@ export function LanguageSwitch() {
           strokeWidth="2"
         />
       </svg>
-      <select value={lang} onChange={(e) => setLang(e.target.value as UiLang)}>
+      <select
+        value={lang}
+        aria-label={t("lang.label")}
+        onChange={(e) => setLang(e.target.value as UiLang)}
+      >
         {UI_LANGS.map((code) => (
           <option key={code} value={code} lang={code}>
             {AI_LANGS[code].native}

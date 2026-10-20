@@ -1,0 +1,72 @@
+.strand {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 6px 2px 2px;
+  min-height: 26px;
+}
+.wire {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 2px;
+  height: 14px;
+  border-bottom: 1.5px solid var(--wire-bright);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}
+.bulb {
+  position: relative;
+  width: 10px;
+  height: 14px;
+  border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%;
+  background: #262c5c;
+  border: 1px solid #3a4180;
+  transition:
+    background-color 0.4s var(--ease-out),
+    box-shadow 0.5s var(--ease-out);
+}
+/* Bulbs follow the wire's curve: the middle ones hang lowest. */
+.bulb:nth-child(n + 4) {
+  top: 4px;
+}
+.bulb:nth-child(n + 6) {
+  top: 6px;
+}
+.bulb:nth-last-child(-n + 4) {
+  top: 4px;
+}
+.bulb:nth-last-child(-n + 2) {
+  top: 0;
+}
+.bulb::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  width: 4px;
+  height: 4px;
+  transform: translateX(-50%);
+  background: #4a5293;
+  border-radius: 1px;
+}
+.on.amber {
+  background: var(--amber);
+  border-color: #ffd36b;
+  box-shadow: 0 3px 12px rgb(255 183 3 / 75%);
+}
+.on.rani {
+  background: var(--rani);
+  border-color: #ff8db4;
+  box-shadow: 0 3px 12px rgb(255 79 139 / 75%);
+}
+.on.leaf {
+  background: var(--leaf);
+  border-color: #8af5c9;
+  box-shadow: 0 3px 12px rgb(46 229 157 / 70%);
+}
+.on.warm {
+  background: var(--warm);
+  border-color: #fff;
+  box-shadow: 0 3px 12px rgb(255 243 214 / 70%);
+}

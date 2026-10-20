@@ -21,6 +21,7 @@ import {
   type DraftField,
 } from "./draft";
 import { takePrefill } from "./prefill";
+import { useEnterOnChange } from "@/ui/common/Reveal";
 import styles from "./Wizard.module.css";
 
 type Step = 1 | 2 | 3;
@@ -45,6 +46,7 @@ export function Wizard() {
   const [apiError, setApiError] = useState("");
   const [newFunction, setNewFunction] = useState("");
   const heading = useRef<HTMLHeadingElement>(null);
+  const stepScope = useEnterOnChange<HTMLDivElement>(step, "right");
   const moved = useRef(false);
 
   useEffect(() => {
@@ -128,224 +130,228 @@ export function Wizard() {
       </p>
       {prefilled && <p className="notice">{t("wizard.prefilled")}</p>}
 
-      <form className="card" onSubmit={submit} noValidate>
-        {step === 1 && (
-          <fieldset className={styles.fieldset}>
-            <legend>
+      <form className={`card ${styles.form}`} onSubmit={submit} noValidate>
+        <div ref={stepScope}>
+          {step === 1 && (
+            <fieldset className={styles.fieldset}>
+              <legend>
+                <h2 ref={heading} tabIndex={-1}>
+                  {t("wizard.step1")}
+                </h2>
+              </legend>
+              <div className={styles.types} id="f-type" tabIndex={-1}>
+                {EVENT_TYPES.map((type) => (
+                  <label key={type} className={styles.typeCard}>
+                    <input
+                      type="radio"
+                      name="type"
+                      value={type}
+                      checked={draft.type === type}
+                      onChange={() => setDraft((d) => withType(d, type, lang))}
+                    />
+                    <span>
+                      <strong>{t(`type.${type}`)}</strong>
+                      <span className="hint">{t(`type.${type}.hint` as MessageKey)}</span>
+                    </span>
+                  </label>
+                ))}
+              </div>
+              {errors.type && (
+                <p className="error-text" role="alert">
+                  {err("type")}
+                </p>
+              )}
+            </fieldset>
+          )}
+
+          {step === 2 && (
+            <div>
               <h2 ref={heading} tabIndex={-1}>
-                {t("wizard.step1")}
+                {t("wizard.step2")}
               </h2>
-            </legend>
-            <div className={styles.types} id="f-type" tabIndex={-1}>
-              {EVENT_TYPES.map((type) => (
-                <label key={type} className={styles.typeCard}>
+              <p className="hint">{t("wizard.functionsHelp")}</p>
+              <ul
+                className={styles.chips}
+                aria-label={t("wizard.step2")}
+                id="f-functions"
+                tabIndex={-1}
+              >
+                {draft.functions.map((fn) => (
+                  <li key={fn} className={styles.chip}>
+                    <span>{fn}</span>
+                    <button
+                      type="button"
+                      className={styles.chipRemove}
+                      aria-label={t("wizard.removeFunction", { name: fn })}
+                      onClick={() => update({ functions: draft.functions.filter((f) => f !== fn) })}
+                    >
+                      ×
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              {errors.functions && (
+                <p className="error-text" role="alert">
+                  {err("functions")}
+                </p>
+              )}
+              {draft.type && (
+                <div className={styles.suggest}>
+                  <p className="label">{t("wizard.suggested")}</p>
+                  <div className={styles.suggestRow}>
+                    {extraFunctions(draft.type, lang)
+                      .filter((f) => !draft.functions.includes(f))
+                      .map((fn) => (
+                        <button
+                          key={fn}
+                          type="button"
+                          className="btn btn-secondary btn-small"
+                          disabled={draft.functions.length >= 8}
+                          onClick={() => update({ functions: [...draft.functions, fn] })}
+                        >
+                          + {fn}
+                        </button>
+                      ))}
+                  </div>
+                </div>
+              )}
+              <div className={styles.addRow}>
+                <div className="field">
+                  <label htmlFor="new-function">{t("wizard.addFunction")}</label>
                   <input
-                    type="radio"
-                    name="type"
-                    value={type}
-                    checked={draft.type === type}
-                    onChange={() => setDraft((d) => withType(d, type, lang))}
+                    id="new-function"
+                    value={newFunction}
+                    maxLength={40}
+                    placeholder={t("wizard.addFunctionPlaceholder")}
+                    onChange={(e) => setNewFunction(e.target.value)}
+                    onKeyDown={(e) => {
+                      // Enter adds the function rather than submitting the step.
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        addFunction();
+                      }
+                    }}
                   />
-                  <span>
-                    <strong>{t(`type.${type}`)}</strong>
-                    <span className="hint">{t(`type.${type}.hint` as MessageKey)}</span>
-                  </span>
-                </label>
-              ))}
-            </div>
-            {errors.type && (
-              <p className="error-text" role="alert">
-                {err("type")}
-              </p>
-            )}
-          </fieldset>
-        )}
-
-        {step === 2 && (
-          <div>
-            <h2 ref={heading} tabIndex={-1}>
-              {t("wizard.step2")}
-            </h2>
-            <p className="hint">{t("wizard.functionsHelp")}</p>
-            <ul
-              className={styles.chips}
-              aria-label={t("wizard.step2")}
-              id="f-functions"
-              tabIndex={-1}
-            >
-              {draft.functions.map((fn) => (
-                <li key={fn} className={styles.chip}>
-                  <span>{fn}</span>
-                  <button
-                    type="button"
-                    className={styles.chipRemove}
-                    aria-label={t("wizard.removeFunction", { name: fn })}
-                    onClick={() => update({ functions: draft.functions.filter((f) => f !== fn) })}
-                  >
-                    ×
-                  </button>
-                </li>
-              ))}
-            </ul>
-            {errors.functions && (
-              <p className="error-text" role="alert">
-                {err("functions")}
-              </p>
-            )}
-            {draft.type && (
-              <div className={styles.suggest}>
-                <p className="label">{t("wizard.suggested")}</p>
-                <div className={styles.suggestRow}>
-                  {extraFunctions(draft.type, lang)
-                    .filter((f) => !draft.functions.includes(f))
-                    .map((fn) => (
-                      <button
-                        key={fn}
-                        type="button"
-                        className="btn btn-secondary btn-small"
-                        disabled={draft.functions.length >= 8}
-                        onClick={() => update({ functions: [...draft.functions, fn] })}
-                      >
-                        + {fn}
-                      </button>
-                    ))}
                 </div>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  disabled={!newFunction.trim() || draft.functions.length >= 8}
+                  onClick={addFunction}
+                >
+                  {t("wizard.add")}
+                </button>
               </div>
-            )}
-            <div className={styles.addRow}>
-              <div className="field">
-                <label htmlFor="new-function">{t("wizard.addFunction")}</label>
-                <input
-                  id="new-function"
-                  value={newFunction}
-                  maxLength={40}
-                  placeholder={t("wizard.addFunctionPlaceholder")}
-                  onChange={(e) => setNewFunction(e.target.value)}
-                  onKeyDown={(e) => {
-                    // Enter adds the function rather than submitting the step.
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      addFunction();
+            </div>
+          )}
+
+          {step === 3 && (
+            <div>
+              <h2 ref={heading} tabIndex={-1}>
+                {t("wizard.step3")}
+              </h2>
+              <div className={styles.grid}>
+                <Field id="title" label={t("field.title")} error={err("title")}>
+                  <input
+                    value={draft.title}
+                    maxLength={80}
+                    placeholder={t("field.titlePlaceholder")}
+                    onChange={(e) => update({ title: e.target.value })}
+                  />
+                </Field>
+                <Field id="city" label={t("field.city")} error={err("city")}>
+                  <input
+                    value={draft.city}
+                    maxLength={60}
+                    autoComplete="address-level2"
+                    placeholder={t("field.cityPlaceholder")}
+                    onChange={(e) => setDraft((d) => withCity(d, e.target.value))}
+                  />
+                </Field>
+                <Field id="tier" label={t("field.tier")} hint={t("field.tierHint")}>
+                  <select
+                    value={draft.tier}
+                    onChange={(e) =>
+                      update({ tier: e.target.value as Draft["tier"], tierChosen: true })
                     }
-                  }}
-                />
-              </div>
-              <button
-                type="button"
-                className="btn btn-secondary"
-                disabled={!newFunction.trim() || draft.functions.length >= 8}
-                onClick={addFunction}
-              >
-                {t("wizard.add")}
-              </button>
-            </div>
-          </div>
-        )}
-
-        {step === 3 && (
-          <div>
-            <h2 ref={heading} tabIndex={-1}>
-              {t("wizard.step3")}
-            </h2>
-            <div className={styles.grid}>
-              <Field id="title" label={t("field.title")} error={err("title")}>
-                <input
-                  value={draft.title}
-                  maxLength={80}
-                  placeholder={t("field.titlePlaceholder")}
-                  onChange={(e) => update({ title: e.target.value })}
-                />
-              </Field>
-              <Field id="city" label={t("field.city")} error={err("city")}>
-                <input
-                  value={draft.city}
-                  maxLength={60}
-                  autoComplete="address-level2"
-                  placeholder={t("field.cityPlaceholder")}
-                  onChange={(e) => setDraft((d) => withCity(d, e.target.value))}
-                />
-              </Field>
-              <Field id="tier" label={t("field.tier")} hint={t("field.tierHint")}>
-                <select
-                  value={draft.tier}
-                  onChange={(e) =>
-                    update({ tier: e.target.value as Draft["tier"], tierChosen: true })
+                  >
+                    {TIERS.map((tier) => (
+                      <option key={tier} value={tier}>
+                        {t(`tier.${tier}`)}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+                <Field id="date" label={t("field.date")} error={err("date")}>
+                  <input
+                    type="date"
+                    value={draft.date}
+                    min={today}
+                    onChange={(e) => update({ date: e.target.value })}
+                  />
+                </Field>
+                <Field id="guests" label={t("field.guests")} error={err("guests")}>
+                  <input
+                    inputMode="numeric"
+                    value={draft.guests}
+                    onChange={(e) => update({ guests: e.target.value })}
+                  />
+                </Field>
+                <Field
+                  id="budget"
+                  label={t("field.budget")}
+                  hint={
+                    budgetValue
+                      ? t("field.budgetPreview", { amount: formatINR(budgetValue) })
+                      : t("field.budgetHint")
                   }
+                  error={err("budget")}
                 >
-                  {TIERS.map((tier) => (
-                    <option key={tier} value={tier}>
-                      {t(`tier.${tier}`)}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-              <Field id="date" label={t("field.date")} error={err("date")}>
-                <input
-                  type="date"
-                  value={draft.date}
-                  min={today}
-                  onChange={(e) => update({ date: e.target.value })}
-                />
-              </Field>
-              <Field id="guests" label={t("field.guests")} error={err("guests")}>
-                <input
-                  inputMode="numeric"
-                  value={draft.guests}
-                  onChange={(e) => update({ guests: e.target.value })}
-                />
-              </Field>
-              <Field
-                id="budget"
-                label={t("field.budget")}
-                hint={
-                  budgetValue
-                    ? t("field.budgetPreview", { amount: formatINR(budgetValue) })
-                    : t("field.budgetHint")
-                }
-                error={err("budget")}
-              >
-                <input value={draft.budget} onChange={(e) => update({ budget: e.target.value })} />
-              </Field>
-              <fieldset className={styles.fieldset}>
-                <legend className="label">{t("field.food")}</legend>
-                <div className={styles.radios}>
-                  {FOODS.map((food) => (
-                    <label key={food} className={styles.radio}>
-                      <input
-                        type="radio"
-                        name="food"
-                        checked={draft.food === food}
-                        onChange={() => update({ food })}
-                      />
-                      {t(`food.${food}`)}
-                    </label>
-                  ))}
-                </div>
-              </fieldset>
-              <Field id="language" label={t("field.language")} hint={t("field.languageHint")}>
-                <select
-                  value={draft.language}
-                  onChange={(e) => update({ language: e.target.value as AiLang })}
-                >
-                  {Object.entries(AI_LANGS).map(([code, l]) => (
-                    <option key={code} value={code} lang={code}>
-                      {l.native} {code !== "en" ? `(${l.name})` : ""}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-              <Field id="vibe" label={t("field.vibe")} wide>
-                <input
-                  value={draft.vibe}
-                  maxLength={80}
-                  placeholder={t("field.vibePlaceholder")}
-                  onChange={(e) => update({ vibe: e.target.value })}
-                />
-              </Field>
+                  <input
+                    value={draft.budget}
+                    onChange={(e) => update({ budget: e.target.value })}
+                  />
+                </Field>
+                <fieldset className={styles.fieldset}>
+                  <legend className="label">{t("field.food")}</legend>
+                  <div className={styles.radios}>
+                    {FOODS.map((food) => (
+                      <label key={food} className={styles.radio}>
+                        <input
+                          type="radio"
+                          name="food"
+                          checked={draft.food === food}
+                          onChange={() => update({ food })}
+                        />
+                        {t(`food.${food}`)}
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+                <Field id="language" label={t("field.language")} hint={t("field.languageHint")}>
+                  <select
+                    value={draft.language}
+                    onChange={(e) => update({ language: e.target.value as AiLang })}
+                  >
+                    {Object.entries(AI_LANGS).map(([code, l]) => (
+                      <option key={code} value={code} lang={code}>
+                        {l.native} {code !== "en" ? `(${l.name})` : ""}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+                <Field id="vibe" label={t("field.vibe")} wide>
+                  <input
+                    value={draft.vibe}
+                    maxLength={80}
+                    placeholder={t("field.vibePlaceholder")}
+                    onChange={(e) => update({ vibe: e.target.value })}
+                  />
+                </Field>
+              </div>
             </div>
-          </div>
-        )}
-
+          )}
+        </div>
         {apiError && (
           <p className="error-text" role="alert">
             {apiError}

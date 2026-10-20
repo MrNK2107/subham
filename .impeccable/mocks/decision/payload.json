@@ -1,0 +1,89 @@
+{
+  "title": "Choose Subham's visual world",
+  "question": "The roll assigned the Laser-cut Invitation. Keep it, take my pick, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "kind": "assigned",
+      "label": "Laser-cut Invitation",
+      "kicker": "THE ROLL",
+      "lineage": "Indian wedding & function invitation cards: layered laser-cut jaali, gold foil, peacock and rani-pink board",
+      "thesis": "Every plan opens like the invitation card a family sends: layered, foil-edged, one card per function. The category's cream-and-serif planner page is refused.",
+      "palette": ["#0f3d3a", "#c2185b", "#e6b422", "#f4ece1", "#1a1426"],
+      "materials": ["laser-cut jaali layers", "gold foil edges", "deep peacock card stock", "rani-pink inner sheet"],
+      "viewport": "A Three.js invitation card floats open at the centre of a peacock-green field, its laser-cut jaali layers parting to reveal the inner sheet, which IS the working 'describe your celebration' form. Gold-foil function tabs (Haldi · Mehendi · Sangeet · Muhurtham · Reception) fan out from its edge. Petals drift. Nav sits on the outer card's border.",
+      "risk": "Gold foil plus 3D can tip into wedding-only kitsch; birthdays and community events must get their own card colours, and foil has to stay on edges, never on text fields.",
+      "raised": [
+        { "from": "clouds-storms-auroras-iridescent-cloud-edge", "raise": "Foil is confined to card edges and hairline rules; every text field stays calm and achromatic." },
+        { "from": "paper-folds-pleats-deployable-akari-light-sculpture", "raise": "State is light: the active card catches a foil highlight, inactive function cards lie flat." },
+        { "from": "brand-identity-canon-fletcher-wit-poster", "raise": "One object owns the first viewport: the single invitation, never a hero plus card row." }
+      ],
+      "html": ".impeccable/mocks/decision/assigned.html",
+      "comp": ".impeccable/mocks/decision/assigned.png"
+    },
+    {
+      "id": "model-pick",
+      "kind": "pick",
+      "label": "Diwali Serial Lights",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "strings of serial bulbs draped over Indian homes and pandals at festival time",
+      "thesis": "The plan as a facade strung with lights: each function is a strand that lights up as its tasks get done.",
+      "palette": ["#0b1030", "#ffb703", "#ff5d8f", "#3ddc97", "#f7f3e8"],
+      "materials": ["indigo night sky", "warm bulb glow", "wire strands"],
+      "viewport": "A Three.js night facade draped with swaying bulb strands; the strands spell the event's functions, and the describe-your-celebration input sits on a lit doorway at the centre.",
+      "risk": "Familiar: dark ground with glowing accents is where many festive pages land, and it skews towards Diwali over weddings.",
+      "html": ".impeccable/mocks/decision/model-pick.html",
+      "comp": ".impeccable/mocks/decision/model-pick.png"
+    },
+    {
+      "id": "challenger-cloud",
+      "kind": "challenger",
+      "catalogId": "clouds-storms-auroras-iridescent-cloud-edge",
+      "label": "Iridescent Cloud Edge",
+      "verdict": "declined",
+      "lineage": "cloud iridescence",
+      "palette": ["#ffffff", "#5b6470", "#9be7c4", "#f2a7c3"],
+      "materials": ["cloud white", "spectral fringe"],
+      "case": "Fuses poorly: families and committees don't identify with atmospheric optics; the plan's functions get lost in white space.",
+      "kept": "Colour confined to edges; text fields stay calm."
+    },
+    {
+      "id": "challenger-akari",
+      "kind": "challenger",
+      "catalogId": "paper-folds-pleats-deployable-akari-light-sculpture",
+      "label": "Akari Light Sculpture",
+      "verdict": "declined",
+      "lineage": "washi and bamboo lamps",
+      "palette": ["#f3ead8", "#c9a978", "#2a2522", "#d9432b"],
+      "materials": ["washi", "bamboo ribs"],
+      "case": "Fuses partly: the 'state as light' idea suits celebration, but the Japanese material world loses Indian audience identification.",
+      "kept": "State is light: active cards glow, inactive ones lie flat."
+    },
+    {
+      "id": "challenger-fletcher",
+      "kind": "challenger",
+      "catalogId": "brand-identity-canon-fletcher-wit-poster",
+      "label": "Fletcher Wit Poster",
+      "verdict": "declined",
+      "lineage": "Alan Fletcher cut-paper posters",
+      "palette": ["#ffffff", "#1f4fd1", "#2e9e4f", "#e63b2e"],
+      "materials": ["cut paper", "crayon"],
+      "case": "Fuses poorly: playful but generic; nothing reads as an Indian celebration.",
+      "kept": "One object owns the sheet."
+    }
+  ],
+  "reroll": { "registers": ["safer", "bolder"] },
+  "buildPath": { "value": "code", "toggle": true },
+  "canon": true,
+  "canonCard": {
+    "kind": "canon",
+    "label": "The category standard",
+    "thesis": "A clean event-planning SaaS page: white ground, one brand colour, product screenshots, feature grid.",
+    "palette": ["#ffffff", "#111827", "#e11d48"],
+    "materials": ["clean grid", "product screenshots"],
+    "viewport": "Headline and input on the left, a dashboard screenshot on the right, three feature cards below.",
+    "risk": "Indistinguishable from any planner; little celebration.",
+    "html": ".impeccable/mocks/decision/canon.html",
+    "comp": ".impeccable/mocks/decision/canon.png"
+  }
+}

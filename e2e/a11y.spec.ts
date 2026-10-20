@@ -1,10 +1,13 @@
 import { expect, test } from "@playwright/test";
 import { createWeddingPlan, expectAccessible } from "./helpers";
 
+// Audit the settled page: entrance animations fade content in, and axe would measure mid-fade.
+test.use({ reducedMotion: "reduce" });
+
 test("landing page is accessible in English and Tamil", async ({ page }) => {
   await page.goto("/");
   await expectAccessible(page);
-  await page.getByLabel("Language").selectOption("ta");
+  await page.getByLabel("Language", { exact: true }).selectOption("ta");
   await expectAccessible(page);
 });
 

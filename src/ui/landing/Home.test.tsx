@@ -6,6 +6,8 @@ import { Home } from "./Home";
 
 const push = vi.fn();
 vi.mock("next/navigation", () => ({ useRouter: () => ({ push }) }));
+// WebGL isn't available in jsdom; the scene is decorative and covered by end-to-end tests.
+vi.mock("@/ui/scene/StreetLights", () => ({ default: () => null }));
 
 const respond = (body: unknown, status = 200) =>
   vi.fn().mockResolvedValue(

@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { describeChange } from "@/core/changes";
 import { AI_LANGS, type Change, type Plan } from "@/core/types";
@@ -63,6 +64,7 @@ export function Assistant({ plan, actions, open, onOpenChange, seed, onSeedUsed 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const logRef = useRef<HTMLOListElement>(null);
   const recognition = useRef<Recognition | null>(null);
+  const reduce = useReducedMotion();
 
   useEffect(() => {
     // Feature detection has to wait for the browser.
@@ -178,7 +180,13 @@ export function Assistant({ plan, actions, open, onOpenChange, seed, onSeedUsed 
   }
 
   return (
-    <aside className={`${styles.panel} no-print`} aria-labelledby="assistant-title">
+    <motion.aside
+      className={`${styles.panel} no-print`}
+      aria-labelledby="assistant-title"
+      initial={reduce ? false : { opacity: 0, y: 24, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ type: "spring", stiffness: 120, damping: 18 }}
+    >
       <div className={styles.head}>
         <h2 id="assistant-title">{t("assistant.title")}</h2>
         <button
@@ -197,7 +205,13 @@ export function Assistant({ plan, actions, open, onOpenChange, seed, onSeedUsed 
           {t("assistant.welcome")}
         </li>
         {messages.map((m, mi) => (
-          <li key={mi} className={m.role === "user" ? styles.user : styles.bot}>
+          <motion.li
+            key={mi}
+            className={m.role === "user" ? styles.user : styles.bot}
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 160, damping: 20 }}
+          >
             <span className="sr-only">
               {m.role === "user" ? t("assistant.you") : t("assistant.bot")}:{" "}
             </span>
@@ -258,7 +272,7 @@ export function Assistant({ plan, actions, open, onOpenChange, seed, onSeedUsed 
                 )}
               </div>
             )}
-          </li>
+          </motion.li>
         ))}
         {busy && <li className={styles.bot}>{t("assistant.thinking")}</li>}
       </ol>
@@ -334,6 +348,6 @@ export function Assistant({ plan, actions, open, onOpenChange, seed, onSeedUsed 
           </button>
         </div>
       </form>
-    </aside>
+    </motion.aside>
   );
 }

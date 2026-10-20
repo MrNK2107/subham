@@ -65,11 +65,11 @@ test("tasks, guests and vendors persist after a reload", async ({ page }) => {
 
 test("the interface switches to Tamil and Telugu", async ({ page }) => {
   await page.goto("/");
-  await page.getByLabel("Language").selectOption("ta");
+  await page.getByLabel("Language", { exact: true }).selectOption("ta");
   await expect(page.locator("html")).toHaveAttribute("lang", "ta");
   await expect(page.locator("h1")).toContainText("கொண்டாட்ட");
   await expect(page.getByRole("link", { name: "புதிய திட்டம்" })).toBeVisible();
-  await page.getByLabel(/மொழி|Language/).selectOption("te");
+  await page.getByLabel(/^(மொழி|Language)$/).selectOption("te");
   await expect(page.locator("html")).toHaveAttribute("lang", "te");
   await expect(page.locator("h1")).toContainText("వేడుక");
   await page.reload();

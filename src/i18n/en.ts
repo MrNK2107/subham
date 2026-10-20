@@ -14,9 +14,9 @@ export const en = {
   "auth.error": "Sign-in didn't work. Please try again.",
 
   "home.eyebrow": "Weddings · Birthdays · Community events · Festivals",
-  "home.title": "Plan every function of your celebration, without the chaos",
+  "home.title": "Light up every function of your celebration",
   "home.lead":
-    "Tell Subham about your event in a sentence. It drafts the budget, timeline, vendor checklist and ideas for each function, and an assistant helps you adjust everything.",
+    "Tell Subham about your event in one line, in any language. Every function gets its own strand of lights: budget, tasks, vendors and ideas, lighting up as you get things done.",
   "home.describeLabel": "Describe your celebration",
   "home.describePlaceholder":
     "e.g. My sister's wedding in Madurai next February, about 300 guests, budget 15 lakh, pure veg",
@@ -302,6 +302,16 @@ export const en = {
   "family.send": "Share",
   "family.done": "Shared with {email}. They'll see it after signing in.",
   "family.signIn": "Sign in with Google first to share this plan.",
+  "home.closeTitle": "Your street is waiting to light up",
+  "home.langBody":
+    "The app speaks English, हिन्दी, தமிழ் and తెలుగు. Plans and the assistant work in 10 Indian languages, and you can simply speak.",
+  "home.langTitle": "Plan in the language you celebrate in",
+  "home.demoTasks": "{done} of {total} tasks done",
+  "home.demoLabel": "Example plan: a 400-guest Coimbatore wedding",
+  "home.demoBody":
+    "Haldi, sangeet, muhurtham or a community meal: each function has its own budget, tasks and vendors, and its bulbs come on as you finish them.",
+  "home.demoTitle": "One strand for every function",
+  "home.cta": "Light it up",
 } as const;
 
 export type MessageKey = keyof typeof en;

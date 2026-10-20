@@ -22,8 +22,9 @@
 }
 .countdown {
   display: inline-block;
-  background: var(--accent-soft);
-  color: var(--warn);
+  background: rgb(255 183 3 / 10%);
+  border: 1px solid rgb(255 183 3 / 35%);
+  color: var(--amber);
   font-weight: 700;
   border-radius: 999px;
   padding: 0.2rem 0.75rem;
@@ -53,7 +54,8 @@
   display: flex;
   gap: 0.25rem;
   overflow-x: auto;
-  border-bottom: 2px solid var(--line);
+  overflow-y: hidden;
+  border-bottom: 2px solid var(--wire);
   margin-bottom: 1.25rem;
   scrollbar-width: thin;
 }
@@ -74,8 +76,26 @@
   color: var(--ink);
 }
 .tab[aria-selected="true"] {
-  color: var(--primary);
-  border-bottom-color: var(--primary);
+  color: var(--warm);
+  border-bottom-color: var(--amber);
+}
+/* Each tab hangs a small bulb; the selected one is lit. */
+.tab::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 11px;
+  margin-right: 0.5rem;
+  vertical-align: -1px;
+  border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%;
+  background: #2a3166;
+  transition:
+    background-color 0.3s var(--ease-out),
+    box-shadow 0.3s var(--ease-out);
+}
+.tab[aria-selected="true"]::before {
+  background: var(--amber);
+  box-shadow: 0 2px 10px rgb(255 183 3 / 80%);
 }
 .panel {
   min-width: 0;
@@ -136,7 +156,7 @@
   justify-content: space-between;
   gap: 0.75rem;
   padding: 0.5rem 0;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--wire);
   flex-wrap: wrap;
 }
 .fnWhen {
@@ -152,8 +172,8 @@
   margin: 0;
 }
 .summary div {
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: var(--panel);
+  border: 1px solid var(--wire);
   border-radius: var(--radius);
   padding: 1rem;
 }
@@ -180,7 +200,7 @@
 .table td {
   text-align: left;
   padding: 0.55rem 0.5rem;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--wire);
   vertical-align: middle;
 }
 .table thead th {
@@ -226,7 +246,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 0.75rem;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--wire);
   padding: 0.35rem 0;
   flex-wrap: wrap;
 }
@@ -257,8 +277,8 @@
   color: var(--ink-2);
 }
 .iconLink:hover {
-  background: var(--surface-2);
-  color: var(--primary);
+  background: var(--night-2);
+  color: var(--amber);
 }
 .runGroup + .runGroup {
   margin-top: 1rem;
@@ -268,12 +288,12 @@
   grid-template-columns: 64px 1fr;
   gap: 0.5rem;
   padding: 0.35rem 0;
-  border-left: 2px solid var(--accent);
+  border-left: 2px solid var(--amber);
   padding-left: 0.75rem;
 }
 .run time {
   font-weight: 700;
-  color: var(--primary);
+  color: var(--amber);
 }
 .lead {
   font-weight: 600;

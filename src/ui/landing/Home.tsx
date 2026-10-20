@@ -1,30 +1,83 @@
 "use client";
 
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useId, useState, type FormEvent } from "react";
+import { formatINR } from "@/core/money";
 import type { Brief } from "@/core/types";
 import { useI18n, type MessageKey } from "@/i18n";
 import { localToday, postJson } from "@/ui/api";
+import { BulbStrand } from "@/ui/common/BulbStrand";
+import { Icon, type IconName } from "@/ui/common/Icon";
+import { Reveal } from "@/ui/common/Reveal";
+import { sceneSignal } from "@/ui/scene/signal";
 import { savePrefill } from "@/ui/wizard/prefill";
 import styles from "./Home.module.css";
 
-const FEATURES = ["budget", "timeline", "vendors", "ideas", "guests", "assistant"] as const;
-const ICONS: Record<(typeof FEATURES)[number], string> = {
-  budget: "₹",
-  timeline: "◷",
-  vendors: "✓",
-  ideas: "✦",
-  guests: "☺",
-  assistant: "❝",
+// The WebGL street loads after the page is interactive and never on the server.
+const StreetLights = dynamic(() => import("@/ui/scene/StreetLights"), { ssr: false });
+
+const FEATURES: IconName[] = ["budget", "timeline", "vendors", "ideas", "guests", "assistant"];
+const FEATURE_KEY: Record<string, string> = {
+  budget: "budget",
+  timeline: "timeline",
+  vendors: "vendors",
+  ideas: "ideas",
+  guests: "guests",
+  assistant: "assistant",
 };
+
+// Illustrative example, labelled as such on the page.
+const DEMO = [
+  {
+    name: "Haldi",
+    budget: 96_000,
+    done: 5,
+    total: 6,
+    tasks: ["Turmeric & flowers ordered", "Dhol booked", "Yellow dress code shared"],
+  },
+  {
+    name: "Mehendi",
+    budget: 1_20_000,
+    done: 3,
+    total: 6,
+    tasks: ["Mehendi artist booked", "Seating for 60 planned", "Playlist pending"],
+  },
+  {
+    name: "Sangeet",
+    budget: 1_92_000,
+    done: 2,
+    total: 8,
+    tasks: ["Choreographer contacted", "Stage size confirmed", "Family dance list pending"],
+  },
+  {
+    name: "Muhurtham",
+    budget: 4_80_000,
+    done: 4,
+    total: 10,
+    tasks: ["Mandapam booked", "Priest & muhurat fixed", "Nadaswaram quote pending"],
+  },
+  {
+    name: "Reception",
+    budget: 3_36_000,
+    done: 1,
+    total: 7,
+    tasks: ["Caterer tasting on Saturday", "Return gifts shortlisted", "Photographer pending"],
+  },
+];
+
+const SCRIPTS = ["शुभ आरंभ", "சுப ஆரம்பம்", "శుభారంభం", "A good beginning"];
 
 export function Home() {
   const { t } = useI18n();
   const router = useRouter();
+  const reduce = useReducedMotion();
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [open, setOpen] = useState<string | null>(null);
   const hintId = useId();
   const errorId = useId();
 
@@ -34,6 +87,7 @@ export function Home() {
       setError(t("error.required"));
       return;
     }
+    sceneSignal.burstAt = performance.now();
     setBusy(true);
     setError("");
     const res = await postJson<{ brief: Partial<Brief> }>("/api/brief", {
@@ -51,15 +105,22 @@ export function Home() {
 
   return (
     <>
-      <section className={styles.hero}>
-        <div className={`container ${styles.heroGrid}`}>
-          <div>
-            <p className={styles.eyebrow}>{t("home.eyebrow")}</p>
-            <h1>{t("home.title")}</h1>
+      <section className={styles.hero} aria-labelledby="hero-title">
+        <StreetLights />
+        <div className={styles.heroShade} aria-hidden="true" />
+        <div className={`container ${styles.heroInner}`}>
+          <Reveal immediate>
+            <h1 id="hero-title" className={styles.title}>
+              {t("home.title")}
+            </h1>
+          </Reveal>
+          <Reveal immediate delay={0.12}>
             <p className={styles.lead}>{t("home.lead")}</p>
+          </Reveal>
 
-            <form className={`card ${styles.describe}`} onSubmit={describe} noValidate>
-              <label htmlFor="describe" className="label">
+          <Reveal immediate delay={0.24} className={styles.doorway}>
+            <form onSubmit={describe} noValidate>
+              <label htmlFor="describe" className={styles.doorLabel}>
                 {t("home.describeLabel")}
               </label>
               <textarea
@@ -82,9 +143,9 @@ export function Home() {
               )}
               <div className={styles.actions}>
                 <button type="submit" className="btn btn-primary" disabled={busy}>
+                  <Icon name="bulb" size={20} />
                   {busy ? t("home.filling") : t("home.describeSubmit")}
                 </button>
-                <span className={styles.or}>{t("home.or")}</span>
                 <Link href="/plan/new" className="btn btn-secondary">
                   {t("home.stepByStep")}
                 </Link>
@@ -93,67 +154,120 @@ export function Home() {
                 {busy ? t("home.filling") : ""}
               </p>
             </form>
-          </div>
-
-          <div className={styles.preview} aria-hidden="true">
-            <div className={styles.previewCard}>
-              <p className={styles.previewTitle}>Priya &amp; Arjun · Madurai</p>
-              <ol className={styles.previewFns}>
-                <li>Haldi</li>
-                <li>Mehendi</li>
-                <li>Sangeet</li>
-                <li>Muhurtham</li>
-                <li>Reception</li>
-              </ol>
-              <div className={styles.previewBar}>
-                <span className={styles.barVenue} />
-                <span className={styles.barFood} />
-                <span className={styles.barDecor} />
-                <span className={styles.barOther} />
-              </div>
-              <ul className={styles.previewList}>
-                <li>✓ Book mandapam</li>
-                <li>✓ Caterer tasting</li>
-                <li>○ Nadaswaram</li>
-              </ul>
-            </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="container" aria-labelledby="features">
-        <h2 id="features" className={styles.sectionTitle}>
-          {t("home.featuresTitle")}
-        </h2>
-        <ul className={styles.features}>
-          {FEATURES.map((f) => (
-            <li key={f} className="card">
-              <span className={styles.icon} aria-hidden="true">
-                {ICONS[f]}
-              </span>
-              <h3>{t(`home.feature.${f}.title` as MessageKey)}</h3>
-              <p>{t(`home.feature.${f}.body` as MessageKey)}</p>
-            </li>
-          ))}
-        </ul>
+      <section className={styles.demo} aria-labelledby="demo-title">
+        <div className={`container ${styles.demoGrid}`}>
+          <Reveal className={styles.demoIntro}>
+            <h2 id="demo-title">{t("home.demoTitle")}</h2>
+            <p>{t("home.demoBody")}</p>
+            <p className={styles.demoLabel}>{t("home.demoLabel")}</p>
+          </Reveal>
+          <ul className={styles.strands}>
+            {DEMO.map((fn, i) => {
+              const expanded = open === fn.name;
+              return (
+                <Reveal as="li" key={fn.name} delay={i * 0.07} className={styles.strandRow}>
+                  <button
+                    type="button"
+                    className={styles.strandButton}
+                    aria-expanded={expanded}
+                    aria-controls={`demo-${fn.name}`}
+                    onClick={() => setOpen(expanded ? null : fn.name)}
+                  >
+                    <span className={styles.strandName}>{fn.name}</span>
+                    <span className={styles.strandBudget}>{formatINR(fn.budget)}</span>
+                    <BulbStrand
+                      value={fn.done}
+                      max={fn.total}
+                      bulbs={fn.total}
+                      label={fn.name}
+                      valueText={t("home.demoTasks", { done: fn.done, total: fn.total })}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {expanded && (
+                      <motion.ul
+                        id={`demo-${fn.name}`}
+                        className={styles.strandTasks}
+                        initial={reduce ? false : { height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={reduce ? undefined : { height: 0, opacity: 0 }}
+                        transition={{ type: "spring", stiffness: 120, damping: 18 }}
+                      >
+                        {fn.tasks.map((task) => (
+                          <li key={task}>{task}</li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                </Reveal>
+              );
+            })}
+          </ul>
+        </div>
       </section>
 
-      <section className="container" aria-labelledby="how">
-        <h2 id="how" className={styles.sectionTitle}>
-          {t("home.howTitle")}
-        </h2>
-        <ol className={styles.steps}>
-          {([1, 2, 3] as const).map((n) => (
-            <li key={n}>
-              <span className={styles.stepNum} aria-hidden="true">
-                {n}
+      <section className={`container ${styles.features}`} aria-labelledby="features-title">
+        <Reveal className={styles.featuresHead}>
+          <h2 id="features-title">{t("home.featuresTitle")}</h2>
+        </Reveal>
+        <ol className={styles.featureList}>
+          {FEATURES.map((f, i) => (
+            <Reveal as="li" key={f} delay={(i % 2) * 0.08} className={styles.feature}>
+              <span className={styles.featureIcon}>
+                <Icon name={f} size={26} />
               </span>
-              <h3>{t(`home.how.${n}.title` as MessageKey)}</h3>
-              <p>{t(`home.how.${n}.body` as MessageKey)}</p>
-            </li>
+              <div>
+                <h3>{t(`home.feature.${FEATURE_KEY[f]}.title` as MessageKey)}</h3>
+                <p>{t(`home.feature.${FEATURE_KEY[f]}.body` as MessageKey)}</p>
+              </div>
+            </Reveal>
           ))}
         </ol>
-        <p className={styles.privacy}>{t("home.privacy")}</p>
+      </section>
+
+      <section className={styles.langs} aria-labelledby="langs-title">
+        <div className="container">
+          <Reveal>
+            <h2 id="langs-title">{t("home.langTitle")}</h2>
+            <p className={styles.langBody}>{t("home.langBody")}</p>
+          </Reveal>
+          <ul className={styles.scripts} aria-hidden="true">
+            {SCRIPTS.map((s, i) => (
+              <li key={s} className={styles[`script${i}`]}>
+                {s}
+              </li>
+            ))}
+          </ul>
+          <ol className={styles.how}>
+            {([1, 2, 3] as const).map((n) => (
+              <Reveal as="li" key={n} delay={n * 0.08}>
+                <span className={styles.howBulb} aria-hidden="true" />
+                <h3>{t(`home.how.${n}.title` as MessageKey)}</h3>
+                <p>{t(`home.how.${n}.body` as MessageKey)}</p>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className={`container ${styles.close}`} aria-labelledby="close-title">
+        <Reveal>
+          <h2 id="close-title">{t("home.closeTitle")}</h2>
+          <div className={styles.actions}>
+            <a href="#describe" className="btn btn-primary">
+              <Icon name="bulb" size={20} />
+              {t("home.cta")}
+            </a>
+            <Link href="/plan/new" className="btn btn-secondary">
+              {t("home.stepByStep")}
+            </Link>
+          </div>
+          <p className="hint">{t("home.privacy")}</p>
+        </Reveal>
       </section>
     </>
   );

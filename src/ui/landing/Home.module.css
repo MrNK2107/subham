@@ -1,192 +1,365 @@
+/* ---------- Hero: the night street ---------- */
 .hero {
   position: relative;
-  padding: 3rem 0 3.5rem;
+  min-height: calc(100svh - 64px);
+  display: flex;
+  align-items: flex-end;
   overflow: hidden;
-  /* A kolam-like dot grid. */
-  background-image: radial-gradient(rgb(158 27 50 / 10%) 1.5px, transparent 1.5px);
-  background-size: 22px 22px;
-  background-position: right top;
+  isolation: isolate;
+  background: radial-gradient(120% 80% at 50% 0%, #141a4d 0%, transparent 60%), var(--night);
 }
-.hero::after {
-  content: "";
+.hero :global(.street-canvas) {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, var(--bg) 35%, rgb(251 246 238 / 70%) 70%, transparent);
+  z-index: -2;
+}
+.heroShade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgb(7 10 34 / 0%) 30%,
+    rgb(7 10 34 / 55%) 62%,
+    rgb(7 10 34 / 92%) 100%
+  );
   pointer-events: none;
 }
-.heroGrid {
-  position: relative;
-  z-index: 1;
+.heroInner {
+  padding-block: 7rem 3.5rem;
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-  gap: 2.5rem;
-  align-items: center;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  grid-template-areas:
+    "title title"
+    "lead door";
+  gap: 1.25rem 3rem;
+  align-items: end;
 }
-.eyebrow {
-  color: var(--primary);
-  font-weight: 700;
-  font-size: 0.9rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
+.heroInner > :nth-child(1) {
+  grid-area: title;
+}
+.heroInner > :nth-child(2) {
+  grid-area: lead;
+  align-self: start;
+}
+.title {
+  font-size: clamp(2.6rem, 7.2vw, 6rem);
+  line-height: 0.98;
+  max-width: 14ch;
+  margin: 0;
+  text-shadow: 0 4px 40px rgb(7 10 34 / 90%);
 }
 .lead {
-  font-size: 1.125rem;
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
   color: var(--ink-2);
-  max-width: 60ch;
+  max-width: 46ch;
+  margin: 0;
 }
-.describe {
-  margin-top: 1.5rem;
+.doorway {
+  grid-area: door;
+  position: relative;
+  background: rgb(13 18 54 / 82%);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--wire-bright);
+  border-radius: 22px 22px 18px 18px;
+  padding: 1.4rem;
+  box-shadow:
+    0 -1px 0 rgb(255 183 3 / 60%),
+    0 -18px 50px -20px rgb(255 183 3 / 55%),
+    var(--lift);
+}
+/* The lit lintel above the doorway. */
+.doorway::before {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: -1px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--amber),
+    var(--warm),
+    var(--amber),
+    transparent
+  );
+}
+.doorway form {
   display: grid;
   gap: 0.6rem;
+}
+.doorLabel {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
 }
 .actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   gap: 0.75rem;
-  margin-top: 0.25rem;
-}
-.or {
-  color: var(--ink-2);
+  margin-top: 0.35rem;
 }
 
-.preview {
-  display: flex;
-  justify-content: center;
+/* ---------- Demo: one strand per function ---------- */
+.demo {
+  padding-block: 6rem 4rem;
+  border-top: 1px solid var(--wire);
+  background: linear-gradient(180deg, var(--night) 0%, #0a0e2c 100%);
 }
-.previewCard {
-  width: min(360px, 100%);
-  background: var(--surface);
-  border-radius: 20px;
-  border: 1px solid var(--line);
-  box-shadow: 0 20px 50px rgb(42 26 20 / 12%);
-  padding: 1.5rem;
-  transform: rotate(2deg);
-  animation: float 6s ease-in-out infinite alternate;
+.demoGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 3rem;
+  align-items: start;
 }
-@keyframes float {
-  to {
-    transform: rotate(1deg) translateY(-6px);
-  }
+.demoIntro {
+  position: sticky;
+  top: 6rem;
 }
-.previewTitle {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.15rem;
+.demoIntro p {
+  color: var(--ink-2);
+  max-width: 44ch;
 }
-.previewFns {
+.demoLabel {
+  display: inline-block;
+  font-size: 0.9rem;
+  border: 1px dashed var(--wire-bright);
+  border-radius: 999px;
+  padding: 0.2rem 0.8rem;
+}
+.strands {
   list-style: none;
+  margin: 0;
   padding: 0;
-  margin: 0 0 1rem;
+  display: grid;
+  gap: 0.75rem;
+}
+.strandRow {
+  border: 1px solid var(--wire);
+  border-radius: var(--radius);
+  background: rgb(18 24 69 / 70%);
+  transition:
+    border-color 0.3s var(--ease-out),
+    background-color 0.3s var(--ease-out);
+}
+.strandRow:hover,
+.strandRow:focus-within {
+  border-color: var(--wire-bright);
+  background: rgb(26 33 87 / 80%);
+}
+.strandButton {
+  all: unset;
+  box-sizing: border-box;
+  width: 100%;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.35rem 1rem;
+  padding: 1rem 1.2rem 1.1rem;
+  border-radius: var(--radius);
+}
+.strandButton:focus-visible {
+  outline: 2px solid var(--warm);
+  outline-offset: 2px;
+}
+.strandButton > :last-child {
+  grid-column: 1 / -1;
+}
+.strandName {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+.strandBudget {
+  color: var(--amber);
+  font-weight: 600;
+  align-self: center;
+}
+.strandTasks {
+  list-style: none;
+  margin: 0;
+  padding: 0 1.2rem;
+  overflow: hidden;
+  color: var(--ink-2);
+}
+.strandTasks li {
+  padding: 0.45rem 0;
+  border-top: 1px solid var(--wire);
+}
+.strandTasks li:last-child {
+  padding-bottom: 1rem;
+}
+
+/* ---------- Features ---------- */
+.features {
+  padding-block: 5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 3rem;
+}
+.featuresHead {
+  position: sticky;
+  top: 6rem;
+  align-self: start;
+}
+.featureList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem 2rem;
+}
+.feature {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+.feature:nth-child(even) {
+  transform: translateY(2.5rem);
+}
+.feature h3 {
+  margin-bottom: 0.3em;
+}
+.feature p {
+  color: var(--ink-2);
+  margin: 0;
+}
+.featureIcon {
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50% 50% 46% 46% / 58% 58% 42% 42%;
+  color: var(--on-amber);
+  background: var(--amber);
+  box-shadow: 0 6px 22px -4px rgb(255 183 3 / 60%);
+}
+.feature:nth-child(3n + 2) .featureIcon {
+  background: var(--rani);
+  color: #fff;
+  box-shadow: 0 6px 22px -4px rgb(255 79 139 / 60%);
+}
+.feature:nth-child(3n + 3) .featureIcon {
+  background: var(--leaf);
+  box-shadow: 0 6px 22px -4px rgb(46 229 157 / 55%);
+}
+
+/* ---------- Languages and how it works ---------- */
+.langs {
+  padding-block: 6rem;
+  border-block: 1px solid var(--wire);
+  background:
+    radial-gradient(60% 80% at 80% 20%, rgb(255 79 139 / 12%), transparent 70%),
+    radial-gradient(50% 60% at 10% 90%, rgb(46 229 157 / 9%), transparent 70%), #0a0e2c;
+}
+.langBody {
+  color: var(--ink-2);
+  max-width: 60ch;
+}
+.scripts {
+  list-style: none;
+  margin: 2.5rem 0;
+  padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.5rem 2rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.2;
 }
-.previewFns li {
-  background: var(--accent-soft);
-  color: var(--warn);
-  font-weight: 600;
-  font-size: 0.8rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
+.script0 {
+  color: var(--amber);
 }
-.previewBar {
-  display: flex;
-  height: 12px;
-  border-radius: 999px;
-  overflow: hidden;
+.script1 {
+  color: var(--rani);
+}
+.script2 {
+  color: var(--leaf);
+}
+.script3 {
+  color: var(--warm);
+}
+.how {
+  list-style: none;
+  margin: 3rem 0 0;
+  padding: 2.2rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+  position: relative;
+}
+/* One wire across the three steps. */
+.how::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 22px;
+  border-bottom: 1.5px solid var(--wire-bright);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}
+.how p {
+  color: var(--ink-2);
+}
+.howBulb {
+  display: block;
+  width: 16px;
+  height: 22px;
   margin-bottom: 1rem;
+  border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%;
+  background: var(--amber);
+  box-shadow: 0 4px 18px rgb(255 183 3 / 70%);
 }
-.barVenue {
-  flex: 3;
-  background: var(--primary);
+.how li:nth-child(2) .howBulb {
+  background: var(--rani);
+  box-shadow: 0 4px 18px rgb(255 79 139 / 70%);
 }
-.barFood {
-  flex: 4;
-  background: var(--accent);
-}
-.barDecor {
-  flex: 2;
+.how li:nth-child(3) .howBulb {
   background: var(--leaf);
-}
-.barOther {
-  flex: 1.5;
-  background: #cbb59b;
-}
-.previewList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 0.35rem;
-  color: var(--ink-2);
-  font-size: 0.95rem;
+  box-shadow: 0 4px 18px rgb(46 229 157 / 70%);
 }
 
-.sectionTitle {
-  margin-top: 2.5rem;
-  margin-bottom: 1.25rem;
+/* ---------- Close ---------- */
+.close {
+  padding-block: 6rem 7rem;
+  text-align: left;
 }
-.features {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
-  gap: 1rem;
+.close h2 {
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  max-width: 18ch;
 }
-.features p {
-  color: var(--ink-2);
-  margin: 0;
-}
-.icon {
-  display: inline-grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: var(--primary-soft);
-  color: var(--primary);
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-}
-.steps {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-}
-.steps p {
-  color: var(--ink-2);
-}
-.stepNum {
-  display: inline-grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 2px solid var(--accent);
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.privacy {
-  margin: 2rem 0 3rem;
-  color: var(--ink-2);
-  font-size: 0.95rem;
+.close .hint {
+  margin-top: 1.5rem;
 }
 
-@media (max-width: 860px) {
-  .heroGrid {
+@media (max-width: 900px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "lead"
+      "door";
+    padding-top: 5rem;
+  }
+  .demoGrid,
+  .features {
     grid-template-columns: 1fr;
   }
-  .preview {
-    display: none;
+  .demoIntro,
+  .featuresHead {
+    position: static;
   }
-  .hero {
-    padding-top: 2rem;
+  .featureList,
+  .how {
+    grid-template-columns: 1fr;
+  }
+  .feature:nth-child(even) {
+    transform: none;
   }
 }

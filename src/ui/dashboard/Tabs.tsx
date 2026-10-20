@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, type KeyboardEvent, type ReactNode } from "react";
+import { useEnterOnChange } from "@/ui/common/Reveal";
 import styles from "./Dashboard.module.css";
 
 export interface TabDef {
@@ -22,6 +23,7 @@ export function Tabs({
   label: string;
 }) {
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
+  const panel = useEnterOnChange<HTMLDivElement>(active);
 
   function onKey(e: KeyboardEvent, index: number) {
     const last = tabs.length - 1;
@@ -78,7 +80,7 @@ export function Tabs({
           tabIndex={0}
           className={styles.panel}
         >
-          {active === tab.id && tab.panel}
+          {active === tab.id && <div ref={panel}>{tab.panel}</div>}
         </div>
       ))}
     </>
