@@ -1,0 +1,325 @@
+:root {
+  color-scheme: light;
+  --bg: #fbf6ee;
+  --surface: #ffffff;
+  --surface-2: #f6ede1;
+  --ink: #2a1a14;
+  --ink-2: #5b4536;
+  --line: #e4d4c0;
+  --primary: #9e1b32;
+  --primary-hover: #7f1428;
+  --primary-soft: #f8e6e8;
+  --accent: #e8a317;
+  --accent-soft: #fdf1d6;
+  --leaf: #2d6a3a;
+  --leaf-soft: #e5f2e6;
+  --warn: #8a4b00;
+  --warn-soft: #fdf0dd;
+  --danger: #a8231b;
+  --focus: #1f4fd1;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 1px 2px rgb(42 26 20 / 6%), 0 8px 24px rgb(42 26 20 / 6%);
+  --font-body:
+    var(--font-sans), var(--font-deva), var(--font-tamil), var(--font-telugu), system-ui, sans-serif;
+  --font-display:
+    var(--font-serif), var(--font-deva), var(--font-tamil), var(--font-telugu), Georgia, serif;
+  --max: 1120px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+  margin: 0 0 0.5em;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  letter-spacing: -0.01em;
+}
+h2 {
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+}
+h3 {
+  font-size: 1.125rem;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--primary);
+  text-underline-offset: 0.18em;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 100;
+  background: var(--ink);
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.6rem 1.15rem;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.1s ease;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+.btn-secondary {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn-secondary:hover:not(:disabled) {
+  border-color: var(--ink-2);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--primary);
+  padding-inline: 0.75rem;
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--primary-soft);
+}
+.btn-small {
+  min-height: 44px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.925rem;
+}
+
+/* ---------- Cards and forms ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+.field label,
+.label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.hint {
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  margin: 0;
+}
+.error-text {
+  color: var(--danger);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.8rem;
+  min-height: 44px;
+  width: 100%;
+}
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: #cbb59b;
+}
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  min-height: 0;
+  accent-color: var(--primary);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.badge-good {
+  background: var(--leaf-soft);
+  color: var(--leaf);
+}
+.badge-warn {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+.badge-bad {
+  background: var(--primary-soft);
+  color: var(--danger);
+}
+
+.notice {
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  background: var(--accent-soft);
+  border: 1px solid #f0d58c;
+  color: var(--ink);
+}
+
+/* A strip of marigold and mango-leaf colours, like a toran over a doorway. */
+.toran {
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--accent) 0 18px,
+    #f28c28 18px 30px,
+    var(--leaf) 30px 40px
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .no-print,
+  header,
+  nav,
+  .skip-link {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  .card {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
+
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--ink-2);
+}
+.lang-switch select {
+  width: auto;
+  padding-block: 0.4rem;
+  border-radius: 999px;
+}

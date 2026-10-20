@@ -1,4 +1,4 @@
-import { functionDefaults } from "./presets";
+import { canonicalFunction, functionDefaults } from "./presets";
 import type { Blueprint, Brief, EventType, IdeaDraft } from "./types";
 
 /** Budget lines that belong to the whole event rather than one function. */
@@ -382,7 +382,7 @@ export function templateBlueprint(brief: Brief): Blueprint {
 
   const main = fns.find((f) => f.dayOffset === 0) ?? fns[0];
   const runSheet = fns.flatMap((f) => {
-    const steps = RUN[f.name.trim().toLowerCase()] ?? [
+    const steps = RUN[(canonicalFunction(f.name) ?? f.name).trim().toLowerCase()] ?? [
       [0, `${f.name} begins`],
       [60, "Main programme"],
       [150, "Food and thanks"],

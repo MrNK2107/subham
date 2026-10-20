@@ -1,3 +1,5 @@
-export default function Home() {
-  return <main>Subham</main>;
+import { Home } from "@/ui/landing/Home";
+
+export default function Page() {
+  return <Home />;
 }
