@@ -106,7 +106,7 @@ Details and threat model in [SECURITY.md](SECURITY.md).
 
 - **Secrets:** API keys stay on the server. The Firebase web config is public by design, and Firestore rules enforce access.
 - **Content Security Policy:** a per-request nonce with `strict-dynamic` and no `unsafe-inline` or `unsafe-eval` in production. Plus HSTS, `X-Frame-Options: DENY`, `nosniff`, Referrer-Policy and Permissions-Policy (microphone for this site only).
-- **API requests:** every route checks the content type and body size, validates with zod, applies a per-client rate limit, never caches responses, and returns error messages that reveal nothing internal.
+- **API requests:** every AI route checks the content type and body size, validates with zod, applies a per-client rate limit keyed on the address Google's front end appends (so it can't be spoofed), never caches responses, and returns error messages that reveal nothing internal.
 - **Prompt injection:** user text only ever reaches the model inside fenced tags with `<` escaped (prompts refer to fields by name, never inline them), model output is schema-validated, and tool calls are allow-listed, re-checked against the real plan, and applied only after approval.
 - **Dependencies:** `npm audit --omit=dev` reports 0 vulnerabilities, and CI checks it on every push.
 
