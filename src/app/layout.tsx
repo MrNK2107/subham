@@ -9,6 +9,7 @@ import {
 } from "next/font/google";
 import { headers } from "next/headers";
 import type { ReactNode } from "react";
+import { Footer } from "@/ui/shell/Footer";
 import { Header } from "@/ui/shell/Header";
 import { SkipLink } from "@/ui/shell/SkipLink";
 import { SITE_URL } from "@/ui/site";
@@ -97,6 +98,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <main id="main" tabIndex={-1}>
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );

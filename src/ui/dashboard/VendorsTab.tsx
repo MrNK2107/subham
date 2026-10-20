@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { parseAmount } from "@/core/money";
 import { VENDOR_STATUSES, type Plan, type Vendor } from "@/core/types";
 import { useI18n } from "@/i18n";
+import { BulbStrand } from "@/ui/common/BulbStrand";
 import type { PlanActions } from "./Dashboard";
 import styles from "./Dashboard.module.css";
 
@@ -28,7 +29,18 @@ export function VendorsTab({ plan, actions }: { plan: Plan; actions: PlanActions
 
   return (
     <div className={styles.stack}>
-      <p className={styles.lead}>{t("vendors.summary", { booked, total: plan.vendors.length })}</p>
+      <div>
+        <p className={styles.lead}>
+          {t("vendors.summary", { booked, total: plan.vendors.length })}
+        </p>
+        <BulbStrand
+          value={booked}
+          max={plan.vendors.length}
+          bulbs={16}
+          label={t("overview.vendorsBooked")}
+          valueText={t("vendors.summary", { booked, total: plan.vendors.length })}
+        />
+      </div>
       <ul className={styles.vendorGrid}>
         {plan.vendors.map((v) => (
           <li key={v.id} className="card">

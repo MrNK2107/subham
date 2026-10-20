@@ -6,6 +6,7 @@ import { summarizeBudget } from "@/core/budget-summary";
 import { formatINR, parseAmount } from "@/core/money";
 import type { Plan } from "@/core/types";
 import { useI18n } from "@/i18n";
+import { BulbStrand } from "@/ui/common/BulbStrand";
 import type { PlanActions } from "./Dashboard";
 import styles from "./Dashboard.module.css";
 
@@ -35,20 +36,21 @@ export function BudgetTab({ plan, actions }: { plan: Plan; actions: PlanActions 
 
   return (
     <div className={styles.stack}>
-      <dl className={styles.summary}>
-        <div>
-          <dt>{t("budget.total")}</dt>
-          <dd>{formatINR(summary.allocated)}</dd>
-        </div>
-        <div>
-          <dt>{t("budget.spent")}</dt>
-          <dd>{formatINR(summary.spent)}</dd>
-        </div>
-        <div>
-          <dt>{t("budget.left")}</dt>
-          <dd>{formatINR(summary.remaining)}</dd>
-        </div>
-      </dl>
+      <section className={`card ${styles.budgetStrand}`} aria-labelledby="budget-total">
+        <h2 id="budget-total" className={styles.budgetFigures}>
+          {formatINR(summary.spent)} <span>{t("budget.spent")}</span> ·{" "}
+          {formatINR(summary.allocated)} <span>{t("budget.total")}</span> ·{" "}
+          {formatINR(summary.remaining)} <span>{t("budget.left")}</span>
+        </h2>
+        <BulbStrand
+          value={summary.spent}
+          max={summary.allocated}
+          bulbs={24}
+          over={summary.spent > summary.allocated}
+          label={t("budget.spent")}
+          valueText={`${formatINR(summary.spent)} / ${formatINR(summary.allocated)}`}
+        />
+      </section>
 
       {summary.overruns.length > 0 && (
         <div className="notice no-print">
@@ -94,10 +96,13 @@ export function BudgetTab({ plan, actions }: { plan: Plan; actions: PlanActions 
                     <tr key={l.id}>
                       <th scope="row" lang={lang}>
                         {l.category}
-                        <progress
-                          value={Math.min(l.spent, l.allocated)}
+                        <BulbStrand
+                          value={l.spent}
                           max={Math.max(l.allocated, 1)}
-                          aria-hidden="true"
+                          bulbs={8}
+                          over={l.spent > l.allocated}
+                          label={l.category}
+                          valueText={`${formatINR(l.spent)} / ${formatINR(l.allocated)}`}
                         />
                       </th>
                       <td>{formatINR(l.allocated)}</td>

@@ -13,18 +13,20 @@ interface Props {
   valueText: string;
   /** Upper bound on bulbs drawn; larger totals are scaled. */
   bulbs?: number;
+  /** Past the limit (e.g. overspent): every bulb turns rani pink and pulses. */
+  over?: boolean;
 }
 
 /**
  * Subham's progress indicator: a strand of serial lights where each bulb that comes on is
  * progress. Exposed to assistive tech as a meter with its value in words.
  */
-export function BulbStrand({ value, max, label, valueText, bulbs = 12 }: Props) {
+export function BulbStrand({ value, max, label, valueText, bulbs = 12, over = false }: Props) {
   const count = Math.max(1, Math.min(bulbs, max || 1));
   const lit = max > 0 ? Math.round((Math.min(value, max) / max) * count) : 0;
   return (
     <div
-      className={styles.strand}
+      className={`${styles.strand} ${over ? styles.over : ""}`}
       role="meter"
       aria-label={label}
       aria-valuemin={0}

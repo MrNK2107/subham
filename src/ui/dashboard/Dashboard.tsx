@@ -134,7 +134,6 @@ export function Dashboard({ id }: { id: string }) {
     <div className={`container ${styles.layout}`}>
       <div className={styles.main}>
         <header className={styles.head}>
-          <p className={styles.countdown}>{countdown}</p>
           <h1 lang={lang}>{plan.brief.title}</h1>
           <p className={styles.meta}>
             {new Date(`${plan.brief.date}T00:00:00`).toLocaleDateString("en-IN", {
@@ -143,7 +142,8 @@ export function Dashboard({ id }: { id: string }) {
               month: "long",
               year: "numeric",
             })}{" "}
-            · {t("plan.guestsCity", { guests: plan.brief.guests, city: plan.brief.city })}
+            · {t("plan.guestsCity", { guests: plan.brief.guests, city: plan.brief.city })}{" "}
+            <span className={styles.countdown}>{countdown}</span>
           </p>
           <div className={`${styles.actions} no-print`}>
             <a

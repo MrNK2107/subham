@@ -62,3 +62,18 @@ export function useEnterOnChange<T extends HTMLElement>(
   }, [key, reduce, animate, scope, from]);
   return scope;
 }
+
+/** Marks an element `data-lit` once it scrolls into view, so CSS can switch its bulbs on. */
+export function LitOnView({
+  children,
+  as: Tag = "div",
+  className,
+}: Omit<Props, "delay" | "immediate">) {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.4 });
+  return (
+    <Tag ref={ref} className={className} data-lit={inView ? "true" : undefined}>
+      {children}
+    </Tag>
+  );
+}

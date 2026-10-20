@@ -72,8 +72,8 @@ function Street({ still }: { still: boolean }) {
     let seed = 7;
     const rand = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
     for (const [z, shade] of [
-      [-7, "#12174a"],
-      [-12, "#0d1238"],
+      [-7, "#1c2366"],
+      [-12, "#151b52"],
     ] as const) {
       let x = -16;
       while (x < 16) {
@@ -180,7 +180,7 @@ function Street({ still }: { still: boolean }) {
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[backdrop.windows, 3]} />
         </bufferGeometry>
-        <pointsMaterial size={0.13} color="#ffcf7a" transparent opacity={0.75} sizeAttenuation />
+        <pointsMaterial size={0.17} color="#ffcf7a" transparent opacity={0.95} sizeAttenuation />
       </points>
       <points ref={bokehRef}>
         <bufferGeometry>

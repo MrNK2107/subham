@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { addGuest, guestSummary, removeGuest, updateGuest } from "@/core/guests";
 import type { Guest, Plan } from "@/core/types";
 import { useI18n } from "@/i18n";
+import { BulbStrand } from "@/ui/common/BulbStrand";
 import type { PlanActions } from "./Dashboard";
 import styles from "./Dashboard.module.css";
 
@@ -52,6 +53,13 @@ export function GuestsTab({ plan, actions }: { plan: Plan; actions: PlanActions 
           {t("guests.expected", { count: s.expected, veg: s.veg, jain: s.jain, nonveg: s.nonveg })}{" "}
           {t("guests.planned", { count: plan.brief.guests })}
         </p>
+        <BulbStrand
+          value={s.confirmed}
+          max={Math.max(plan.brief.guests, 1)}
+          bulbs={20}
+          label={t("overview.guestsConfirmed")}
+          valueText={t("overview.ofTotal", { done: s.confirmed, total: plan.brief.guests })}
+        />
       </div>
 
       <form className={`card ${styles.guestForm} no-print`} onSubmit={add} noValidate>

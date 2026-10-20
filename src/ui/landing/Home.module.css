@@ -19,45 +19,35 @@
   z-index: -1;
   background: linear-gradient(
     180deg,
-    rgb(7 10 34 / 0%) 30%,
-    rgb(7 10 34 / 55%) 62%,
+    rgb(7 10 34 / 0%) 40%,
+    rgb(7 10 34 / 50%) 70%,
     rgb(7 10 34 / 92%) 100%
   );
   pointer-events: none;
 }
 .heroInner {
-  padding-block: 7rem 3.5rem;
+  padding-block: 9rem 3.5rem;
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  grid-template-areas:
-    "title title"
-    "lead door";
-  gap: 1.25rem 3rem;
-  align-items: end;
-}
-.heroInner > :nth-child(1) {
-  grid-area: title;
-}
-.heroInner > :nth-child(2) {
-  grid-area: lead;
-  align-self: start;
+  grid-template-columns: minmax(0, 900px);
+  gap: 1.25rem;
 }
 .title {
-  font-size: clamp(2.6rem, 7.2vw, 6rem);
+  font-size: clamp(2.4rem, 4.9vw, 4.6rem);
   line-height: 0.98;
-  max-width: 14ch;
+  max-width: 22ch;
   margin: 0;
   text-shadow: 0 4px 40px rgb(7 10 34 / 90%);
 }
 .lead {
   font-size: clamp(1.05rem, 1.4vw, 1.25rem);
   color: var(--ink-2);
-  max-width: 46ch;
+  max-width: 52ch;
   margin: 0;
+  text-shadow: 0 2px 18px rgb(7 10 34 / 95%);
 }
 .doorway {
-  grid-area: door;
   position: relative;
+  max-width: 560px;
   background: rgb(13 18 54 / 82%);
   backdrop-filter: blur(10px);
   border: 1px solid var(--wire-bright);
@@ -100,6 +90,83 @@
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 0.35rem;
+}
+
+/* Function tags hanging from the nearest strand, swaying on their strings. */
+.tags {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+.tags li {
+  position: absolute;
+  top: 9%;
+  transform-origin: 50% 0;
+  animation: sway 5s ease-in-out infinite alternate;
+}
+.tags li::before {
+  content: "";
+  display: block;
+  width: 1.5px;
+  height: 46px;
+  margin: 0 auto;
+  background: var(--wire-bright);
+}
+.tags span {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--on-amber);
+  background: var(--warm);
+  padding: 0.2rem 0.75rem 0.15rem;
+  border-radius: 6px 6px 10px 10px;
+  box-shadow: 0 8px 24px -6px rgb(255 183 3 / 55%);
+}
+.tags li:nth-child(1) {
+  left: 44%;
+  top: 7%;
+  animation-delay: -1s;
+}
+.tags li:nth-child(2) {
+  left: 54%;
+  top: 9.5%;
+}
+.tags li:nth-child(2) span {
+  background: var(--rani);
+}
+.tags li:nth-child(3) {
+  left: 64%;
+  top: 10.5%;
+  animation-delay: -2.5s;
+}
+.tags li:nth-child(3) span {
+  background: var(--amber);
+}
+.tags li:nth-child(4) {
+  left: 74%;
+  top: 9.5%;
+  animation-delay: -0.5s;
+}
+.tags li:nth-child(4) span {
+  background: var(--leaf);
+}
+.tags li:nth-child(5) {
+  left: 88%;
+  top: 7.5%;
+  animation-delay: -3.5s;
+}
+@keyframes sway {
+  from {
+    transform: rotate(-3deg);
+  }
+  to {
+    transform: rotate(3deg);
+  }
 }
 
 /* ---------- Demo: one strand per function ---------- */
@@ -194,58 +261,89 @@
 
 /* ---------- Features ---------- */
 .features {
-  padding-block: 5rem;
-  display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: 3rem;
+  padding-block: 5rem 4rem;
 }
-.featuresHead {
-  position: sticky;
-  top: 6rem;
-  align-self: start;
+.featuresHead h2 {
+  max-width: 22ch;
 }
-.featureList {
+/* Features hang as tags from one wire; their bulbs come on as the wire scrolls into view. */
+.featureStrand {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 2.4rem 0 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.5rem 2rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.75rem 1.75rem;
+  position: relative;
 }
-.feature {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1rem;
-  align-items: start;
+.featureStrand::before {
+  content: "";
+  position: absolute;
+  left: -1rem;
+  right: -1rem;
+  top: 0;
+  height: 30px;
+  border-bottom: 1.5px solid var(--wire-bright);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
 }
-.feature:nth-child(even) {
-  transform: translateY(2.5rem);
+.featureTag {
+  position: relative;
 }
-.feature h3 {
-  margin-bottom: 0.3em;
+.featureTag h3 {
+  margin: 0.8rem 0 0.3em;
 }
-.feature p {
+.featureTag p {
   color: var(--ink-2);
   margin: 0;
+}
+.featureBulb {
+  position: absolute;
+  top: -1.6rem;
+  left: 1.2rem;
+  width: 12px;
+  height: 17px;
+  border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%;
+  background: #262c5c;
+  border: 1px solid #3a4180;
+  transition:
+    background-color 0.5s var(--ease-out),
+    box-shadow 0.6s var(--ease-out);
+}
+.featureTag:nth-child(n + 4) .featureBulb {
+  display: none;
 }
 .featureIcon {
   display: inline-grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
-  border-radius: 50% 50% 46% 46% / 58% 58% 42% 42%;
-  color: var(--on-amber);
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid var(--wire-bright);
+  color: var(--ink-3);
+  transition:
+    color 0.5s var(--ease-out),
+    border-color 0.5s var(--ease-out);
+}
+.featureStrand[data-lit] .featureBulb {
   background: var(--amber);
-  box-shadow: 0 6px 22px -4px rgb(255 183 3 / 60%);
+  border-color: #ffd36b;
+  box-shadow: 0 4px 16px rgb(255 183 3 / 80%);
 }
-.feature:nth-child(3n + 2) .featureIcon {
+.featureStrand[data-lit] .featureTag:nth-child(3n + 2) .featureBulb {
   background: var(--rani);
-  color: #fff;
-  box-shadow: 0 6px 22px -4px rgb(255 79 139 / 60%);
+  border-color: #ff8db4;
+  box-shadow: 0 4px 16px rgb(255 79 139 / 80%);
+  transition-delay: 0.15s;
 }
-.feature:nth-child(3n + 3) .featureIcon {
+.featureStrand[data-lit] .featureTag:nth-child(3n + 3) .featureBulb {
   background: var(--leaf);
-  box-shadow: 0 6px 22px -4px rgb(46 229 157 / 55%);
+  border-color: #8af5c9;
+  box-shadow: 0 4px 16px rgb(46 229 157 / 75%);
+  transition-delay: 0.3s;
+}
+.featureStrand[data-lit] .featureIcon {
+  color: var(--warm);
+  border-color: var(--amber);
 }
 
 /* ---------- Languages and how it works ---------- */
@@ -325,9 +423,131 @@
   box-shadow: 0 4px 18px rgb(46 229 157 / 70%);
 }
 
+/* ---------- Close: the street relights ---------- */
+.reprise {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 18px;
+  margin-bottom: 3rem;
+}
+.reprise::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 34px;
+  border-bottom: 1.5px solid var(--wire-bright);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}
+.reprise span {
+  position: relative;
+  width: 12px;
+  height: 17px;
+  border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%;
+  background: #262c5c;
+  border: 1px solid #3a4180;
+  transition:
+    background-color 0.4s var(--ease-out),
+    box-shadow 0.5s var(--ease-out);
+}
+.reprise span:nth-child(n + 5):nth-last-child(n + 5) {
+  top: 8px;
+}
+.reprise span:nth-child(n + 9):nth-last-child(n + 9) {
+  top: 13px;
+}
+.reprise[data-lit] span {
+  background: var(--amber);
+  box-shadow: 0 4px 14px rgb(255 183 3 / 80%);
+}
+.reprise[data-lit] span:nth-child(4n + 2) {
+  background: var(--rani);
+  box-shadow: 0 4px 14px rgb(255 79 139 / 80%);
+}
+.reprise[data-lit] span:nth-child(4n + 3) {
+  background: var(--leaf);
+  box-shadow: 0 4px 14px rgb(46 229 157 / 75%);
+}
+.reprise[data-lit] span:nth-child(4n) {
+  background: var(--warm);
+  box-shadow: 0 4px 14px rgb(255 243 214 / 75%);
+}
+.reprise[data-lit] span:nth-child(1) {
+  transition-delay: 0s;
+}
+.reprise[data-lit] span:nth-child(2) {
+  transition-delay: 0.06s;
+}
+.reprise[data-lit] span:nth-child(3) {
+  transition-delay: 0.12s;
+}
+.reprise[data-lit] span:nth-child(4) {
+  transition-delay: 0.18s;
+}
+.reprise[data-lit] span:nth-child(5) {
+  transition-delay: 0.24s;
+}
+.reprise[data-lit] span:nth-child(6) {
+  transition-delay: 0.3s;
+}
+.reprise[data-lit] span:nth-child(7) {
+  transition-delay: 0.36s;
+}
+.reprise[data-lit] span:nth-child(8) {
+  transition-delay: 0.42s;
+}
+.reprise[data-lit] span:nth-child(9) {
+  transition-delay: 0.48s;
+}
+.reprise[data-lit] span:nth-child(10) {
+  transition-delay: 0.54s;
+}
+.reprise[data-lit] span:nth-child(11) {
+  transition-delay: 0.6s;
+}
+.reprise[data-lit] span:nth-child(12) {
+  transition-delay: 0.66s;
+}
+.reprise[data-lit] span:nth-child(13) {
+  transition-delay: 0.72s;
+}
+.reprise[data-lit] span:nth-child(14) {
+  transition-delay: 0.78s;
+}
+.reprise[data-lit] span:nth-child(15) {
+  transition-delay: 0.84s;
+}
+.reprise[data-lit] span:nth-child(16) {
+  transition-delay: 0.9s;
+}
+.reprise[data-lit] span:nth-child(17) {
+  transition-delay: 0.96s;
+}
+.reprise[data-lit] span:nth-child(18) {
+  transition-delay: 1.02s;
+}
+.reprise[data-lit] span:nth-child(19) {
+  transition-delay: 1.08s;
+}
+.reprise[data-lit] span:nth-child(20) {
+  transition-delay: 1.14s;
+}
+.reprise[data-lit] span:nth-child(21) {
+  transition-delay: 1.2s;
+}
+.reprise[data-lit] span:nth-child(22) {
+  transition-delay: 1.26s;
+}
+.reprise[data-lit] span:nth-child(23) {
+  transition-delay: 1.32s;
+}
+.reprise[data-lit] span:nth-child(24) {
+  transition-delay: 1.38s;
+}
+
 /* ---------- Close ---------- */
 .close {
-  padding-block: 6rem 7rem;
+  padding-block: 5rem 4rem;
   text-align: left;
 }
 .close h2 {
@@ -341,25 +561,61 @@
 @media (max-width: 900px) {
   .heroInner {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "title"
-      "lead"
-      "door";
-    padding-top: 5rem;
+    padding-top: 9rem;
   }
-  .demoGrid,
-  .features {
+  .heroShade {
+    background: linear-gradient(
+      180deg,
+      rgb(7 10 34 / 10%) 8%,
+      rgb(7 10 34 / 78%) 30%,
+      rgb(7 10 34 / 94%) 100%
+    );
+  }
+  .tags li:nth-child(n) {
+    top: 5%;
+  }
+  .tags li:nth-child(1) {
+    left: 4%;
+  }
+  .tags li:nth-child(2) {
+    left: 25%;
+  }
+  .tags li:nth-child(3) {
+    left: 47%;
+  }
+  .tags li:nth-child(4) {
+    left: 70%;
+  }
+  .tags li:nth-child(5) {
+    display: none;
+  }
+  .demoGrid {
     grid-template-columns: 1fr;
   }
-  .demoIntro,
-  .featuresHead {
+  .demoIntro {
     position: static;
   }
-  .featureList,
   .how {
     grid-template-columns: 1fr;
   }
-  .feature:nth-child(even) {
-    transform: none;
+  .featureStrand {
+    grid-template-columns: 1fr;
+    padding: 0 0 0 2rem;
+  }
+  .featureStrand::before {
+    left: 0.4rem;
+    right: auto;
+    top: 0;
+    bottom: 0;
+    width: 1.5px;
+    height: auto;
+    border: 0;
+    border-radius: 0;
+    background: var(--wire-bright);
+  }
+  .featureTag:nth-child(n) .featureBulb {
+    display: block;
+    top: 0.9rem;
+    left: -2rem;
   }
 }

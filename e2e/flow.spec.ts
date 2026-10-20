@@ -6,7 +6,7 @@ test("describe in one line, review and create a plan", async ({ page }) => {
   await page
     .getByLabel("Describe your celebration")
     .fill("Wedding in Hyderabad, 250 guests, 12 lakh");
-  await page.getByRole("button", { name: "Fill it in for me" }).click();
+  await page.getByRole("button", { name: "Light it up" }).click();
   await expect(page.getByText(/we filled in what we understood/i)).toBeVisible();
   await expect(page.getByLabel("City or town")).toHaveValue("Hyderabad");
   await expect(page.getByLabel("City type")).toHaveValue("metro");
@@ -68,7 +68,7 @@ test("the interface switches to Tamil and Telugu", async ({ page }) => {
   await page.getByLabel("Language", { exact: true }).selectOption("ta");
   await expect(page.locator("html")).toHaveAttribute("lang", "ta");
   await expect(page.locator("h1")).toContainText("கொண்டாட்ட");
-  await expect(page.getByRole("link", { name: "புதிய திட்டம்" })).toBeVisible();
+  await expect(page.getByRole("banner").getByRole("link", { name: "புதிய திட்டம்" })).toBeVisible();
   await page.getByLabel(/^(மொழி|Language)$/).selectOption("te");
   await expect(page.locator("html")).toHaveAttribute("lang", "te");
   await expect(page.locator("h1")).toContainText("వేడుక");

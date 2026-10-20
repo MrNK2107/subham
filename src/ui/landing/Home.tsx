@@ -11,7 +11,8 @@ import { useI18n, type MessageKey } from "@/i18n";
 import { localToday, postJson } from "@/ui/api";
 import { BulbStrand } from "@/ui/common/BulbStrand";
 import { Icon, type IconName } from "@/ui/common/Icon";
-import { Reveal } from "@/ui/common/Reveal";
+import { LitOnView, Reveal } from "@/ui/common/Reveal";
+import { presetFunctions } from "@/core/presets";
 import { sceneSignal } from "@/ui/scene/signal";
 import { savePrefill } from "@/ui/wizard/prefill";
 import styles from "./Home.module.css";
@@ -71,7 +72,7 @@ const DEMO = [
 const SCRIPTS = ["शुभ आरंभ", "சுப ஆரம்பம்", "శుభారంభం", "A good beginning"];
 
 export function Home() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const router = useRouter();
   const reduce = useReducedMotion();
   const [text, setText] = useState("");
@@ -108,6 +109,14 @@ export function Home() {
       <section className={styles.hero} aria-labelledby="hero-title">
         <StreetLights />
         <div className={styles.heroShade} aria-hidden="true" />
+        {/* Each function hangs as a tag from the nearest strand. */}
+        <ul className={styles.tags} aria-hidden="true">
+          {presetFunctions("wedding", lang).map((name) => (
+            <li key={name}>
+              <span>{name}</span>
+            </li>
+          ))}
+        </ul>
         <div className={`container ${styles.heroInner}`}>
           <Reveal immediate>
             <h1 id="hero-title" className={styles.title}>
@@ -144,7 +153,7 @@ export function Home() {
               <div className={styles.actions}>
                 <button type="submit" className="btn btn-primary" disabled={busy}>
                   <Icon name="bulb" size={20} />
-                  {busy ? t("home.filling") : t("home.describeSubmit")}
+                  {busy ? t("home.filling") : t("home.cta")}
                 </button>
                 <Link href="/plan/new" className="btn btn-secondary">
                   {t("home.stepByStep")}
@@ -214,19 +223,18 @@ export function Home() {
         <Reveal className={styles.featuresHead}>
           <h2 id="features-title">{t("home.featuresTitle")}</h2>
         </Reveal>
-        <ol className={styles.featureList}>
-          {FEATURES.map((f, i) => (
-            <Reveal as="li" key={f} delay={(i % 2) * 0.08} className={styles.feature}>
+        <LitOnView as="ol" className={styles.featureStrand}>
+          {FEATURES.map((f) => (
+            <li key={f} className={styles.featureTag}>
+              <span className={styles.featureBulb} aria-hidden="true" />
               <span className={styles.featureIcon}>
-                <Icon name={f} size={26} />
+                <Icon name={f} size={22} />
               </span>
-              <div>
-                <h3>{t(`home.feature.${FEATURE_KEY[f]}.title` as MessageKey)}</h3>
-                <p>{t(`home.feature.${FEATURE_KEY[f]}.body` as MessageKey)}</p>
-              </div>
-            </Reveal>
+              <h3>{t(`home.feature.${FEATURE_KEY[f]}.title` as MessageKey)}</h3>
+              <p>{t(`home.feature.${FEATURE_KEY[f]}.body` as MessageKey)}</p>
+            </li>
           ))}
-        </ol>
+        </LitOnView>
       </section>
 
       <section className={styles.langs} aria-labelledby="langs-title">
@@ -255,6 +263,11 @@ export function Home() {
       </section>
 
       <section className={`container ${styles.close}`} aria-labelledby="close-title">
+        <LitOnView className={styles.reprise}>
+          {Array.from({ length: 24 }, (_, i) => (
+            <span key={i} aria-hidden="true" />
+          ))}
+        </LitOnView>
         <Reveal>
           <h2 id="close-title">{t("home.closeTitle")}</h2>
           <div className={styles.actions}>
@@ -266,7 +279,6 @@ export function Home() {
               {t("home.stepByStep")}
             </Link>
           </div>
-          <p className="hint">{t("home.privacy")}</p>
         </Reveal>
       </section>
     </>

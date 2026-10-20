@@ -5,6 +5,7 @@ import { googleCalendarUrl } from "@/core/ics";
 import type { Plan } from "@/core/types";
 import { useI18n } from "@/i18n";
 import { localToday } from "@/ui/api";
+import { BulbStrand } from "@/ui/common/BulbStrand";
 import type { PlanActions } from "./Dashboard";
 import styles from "./Dashboard.module.css";
 
@@ -33,6 +34,18 @@ export function TimelineTab({ plan, actions }: { plan: Plan; actions: PlanAction
     <div className={styles.twoCol}>
       <section className="card" aria-labelledby="todo">
         <h2 id="todo">{t("timeline.tasks")}</h2>
+        <div className={styles.sectionStrand}>
+          <BulbStrand
+            value={plan.tasks.filter((x) => x.done).length}
+            max={plan.tasks.length}
+            bulbs={16}
+            label={t("overview.tasks")}
+            valueText={t("overview.ofTotal", {
+              done: plan.tasks.filter((x) => x.done).length,
+              total: plan.tasks.length,
+            })}
+          />
+        </div>
         {plan.tasks.length === 0 && <p>{t("timeline.empty")}</p>}
         <ul className={styles.tasks}>
           {plan.tasks.map((task) => (

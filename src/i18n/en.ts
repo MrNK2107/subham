@@ -21,7 +21,7 @@ export const en = {
   "home.describePlaceholder":
     "e.g. My sister's wedding in Madurai next February, about 300 guests, budget 15 lakh, pure veg",
   "home.describeHint": "Write in English, हिन्दी, தமிழ், తెలుగు or any Indian language.",
-  "home.describeSubmit": "Fill it in for me",
+  "home.describeSubmit": "Light it up",
   "home.filling": "Reading your description…",
   "home.or": "or",
   "home.stepByStep": "Start step by step",

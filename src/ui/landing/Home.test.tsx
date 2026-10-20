@@ -28,7 +28,7 @@ describe("Home", () => {
     const user = userEvent.setup();
     render(<Home />);
     await user.type(screen.getByLabelText("Describe your celebration"), "Birthday in Salem");
-    await user.click(screen.getByRole("button", { name: "Fill it in for me" }));
+    await user.click(screen.getByRole("button", { name: "Light it up" }));
     expect(push).toHaveBeenCalledWith("/plan/new");
     expect(takePrefill()).toEqual({ type: "birthday", city: "Salem" });
   });
@@ -38,7 +38,7 @@ describe("Home", () => {
     vi.stubGlobal("fetch", fetcher);
     const user = userEvent.setup();
     render(<Home />);
-    await user.click(screen.getByRole("button", { name: "Fill it in for me" }));
+    await user.click(screen.getByRole("button", { name: "Light it up" }));
     expect(screen.getByRole("alert")).toHaveTextContent("Please fill this in.");
     expect(fetcher).not.toHaveBeenCalled();
   });
@@ -48,7 +48,7 @@ describe("Home", () => {
     const user = userEvent.setup();
     render(<Home />);
     await user.type(screen.getByLabelText("Describe your celebration"), "A wedding");
-    await user.click(screen.getByRole("button", { name: "Fill it in for me" }));
+    await user.click(screen.getByRole("button", { name: "Light it up" }));
     expect(await screen.findByRole("alert")).toHaveTextContent("Quick-fill needs AI");
     expect(push).not.toHaveBeenCalled();
   });

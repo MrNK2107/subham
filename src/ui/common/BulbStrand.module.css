@@ -70,3 +70,15 @@
   border-color: #fff;
   box-shadow: 0 3px 12px rgb(255 243 214 / 70%);
 }
+
+.over .bulb {
+  background: var(--rani);
+  border-color: #ff8db4;
+  box-shadow: 0 3px 12px rgb(255 79 139 / 80%);
+  animation: flicker 1.6s ease-in-out infinite alternate;
+}
+@keyframes flicker {
+  50% {
+    opacity: 0.55;
+  }
+}
