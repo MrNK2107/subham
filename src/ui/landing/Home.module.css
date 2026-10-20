@@ -309,16 +309,11 @@
     background-color 0.5s var(--ease-out),
     box-shadow 0.6s var(--ease-out);
 }
-.featureTag:nth-child(n + 4) .featureBulb {
-  display: none;
+.featureStrand + .featureStrand {
+  margin-top: 3.5rem;
 }
 .featureIcon {
-  display: inline-grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
-  border: 1px solid var(--wire-bright);
+  display: block;
   color: var(--ink-3);
   transition:
     color 0.5s var(--ease-out),
@@ -342,8 +337,7 @@
   transition-delay: 0.3s;
 }
 .featureStrand[data-lit] .featureIcon {
-  color: var(--warm);
-  border-color: var(--amber);
+  color: var(--amber);
 }
 
 /* ---------- Languages and how it works ---------- */
@@ -571,22 +565,7 @@
       rgb(7 10 34 / 94%) 100%
     );
   }
-  .tags li:nth-child(n) {
-    top: 5%;
-  }
-  .tags li:nth-child(1) {
-    left: 4%;
-  }
-  .tags li:nth-child(2) {
-    left: 25%;
-  }
-  .tags li:nth-child(3) {
-    left: 47%;
-  }
-  .tags li:nth-child(4) {
-    left: 70%;
-  }
-  .tags li:nth-child(5) {
+  .tags {
     display: none;
   }
   .demoGrid {
@@ -612,6 +591,9 @@
     border: 0;
     border-radius: 0;
     background: var(--wire-bright);
+  }
+  .featureStrand + .featureStrand {
+    margin-top: 0;
   }
   .featureTag:nth-child(n) .featureBulb {
     display: block;

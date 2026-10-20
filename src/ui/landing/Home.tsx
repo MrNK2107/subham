@@ -223,18 +223,20 @@ export function Home() {
         <Reveal className={styles.featuresHead}>
           <h2 id="features-title">{t("home.featuresTitle")}</h2>
         </Reveal>
-        <LitOnView as="ol" className={styles.featureStrand}>
-          {FEATURES.map((f) => (
-            <li key={f} className={styles.featureTag}>
-              <span className={styles.featureBulb} aria-hidden="true" />
-              <span className={styles.featureIcon}>
-                <Icon name={f} size={22} />
-              </span>
-              <h3>{t(`home.feature.${FEATURE_KEY[f]}.title` as MessageKey)}</h3>
-              <p>{t(`home.feature.${FEATURE_KEY[f]}.body` as MessageKey)}</p>
-            </li>
-          ))}
-        </LitOnView>
+        {[FEATURES.slice(0, 3), FEATURES.slice(3)].map((row, r) => (
+          <LitOnView as="ol" key={r} className={styles.featureStrand}>
+            {row.map((f) => (
+              <li key={f} className={styles.featureTag}>
+                <span className={styles.featureBulb} aria-hidden="true" />
+                <span className={styles.featureIcon}>
+                  <Icon name={f} size={22} />
+                </span>
+                <h3>{t(`home.feature.${FEATURE_KEY[f]}.title` as MessageKey)}</h3>
+                <p>{t(`home.feature.${FEATURE_KEY[f]}.body` as MessageKey)}</p>
+              </li>
+            ))}
+          </LitOnView>
+        ))}
       </section>
 
       <section className={styles.langs} aria-labelledby="langs-title">

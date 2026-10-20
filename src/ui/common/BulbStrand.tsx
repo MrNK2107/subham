@@ -23,7 +23,9 @@ interface Props {
  */
 export function BulbStrand({ value, max, label, valueText, bulbs = 12, over = false }: Props) {
   const count = Math.max(1, Math.min(bulbs, max || 1));
-  const lit = max > 0 ? Math.round((Math.min(value, max) / max) * count) : 0;
+  const share = max > 0 ? Math.min(value, max) / max : 0;
+  // Real progress always shows: any value above zero lights at least one bulb.
+  const lit = share > 0 ? Math.max(1, Math.round(share * count)) : 0;
   return (
     <div
       className={`${styles.strand} ${over ? styles.over : ""}`}

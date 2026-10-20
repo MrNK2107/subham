@@ -25,11 +25,29 @@ function glowTexture(): THREE.Texture {
   return texture;
 }
 
+/** A vertical fade from clear to the night colour, laid over the base of the rooftops. */
+function hazeTexture(): THREE.Texture {
+  const canvas = document.createElement("canvas");
+  canvas.width = 4;
+  canvas.height = 256;
+  const ctx = canvas.getContext("2d")!;
+  const g = ctx.createLinearGradient(0, 0, 0, 256);
+  g.addColorStop(0, "rgba(7,10,34,0)");
+  g.addColorStop(0.55, "rgba(7,10,34,0.55)");
+  g.addColorStop(1, "rgba(7,10,34,1)");
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 4, 256);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
 function Street({ still }: { still: boolean }) {
   const { size, camera } = useThree();
   const aspect = size.width / Math.max(size.height, 1);
   const strands = useMemo(() => layoutStrands(aspect), [aspect]);
   const glow = useMemo(() => glowTexture(), []);
+  const haze = useMemo(() => hazeTexture(), []);
   const pointer = useRef({ x: 0, y: 0 });
   const bokehRef = useRef<THREE.Points>(null);
 
@@ -79,7 +97,8 @@ function Street({ still }: { still: boolean }) {
       while (x < 16) {
         const w = 1.4 + rand() * 2.2;
         const h = 1.2 + rand() * (z === -7 ? 2.4 : 3.6);
-        roofs.push({ x: x + w / 2, w, h, z, shade });
+        const tone = new THREE.Color(shade).multiplyScalar(0.7 + rand() * 0.45);
+        roofs.push({ x: x + w / 2, w, h, z, shade: `#${tone.getHexString()}` });
         for (let wy = 0.4; wy < h - 0.3; wy += 0.55) {
           for (let wx = -w / 2 + 0.35; wx < w / 2 - 0.2; wx += 0.5) {
             if (rand() > 0.62) windows.push(x + w / 2 + wx, -2.2 + wy, z + 0.05);
@@ -174,6 +193,12 @@ function Street({ still }: { still: boolean }) {
         <mesh key={i} position={[r.x, -2.2 + r.h / 2, r.z]}>
           <planeGeometry args={[r.w, r.h]} />
           <meshBasicMaterial color={r.shade} />
+        </mesh>
+      ))}
+      {[-11.8, -6.8].map((z) => (
+        <mesh key={z} position={[0, -1.4, z]}>
+          <planeGeometry args={[44, 3.2]} />
+          <meshBasicMaterial map={haze} transparent depthWrite={false} />
         </mesh>
       ))}
       <points>
