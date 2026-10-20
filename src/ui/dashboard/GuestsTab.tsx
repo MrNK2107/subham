@@ -129,7 +129,12 @@ export function GuestsTab({ plan, actions }: { plan: Plan; actions: PlanActions 
       {plan.guests.length === 0 ? (
         <p>{t("guests.empty")}</p>
       ) : (
-        <div className={`card ${styles.tableWrap}`}>
+        <div
+          className={`card ${styles.tableWrap}`}
+          tabIndex={0}
+          role="region"
+          aria-label={t("tab.guests")}
+        >
           <table className={styles.table}>
             <thead>
               <tr>

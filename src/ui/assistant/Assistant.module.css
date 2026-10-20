@@ -41,6 +41,8 @@
 }
 .bot,
 .user {
+  /* In the scrolling column, bubbles must keep their height rather than overlap. */
+  flex-shrink: 0;
   padding: 0.65rem 0.85rem;
   border-radius: 14px;
   max-width: 92%;

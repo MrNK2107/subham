@@ -1,6 +1,8 @@
 interface ThrottleOptions {
   limit: number;
   windowMs: number;
+  /** Multiplies the limit; defaults to RATE_LIMIT_SCALE (used to give e2e runs headroom). */
+  scale?: number;
   now?: () => number;
 }
 
@@ -10,7 +12,13 @@ export type ThrottleResult = { ok: true } | { ok: false; retryAfter: number };
  * Fixed-window request limit per client. State is per server instance, which is enough to blunt
  * accidental loops and casual abuse; a shared store (Memorystore/Redis) would make it global.
  */
-export function createThrottle({ limit, windowMs, now = Date.now }: ThrottleOptions) {
+export function createThrottle({
+  limit: base,
+  windowMs,
+  scale = Math.max(1, Number(process.env.RATE_LIMIT_SCALE) || 1),
+  now = Date.now,
+}: ThrottleOptions) {
+  const limit = base * scale;
   const windows = new Map<string, { start: number; count: number }>();
 
   return {

@@ -350,3 +350,10 @@ details summary {
   padding-block: 0.4rem;
   border-radius: 999px;
 }
+
+.status-page {
+  padding-block: 4rem;
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}

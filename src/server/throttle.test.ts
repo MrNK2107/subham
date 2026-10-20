@@ -28,6 +28,18 @@ describe("createThrottle", () => {
   });
 });
 
+describe("createThrottle scale", () => {
+  it("multiplies the limit, e.g. for end-to-end test runs from one address", () => {
+    const throttle = createThrottle({ limit: 1, windowMs: 1_000, scale: 3 });
+    expect([throttle.hit("a").ok, throttle.hit("a").ok, throttle.hit("a").ok]).toEqual([
+      true,
+      true,
+      true,
+    ]);
+    expect(throttle.hit("a").ok).toBe(false);
+  });
+});
+
 describe("ipOf", () => {
   it("takes the first forwarded address", () => {
     const req = new Request("http://x", { headers: { "x-forwarded-for": "1.2.3.4, 10.0.0.1" } });

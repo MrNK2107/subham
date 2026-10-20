@@ -72,7 +72,12 @@ export function BudgetTab({ plan, actions }: { plan: Plan; actions: PlanActions 
           <h2 id={`grp-${g.id}`} lang={g.id === GENERAL ? undefined : lang}>
             {g.name}
           </h2>
-          <div className={styles.tableWrap}>
+          <div
+            className={styles.tableWrap}
+            tabIndex={0}
+            role="region"
+            aria-labelledby={`grp-${g.id}`}
+          >
             <table className={styles.table}>
               <thead>
                 <tr>
