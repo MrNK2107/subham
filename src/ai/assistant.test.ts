@@ -34,6 +34,16 @@ describe("createAssistant.blueprint", () => {
 });
 
 describe("createAssistant.extractBrief", () => {
+  it("asks the model to answer every field (null when unknown) so small models don't skip them", async () => {
+    const json = vi.fn(async () => ({ city: null, budget: 50000 }));
+    const ai = createAssistant(engine({ json }));
+    expect(await ai.extractBrief("…", TODAY)).toEqual({ budget: 50000 });
+    const schema = (json.mock.calls[0] as unknown as [{ schema: { required: string[] } }])[0]
+      .schema;
+    expect(schema.required).toEqual(expect.arrayContaining(["city", "date", "guests", "budget"]));
+    expect(JSON.stringify(schema)).toContain("YYYY-MM-DD");
+  });
+
   it("keeps each field that validates and drops the rest", async () => {
     const ai = createAssistant(
       engine({

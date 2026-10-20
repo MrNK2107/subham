@@ -1,0 +1,94 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "Subham" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - navigation "Home" [ref=e12]:
+        - link "My plans" [ref=e13] [cursor=pointer]:
+          - /url: /plans
+        - link "New plan" [ref=e14] [cursor=pointer]:
+          - /url: /plan/new
+      - generic [ref=e16]:
+        - generic [ref=e17]: Language
+        - combobox "Language" [ref=e21]:
+          - option "English" [selected]
+          - option "हिन्दी"
+          - option "தமிழ்"
+          - option "తెలుగు"
+  - main [ref=e22]:
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - paragraph [ref=e26]: Weddings · Birthdays · Community events · Festivals
+        - heading "Plan every function of your celebration, without the chaos" [level=1] [ref=e27]
+        - paragraph [ref=e28]: Tell Subham about your event in a sentence. It drafts the budget, timeline, vendor checklist and ideas for each function, and an assistant helps you adjust everything.
+        - generic [ref=e29]:
+          - generic [ref=e30]: Describe your celebration
+          - textbox "Describe your celebration" [ref=e31]:
+            - /placeholder: e.g. My sister's wedding in Madurai next February, about 300 guests, budget 15 lakh, pure veg
+            - text: En thambi Karthik kalyanam Coimbatore la, February 2027, 400 per varuvanga, budget 12 lakh, pure veg
+          - paragraph [ref=e32]: Write in English, हिन्दी, தமிழ், తెలుగు or any Indian language.
+          - generic [ref=e33]:
+            - button "Reading your description…" [disabled] [ref=e99]
+            - generic [ref=e35]: or
+            - link "Start step by step" [ref=e36] [cursor=pointer]:
+              - /url: /plan/new
+          - status [ref=e37]: Reading your description…
+      - generic [ref=e39]:
+        - paragraph [ref=e40]: Priya & Arjun · Madurai
+        - list [ref=e41]:
+          - listitem [ref=e42]: Haldi
+          - listitem [ref=e43]: Mehendi
+          - listitem [ref=e44]: Sangeet
+          - listitem [ref=e45]: Muhurtham
+          - listitem [ref=e46]: Reception
+        - list [ref=e52]:
+          - listitem [ref=e53]: ✓ Book mandapam
+          - listitem [ref=e54]: ✓ Caterer tasting
+          - listitem [ref=e55]: ○ Nadaswaram
+    - region [ref=e56]:
+      - heading "Everything a celebration needs, in one plan" [level=2] [ref=e57]
+      - list [ref=e58]:
+        - listitem [ref=e59]:
+          - generic [aria-hidden] [ref=e60]: ₹
+          - heading "Budget that adds up" [level=3] [ref=e61]
+          - paragraph [ref=e62]: Split by function and category to the exact rupee, with cost checks for your city.
+        - listitem [ref=e63]:
+          - generic [aria-hidden] [ref=e64]: ◷
+          - heading "Timeline and run sheet" [level=3] [ref=e65]
+          - paragraph [ref=e66]: To-dos counted back from your date, a schedule for each function, and Google Calendar export.
+        - listitem [ref=e67]:
+          - generic [aria-hidden] [ref=e68]: ✓
+          - heading "Vendor checklist" [level=3] [ref=e69]
+          - paragraph [ref=e70]: Track every vendor from first call to booked, with questions to ask before paying an advance.
+        - listitem [ref=e71]:
+          - generic [aria-hidden] [ref=e72]: ✦
+          - heading "Ideas that fit you" [level=3] [ref=e73]
+          - paragraph [ref=e74]: Themes, decor, food and gifts tuned to your region, city, food preference and budget.
+        - listitem [ref=e75]:
+          - generic [aria-hidden] [ref=e76]: ☺
+          - heading "Guests and RSVPs" [level=3] [ref=e77]
+          - paragraph [ref=e78]: Keep the guest list by side and diet, and see how many plates to plan for.
+        - listitem [ref=e79]:
+          - generic [aria-hidden] [ref=e80]: ❝
+          - heading "An assistant that asks first" [level=3] [ref=e81]
+          - paragraph [ref=e82]: Ask in any language. It proposes changes in plain words and only applies what you approve.
+    - region [ref=e83]:
+      - heading "How it works" [level=2] [ref=e84]
+      - list [ref=e85]:
+        - listitem [ref=e86]:
+          - generic [aria-hidden] [ref=e87]: "1"
+          - heading "Describe" [level=3] [ref=e88]
+          - paragraph [ref=e89]: "One sentence or a short form: type, date, city, guests, budget."
+        - listitem [ref=e90]:
+          - generic [aria-hidden] [ref=e91]: "2"
+          - heading "Review" [level=3] [ref=e92]
+          - paragraph [ref=e93]: Get a full draft for every function in your language.
+        - listitem [ref=e94]:
+          - generic [aria-hidden] [ref=e95]: "3"
+          - heading "Refine together" [level=3] [ref=e96]
+          - paragraph [ref=e97]: Log payments, tick off tasks and let the assistant rebalance.
+      - paragraph [ref=e98]: Your plans stay on this device unless you sign in to sync them.
+  - button "Open Next.js Dev Tools" [ref=e105] [cursor=pointer]
+  - alert [ref=e109]

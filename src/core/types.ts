@@ -61,7 +61,8 @@ export const BlueprintFunctionSchema = z.object({
 });
 export const BlueprintBudgetSchema = z.object({
   fn: text(40),
-  category: text(40),
+  // Small models sometimes put the percentage in the name; a category must contain letters.
+  category: text(40).refine((s) => /\p{L}/u.test(s), "Category needs a name"),
   percent: z.number().positive().max(100),
 });
 export const BlueprintTaskSchema = z.object({

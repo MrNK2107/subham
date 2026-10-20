@@ -1,0 +1,326 @@
+[     325ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:719
+[     399ms] [LOG] [HMR] connected @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:719
+[   34126ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:719
+[   34242ms] [LOG] [Fast Refresh] done in 230ms @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:719
+[   79857ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:719
+[   80236ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "details summary" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:995
+[   80236ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "progress" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:995
+[   80450ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:719
+[   80886ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "details summary" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:995
+[   80887ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "progress" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:995
+[   80993ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "details summary" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:995
+[   80993ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "progress" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:995
+[   81100ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:719
+[   81210ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:719
+[   81266ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "details summary" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:995
+[   81266ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "progress" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:995
+[   81267ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "details summary" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:995
+[   81267ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "progress" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:995
+[   81439ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "details summary" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:995
+[   81439ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "progress" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:995
+[   81442ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3005/plan/b95cd420-cdea-4738-9626-70a6f40e610b?_rsc=hFah4kj7c37raf_Z:0
+[   81491ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3005/plan/b95cd420-cdea-4738-9626-70a6f40e610b:0
+[   81561ms] [ERROR] Refused to execute script from 'http://localhost:3005/_next/static/development/_clientMiddlewareManifest.js' because its MIME type ('application/json') is not executable, and strict MIME type checking is enabled. @ http://localhost:3005/plan/b95cd420-cdea-4738-9626-70a6f40e610b:0
+[   81605ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3005/_next/static/chunks/node_modules_react-dom_cjs_react-dom-client_development_1nq9a-7w2rk6e.js:16702
+[   81676ms] Error: ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "details summary" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+
+    at Object.getCompilationErrors (file://C:\Users\nanda\Desktop\projects\prompt_wars\ch5\node_modules\next\dist\server\dev\hot-reloader-turbopack.js:1518:37)
+    at DevBundlerService.getCompilationError (file://C:\Users\nanda\Desktop\projects\prompt_wars\ch5\node_modules\next\dist\server\lib\dev-bundler-service.js:63:55)
+    at DevServer.getCompilationError (file://C:\Users\nanda\Desktop\projects\prompt_wars\ch5\node_modules\next\dist\server\dev\next-dev-server.js:692:42)
+    at DevServer.findPageComponents (file://C:\Users\nanda\Desktop\projects\prompt_wars\ch5\node_modules\next\dist\server\dev\next-dev-server.js:662:43)
+    at async DevServer.renderErrorToResponseImpl (file://C:\Users\nanda\Desktop\projects\prompt_wars\ch5\node_modules\next\dist\server\base-server.js:2026:26)
+[   81676ms] [LOG] [HMR] connected @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_1gdrd03q-xsfc._.js:703
+[   81681ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "details summary" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_1gdrd03q-xsfc._.js:1760
+[   81681ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "progress" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_1gdrd03q-xsfc._.js:1760
+[   81798ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "details summary" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_1gdrd03q-xsfc._.js:1760
+[   81798ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "progress" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_1gdrd03q-xsfc._.js:1760
+[  116736ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "details summary" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_1gdrd03q-xsfc._.js:1760
+[  116737ms] [ERROR] ./src/ui/dashboard/Dashboard.module.css
+Error: Transforming CSS failed
+Selector "progress" is not pure. Pure selectors must contain at least one local class or id.
+
+Import traces:
+  Client Component Browser:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component Browser]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/ui/dashboard/Dashboard.module.css [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Client Component SSR]
+    ./src/ui/dashboard/Dashboard.tsx [Server Component]
+    ./src/app/plan/[id]/page.tsx [Server Component] @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_1gdrd03q-xsfc._.js:1760
+[  127798ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:719
+[  127826ms] [LOG] [HMR] connected @ http://localhost:3005/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js:719

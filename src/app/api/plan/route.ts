@@ -1,5 +1,5 @@
 import { AiUnavailable, pickProvider } from "@/ai/provider";
-import { assemblePlan } from "@/core/assemble";
+import { assemblePlan, withFallbacks } from "@/core/assemble";
 import { trustedToday } from "@/core/schedule";
 import { templateBlueprint } from "@/core/templates";
 import type { Blueprint } from "@/core/types";
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       notice = "AI drafting isn't set up here, so this is a starter plan.";
     } else {
       try {
-        draft = { bp: await ai.blueprint(brief, today), source: ai.name };
+        draft = { bp: withFallbacks(await ai.blueprint(brief, today), brief), source: ai.name };
         drafts.set(key, draft);
       } catch (error) {
         if (!(error instanceof AiUnavailable)) throw error;

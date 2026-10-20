@@ -1,0 +1,38 @@
+- generic:
+  - generic [active]:
+    - generic [ref=f2e3]:
+      - generic [ref=f2e4]:
+        - navigation [ref=f2e6]:
+          - button [disabled] [ref=f2e7]:
+            - img "previous" [ref=f2e8]
+          - generic [ref=f2e10]:
+            - generic [ref=f2e11]: 1/
+            - generic [ref=f2e12]: "1"
+          - button [disabled] [ref=f2e13]:
+            - img "next" [ref=f2e14]
+        - generic [ref=f2e17]:
+          - generic "Latest available version is detected (16.4.2)." [ref=f2e20]: Next.js 16.4.2
+          - generic [ref=f2e21]: Turbopack
+      - dialog "Build Error" [ref=f2e23]:
+        - generic [ref=f2e26]:
+          - generic [ref=f2e28]:
+            - generic [ref=f2e29]:
+              - generic [ref=f2e30]: Build Error
+              - generic [ref=f2e32]:
+                - button "Copy Error Info" [ref=f2e33] [cursor=pointer]
+                - button "No related documentation found" [disabled] [ref=f2e36]
+                - button "Attach Node.js inspector" [ref=f2e39] [cursor=pointer]
+            - generic [ref=f2e48]: Transforming CSS failed
+          - generic [ref=f2e51]:
+            - generic [ref=f2e53]:
+              - generic [ref=f2e57]: ./src/ui/dashboard/Dashboard.module.css
+              - button "Open in editor" [ref=f2e58] [cursor=pointer]
+            - generic [ref=f2e62]: "Error: Transforming CSS failed Selector \"details summary\" is not pure. Pure selectors must contain at least one local class or id. Import traces: Client Component Browser: ./src/ui/dashboard/Dashboard.module.css [Client Component Browser] ./src/ui/dashboard/Dashboard.tsx [Client Component Browser] ./src/ui/dashboard/Dashboard.tsx [Server Component] ./src/app/plan/[id]/page.tsx [Server Component] Client Component SSR: ./src/ui/dashboard/Dashboard.module.css [Client Component SSR] ./src/ui/dashboard/Dashboard.tsx [Client Component SSR] ./src/ui/dashboard/Dashboard.tsx [Server Component] ./src/app/plan/[id]/page.tsx [Server Component]"
+    - generic [ref=f2e69] [cursor=pointer]:
+      - button "Open Next.js Dev Tools" [ref=f2e70]
+      - button "Open issues overlay" [ref=f2e75]:
+        - generic [ref=f2e76]:
+          - generic [aria-hidden] [ref=f2e77]: "0"
+          - generic [ref=f2e78]: "1"
+        - generic [ref=f2e79]: Issue
+  - alert [ref=f2e80]

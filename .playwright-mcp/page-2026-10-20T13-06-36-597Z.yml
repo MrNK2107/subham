@@ -1,0 +1,199 @@
+- generic [ref=f4e1]:
+  - link "Skip to main content" [ref=f4e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f4e4]:
+    - generic [ref=f4e5]:
+      - link "Subham" [ref=f4e6] [cursor=pointer]:
+        - /url: /
+      - navigation "Home" [ref=f4e12]:
+        - link "My plans" [ref=f4e13] [cursor=pointer]:
+          - /url: /plans
+        - link "New plan" [ref=f4e14] [cursor=pointer]:
+          - /url: /plan/new
+      - generic [ref=f4e16]:
+        - generic [ref=f4e17]: Language
+        - combobox "Language" [ref=f4e21]:
+          - option "English" [selected]
+          - option "हिन्दी"
+          - option "தமிழ்"
+          - option "తెలుగు"
+  - main [ref=f4e22]:
+    - generic [ref=f4e33]:
+      - generic [ref=f4e34]:
+        - generic [ref=f4e35]:
+          - paragraph [ref=f4e36]: 117 days to go
+          - heading "Karthik's wedding" [level=1] [ref=f4e37]
+          - paragraph [ref=f4e38]: Sunday, 14 February 2027 · 400 guests · Coimbatore
+          - generic [ref=f4e39]:
+            - link "Share on WhatsApp" [ref=f4e40] [cursor=pointer]:
+              - /url: https://wa.me/?text=*Karthik's%20wedding*%20%C2%B7%202027-02-14%20%C2%B7%20Coimbatore%0ABudget%3A%20%E2%82%B912%2C00%2C000%20%C2%B7%20Spent%3A%20%E2%82%B90%0A%0ANext%20up%3A%0A%E2%98%90%20%E0%AE%A4%E0%AE%BF%E0%AE%B0%E0%AF%81%E0%AE%AE%E0%AE%A3%20%E0%AE%AE%E0%AE%A3%E0%AF%8D%E0%AE%9F%E0%AE%AA%E0%AE%AE%E0%AF%8D%20%E0%AE%AE%E0%AF%81%E0%AE%A9%E0%AF%8D%E0%AE%AA%E0%AE%A4%E0%AE%BF%E0%AE%B5%E0%AF%81%20(Wedding%20Venue%20Booking)%20(2026-10-20)%0A%E2%98%90%20%E0%AE%95%E0%AF%87%E0%AE%9F%E0%AF%8D%E0%AE%9F%E0%AE%B0%E0%AE%BF%E0%AE%99%E0%AF%8D%20%E0%AE%92%E0%AE%AA%E0%AF%8D%E0%AE%AA%E0%AE%A8%E0%AF%8D%E0%AE%A4%E0%AE%AE%E0%AF%8D%20%E0%AE%87%E0%AE%B1%E0%AF%81%E0%AE%A4%E0%AE%BF%20%E0%AE%9A%E0%AF%86%E0%AE%AF%E0%AF%8D%E0%AE%A4%E0%AE%B2%E0%AF%8D%20(Finalizing%20Catering%20Contract)%20(2026-10-20)%0A%E2%98%90%20%E0%AE%9A%E0%AE%99%E0%AF%8D%E0%AE%95%E0%AF%80%E0%AE%9F%E0%AF%8D%20%E0%AE%85%E0%AE%B2%E0%AE%99%E0%AF%8D%E0%AE%95%E0%AE%BE%E0%AE%B0%20%E0%AE%B5%E0%AE%9F%E0%AE%BF%E0%AE%B5%E0%AE%AE%E0%AF%88%E0%AE%AA%E0%AF%8D%E0%AE%AA%E0%AE%BE%E0%AE%B3%E0%AE%B0%E0%AF%8D%20%E0%AE%85%E0%AE%A3%E0%AF%81%E0%AE%95%E0%AF%81%E0%AE%AE%E0%AF%81%E0%AE%B1%E0%AF%88%20(Sangeet%20Decor%20Designer%20Consultation)%20(2026-10-20)%0A%E2%98%90%20%E0%AE%A4%E0%AE%BF%E0%AE%B0%E0%AF%81%E0%AE%AE%E0%AE%A3%20%E0%AE%86%E0%AE%9F%E0%AF%88%20%E0%AE%B5%E0%AE%BE%E0%AE%9F%E0%AE%95%E0%AF%88%2F%E0%AE%95%E0%AF%8A%E0%AE%B3%E0%AF%8D%E0%AE%AE%E0%AF%81%E0%AE%A4%E0%AE%B2%E0%AF%8D%20(Wedding%20Attire%20Rental%2FPurchase)%20(2026-10-20)%0A%E2%98%90%20%E0%AE%A8%E0%AE%BF%E0%AE%95%E0%AE%B4%E0%AF%8D%E0%AE%9A%E0%AF%8D%E0%AE%9A%E0%AE%BF%20%E0%AE%85%E0%AE%B4%E0%AF%88%E0%AE%AA%E0%AF%8D%E0%AE%AA%E0%AE%BF%E0%AE%A4%E0%AE%B4%E0%AF%8D%20%E0%AE%B5%E0%AE%9F%E0%AE%BF%E0%AE%B5%E0%AE%AE%E0%AF%88%E0%AE%AA%E0%AF%8D%E0%AE%AA%E0%AF%81%20%E0%AE%AE%E0%AE%B1%E0%AF%8D%E0%AE%B1%E0%AF%81%E0%AE%AE%E0%AF%8D%20%E0%AE%85%E0%AE%9A%E0%AF%8D%E0%AE%9A%E0%AF%81%E0%AE%AA%E0%AF%8D%20%E0%AE%AA%E0%AE%A3%E0%AE%BF%20(Invitation%20Design%20%26%20Printing)%20(2026-10-20)%0A%0AVendors%20still%20to%20book%3A%20%E0%AE%A4%E0%AE%BF%E0%AE%B0%E0%AF%81%E0%AE%AE%E0%AE%A3%20%E0%AE%AE%E0%AE%A3%E0%AF%8D%E0%AE%9F%E0%AE%AA%E0%AE%AE%E0%AF%8D%20(Venue)%2C%20%E0%AE%95%E0%AF%87%E0%AE%9F%E0%AF%8D%E0%AE%9F%E0%AE%B0%E0%AE%BF%E0%AE%99%E0%AF%8D%20%E0%AE%9A%E0%AE%B0%E0%AF%8D%E0%AE%B5%E0%AF%80%E0%AE%B8%E0%AF%8D%20(Catering%20Service)%2C%20%E0%AE%AE%E0%AF%87%E0%AE%95%E0%AF%8D%E0%AE%95%E0%AE%AA%E0%AF%8D%20%26%20%E0%AE%B9%E0%AF%87%E0%AE%B0%E0%AF%8D%20%E0%AE%B8%E0%AF%8D%E0%AE%AA%E0%AE%BE%20(MUA)%2C%20%E0%AE%92%E0%AE%B3%E0%AE%BF%20%E0%AE%85%E0%AE%AE%E0%AF%88%E0%AE%AA%E0%AF%8D%E0%AE%AA%E0%AF%81%20%26%20%E0%AE%92%E0%AE%B2%E0%AE%BF%20(Lighting%20%26%20Sound)%2C%20%E0%AE%AE%E0%AF%86%E0%AE%B9%E0%AE%A8%E0%AF%8D%E0%AE%A4%E0%AE%BF%20%E0%AE%95%E0%AE%B2%E0%AF%88%E0%AE%9E%E0%AE%B0%E0%AF%8D%20(Mehendi%20Artist)%2C%20%E0%AE%AA%E0%AF%81%E0%AE%95%E0%AF%88%E0%AE%AA%E0%AF%8D%E0%AE%AA%E0%AE%9F%20%E0%AE%AE%E0%AE%B1%E0%AF%8D%E0%AE%B1%E0%AF%81%E0%AE%AE%E0%AF%8D%20%E0%AE%B5%E0%AF%80%E0%AE%9F%E0%AE%BF%E0%AE%AF%E0%AF%8B%E0%AE%B5%E0%AF%8A%E0%AE%B0%E0%AF%8D%E0%AE%95%E0%AF%8D%20(Photobo%2FV
+            - button "Download calendar" [ref=f4e41] [cursor=pointer]
+            - button "Print summary" [ref=f4e42] [cursor=pointer]
+            - button "Delete plan" [ref=f4e43] [cursor=pointer]
+        - tablist "Karthik's wedding" [ref=f4e44]:
+          - tab "Overview" [ref=f4e45] [cursor=pointer]
+          - tab "Budget" [active] [selected] [ref=f4e46] [cursor=pointer]
+          - tab "Timeline" [ref=f4e47] [cursor=pointer]
+          - tab "Vendors" [ref=f4e48] [cursor=pointer]
+          - tab "Guests" [ref=f4e49] [cursor=pointer]
+          - tab "Ideas" [ref=f4e50] [cursor=pointer]
+        - tabpanel "Budget" [ref=f4e150]:
+          - generic [ref=f4e151]:
+            - generic [ref=f4e152]:
+              - generic [ref=f4e153]:
+                - term [ref=f4e154]: Total budget
+                - definition [ref=f4e155]: ₹12,00,000
+              - generic [ref=f4e156]:
+                - term [ref=f4e157]: Spent
+                - definition [ref=f4e158]: ₹0
+              - generic [ref=f4e159]:
+                - term [ref=f4e160]: Left
+                - definition [ref=f4e161]: ₹12,00,000
+            - region [ref=f4e162]:
+              - heading "Whole event" [level=2] [ref=f4e163]
+              - table [ref=f4e165]:
+                - rowgroup [ref=f4e166]:
+                  - row [ref=f4e167]:
+                    - columnheader "Budget line" [ref=f4e168]
+                    - columnheader "Planned" [ref=f4e169]
+                    - columnheader "Spent" [ref=f4e170]
+                    - columnheader "Left" [ref=f4e171]
+                - rowgroup [ref=f4e172]:
+                  - row [ref=f4e173]:
+                    - rowheader "20%" [ref=f4e174]:
+                      - text: 20%
+                      - progressbar [aria-hidden] [ref=f4e175]
+                    - cell "₹2,28,571" [ref=f4e176]
+                    - cell "₹0" [ref=f4e177]
+                    - cell "₹2,28,571" [ref=f4e178]
+            - region [ref=f4e179]:
+              - heading "Haldi" [level=2] [ref=f4e180]
+              - table [ref=f4e182]:
+                - rowgroup [ref=f4e183]:
+                  - row [ref=f4e184]:
+                    - columnheader "Budget line" [ref=f4e185]
+                    - columnheader "Planned" [ref=f4e186]
+                    - columnheader "Spent" [ref=f4e187]
+                    - columnheader "Left" [ref=f4e188]
+                - rowgroup [ref=f4e189]:
+                  - row [ref=f4e190]:
+                    - rowheader "5%" [ref=f4e191]:
+                      - text: 5%
+                      - progressbar [aria-hidden] [ref=f4e192]
+                    - cell "₹57,143" [ref=f4e193]
+                    - cell "₹0" [ref=f4e194]
+                    - cell "₹57,143" [ref=f4e195]
+            - region [ref=f4e196]:
+              - heading "Mehendi" [level=2] [ref=f4e197]
+              - table [ref=f4e199]:
+                - rowgroup [ref=f4e200]:
+                  - row [ref=f4e201]:
+                    - columnheader "Budget line" [ref=f4e202]
+                    - columnheader "Planned" [ref=f4e203]
+                    - columnheader "Spent" [ref=f4e204]
+                    - columnheader "Left" [ref=f4e205]
+                - rowgroup [ref=f4e206]:
+                  - row [ref=f4e207]:
+                    - rowheader "15%" [ref=f4e208]:
+                      - text: 15%
+                      - progressbar [aria-hidden] [ref=f4e209]
+                    - cell "₹1,71,429" [ref=f4e210]
+                    - cell "₹0" [ref=f4e211]
+                    - cell "₹1,71,429" [ref=f4e212]
+            - region [ref=f4e213]:
+              - heading "Sangeet" [level=2] [ref=f4e214]
+              - table [ref=f4e216]:
+                - rowgroup [ref=f4e217]:
+                  - row [ref=f4e218]:
+                    - columnheader "Budget line" [ref=f4e219]
+                    - columnheader "Planned" [ref=f4e220]
+                    - columnheader "Spent" [ref=f4e221]
+                    - columnheader "Left" [ref=f4e222]
+                - rowgroup [ref=f4e223]:
+                  - row [ref=f4e224]:
+                    - rowheader "25%" [ref=f4e225]:
+                      - text: 25%
+                      - progressbar [aria-hidden] [ref=f4e226]
+                    - cell "₹2,85,714" [ref=f4e227]
+                    - cell "₹0" [ref=f4e228]
+                    - cell "₹2,85,714" [ref=f4e229]
+            - region [ref=f4e230]:
+              - heading "Wedding Ceremony" [level=2] [ref=f4e231]
+              - table [ref=f4e233]:
+                - rowgroup [ref=f4e234]:
+                  - row [ref=f4e235]:
+                    - columnheader "Budget line" [ref=f4e236]
+                    - columnheader "Planned" [ref=f4e237]
+                    - columnheader "Spent" [ref=f4e238]
+                    - columnheader "Left" [ref=f4e239]
+                - rowgroup [ref=f4e240]:
+                  - row [ref=f4e241]:
+                    - rowheader "30%" [ref=f4e242]:
+                      - text: 30%
+                      - progressbar [aria-hidden] [ref=f4e243]
+                    - cell "₹3,42,857" [ref=f4e244]
+                    - cell "₹0" [ref=f4e245]
+                    - cell "₹3,42,857" [ref=f4e246]
+            - region [ref=f4e247]:
+              - heading "Reception" [level=2] [ref=f4e248]
+              - table [ref=f4e250]:
+                - rowgroup [ref=f4e251]:
+                  - row [ref=f4e252]:
+                    - columnheader "Budget line" [ref=f4e253]
+                    - columnheader "Planned" [ref=f4e254]
+                    - columnheader "Spent" [ref=f4e255]
+                    - columnheader "Left" [ref=f4e256]
+                - rowgroup [ref=f4e257]:
+                  - row [ref=f4e258]:
+                    - rowheader "10%" [ref=f4e259]:
+                      - text: 10%
+                      - progressbar [aria-hidden] [ref=f4e260]
+                    - cell "₹1,14,286" [ref=f4e261]
+                    - cell "₹0" [ref=f4e262]
+                    - cell "₹1,14,286" [ref=f4e263]
+            - generic [ref=f4e264]:
+              - heading "Log a payment" [level=2] [ref=f4e265]
+              - generic [ref=f4e266]:
+                - generic [ref=f4e267]: Budget line
+                - combobox "Budget line" [ref=f4e268]:
+                  - option "20%" [selected]
+                  - option "5%"
+                  - option "15%"
+                  - option "25%"
+                  - option "30%"
+                  - option "10%"
+              - generic [ref=f4e269]:
+                - generic [ref=f4e270]: Amount paid
+                - textbox "Amount paid" [ref=f4e271]
+              - button "Add payment" [ref=f4e272] [cursor=pointer]
+      - complementary [ref=f4e114]:
+        - generic [ref=f4e115]:
+          - heading "Planning assistant" [level=2] [ref=f4e116]
+          - button "Close assistant" [ref=f4e117] [cursor=pointer]: ×
+        - list [ref=f4e118]:
+          - listitem [ref=f4e119]:
+            - generic [ref=f4e120]: "Subham:"
+            - text: Hi! I can rebalance your budget, add tasks, track vendors or suggest ideas. What do you need?
+          - listitem [ref=f4e136]:
+            - generic [ref=f4e137]: "You:"
+            - paragraph [ref=f4e138]: Haldi decor budget la irundhu 20000 rupees Reception food ku maathunga please
+          - listitem [ref=f4e139]:
+            - generic [ref=f4e140]: "Subham:"
+            - paragraph [ref=f4e141]: Sure thing! I can move the money for you. You want to take 20000 rupees from the Haldi budget (b2) and add it to the Reception food budget (b6).
+            - group "Proposed changes" [ref=f4e142]:
+              - paragraph [ref=f4e143]: Proposed changes
+              - list [ref=f4e144]:
+                - listitem [ref=f4e145]:
+                  - generic [ref=f4e146]: Move ₹20,000 from 5% to 10%
+                  - generic [ref=f4e147]:
+                    - button "Apply" [ref=f4e148] [cursor=pointer]
+                    - button "Dismiss" [ref=f4e149] [cursor=pointer]
+        - generic [ref=f4e125]:
+          - generic [ref=f4e126]: Message to the assistant
+          - textbox "Message to the assistant" [ref=f4e127]:
+            - /placeholder: Ask anything, in any language…
+          - generic [ref=f4e128]:
+            - button "Speak your message" [ref=f4e129] [cursor=pointer]
+            - button "Send" [disabled] [ref=f4e134]
+  - button "Open Next.js Dev Tools" [ref=f4e29] [cursor=pointer]
+  - alert [ref=f4e135]

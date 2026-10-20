@@ -1,0 +1,89 @@
+- generic [active] [ref=f1e1]:
+  - link "Skip to main content" [ref=f1e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f1e4]:
+    - generic [ref=f1e5]:
+      - link "Subham" [ref=f1e6] [cursor=pointer]:
+        - /url: /
+      - navigation "Home" [ref=f1e12]:
+        - link "My plans" [ref=f1e13] [cursor=pointer]:
+          - /url: /plans
+        - link "New plan" [ref=f1e14] [cursor=pointer]:
+          - /url: /plan/new
+      - generic [ref=f1e16]:
+        - generic [ref=f1e17]: Language
+        - combobox "Language" [ref=f1e21]:
+          - option "English" [selected]
+          - option "हिन्दी"
+          - option "தமிழ்"
+          - option "తెలుగు"
+  - main [ref=f1e22]:
+    - generic [ref=f1e108]:
+      - heading "Plan a new celebration" [level=1] [ref=f1e109]
+      - paragraph [ref=f1e110]: Step 3 of 3
+      - paragraph [ref=f1e113]: We filled in what we understood. Check the details and continue.
+      - generic [ref=f1e114]:
+        - generic [ref=f1e115]:
+          - heading "The details" [level=2] [ref=f1e116]
+          - generic [ref=f1e117]:
+            - generic [ref=f1e118]:
+              - generic [ref=f1e119]: Name of the celebration
+              - textbox "Name of the celebration" [ref=f1e120]:
+                - /placeholder: e.g. Ananya's 1st birthday
+                - text: Karthik's wedding
+            - generic [ref=f1e121]:
+              - generic [ref=f1e122]: City or town
+              - textbox "City or town" [ref=f1e123]:
+                - /placeholder: e.g. Coimbatore
+                - text: Coimbatore
+            - generic [ref=f1e124]:
+              - generic [ref=f1e125]: City type
+              - combobox "City type" [ref=f1e126]:
+                - option "Metro city"
+                - option "Tier-2 city" [selected]
+                - option "Town / tier-3"
+              - paragraph [ref=f1e127]: Guessed from the city. It shapes the cost estimates.
+            - generic [ref=f1e128]:
+              - generic [ref=f1e129]: Main date
+              - textbox "Main date" [ref=f1e130]: 2027-02-14
+            - generic [ref=f1e131]:
+              - generic [ref=f1e132]: Number of guests
+              - textbox "Number of guests" [ref=f1e133]: "400"
+            - generic [ref=f1e134]:
+              - generic [ref=f1e135]: Total budget
+              - textbox "Total budget" [ref=f1e136]: "1200000"
+              - paragraph [ref=f1e137]: That's ₹12,00,000
+            - group "Food" [ref=f1e138]:
+              - generic [ref=f1e140]:
+                - generic [ref=f1e141] [cursor=pointer]:
+                  - radio "Pure veg" [checked] [ref=f1e142]
+                  - text: Pure veg
+                - generic [ref=f1e143] [cursor=pointer]:
+                  - radio "Jain" [ref=f1e144]
+                  - text: Jain
+                - generic [ref=f1e145] [cursor=pointer]:
+                  - radio "Veg & non-veg" [ref=f1e146]
+                  - text: Veg & non-veg
+            - generic [ref=f1e147]:
+              - generic [ref=f1e148]: Plan language
+              - combobox "Plan language" [ref=f1e149]:
+                - option "English"
+                - option "हिन्दी (Hindi)"
+                - option "தமிழ் (Tamil)" [selected]
+                - option "తెలుగు (Telugu)"
+                - option "ಕನ್ನಡ (Kannada)"
+                - option "മലയാളം (Malayalam)"
+                - option "বাংলা (Bengali)"
+                - option "मराठी (Marathi)"
+                - option "ગુજરાતી (Gujarati)"
+                - option "ਪੰਜਾਬੀ (Punjabi)"
+              - paragraph [ref=f1e150]: The AI writes your plan in this language.
+            - generic [ref=f1e151]:
+              - generic [ref=f1e152]: Vibe or theme (optional)
+              - textbox "Vibe or theme (optional)" [ref=f1e153]:
+                - /placeholder: e.g. Traditional Chettinad, pastel garden, superheroes
+        - generic [ref=f1e154]:
+          - button "Back" [ref=f1e155] [cursor=pointer]
+          - button "Create my plan" [ref=f1e156] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=f1e104] [cursor=pointer]
+  - alert [ref=f1e157]: Plan a new celebration

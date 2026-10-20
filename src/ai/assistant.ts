@@ -35,7 +35,24 @@ const IdeasSchema = z.object({ ideas: z.array(IdeaDraftSchema) });
 
 // Schemas are built once; they never change at runtime.
 const BLUEPRINT_SCHEMA = forModel(BlueprintSchema);
-const EXTRACT_SCHEMA = forModel(EXTRACTABLE.partial());
+// Every field is required but nullable: small models skip optional fields, so ask for each one.
+const HINTS: Partial<Record<keyof typeof EXTRACTABLE.shape, string>> = {
+  date: "Main date as YYYY-MM-DD, or null",
+  city: "City or town name, or null",
+  guests: "Number of guests, or null",
+  budget: "Total budget in whole rupees, or null",
+  title: "Short warm name for the celebration",
+};
+const EXTRACT_SCHEMA = forModel(
+  z.object(
+    Object.fromEntries(
+      Object.entries(EXTRACTABLE.shape).map(([key, field]) => {
+        const hint = HINTS[key as keyof typeof HINTS];
+        return [key, hint ? field.nullable().describe(hint) : field.nullable()];
+      }),
+    ),
+  ),
+);
 const IDEAS_SCHEMA = forModel(IdeasSchema);
 const TOOLS = toolDeclarations();
 

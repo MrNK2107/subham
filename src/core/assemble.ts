@@ -2,6 +2,7 @@ import type { z } from "zod";
 import { allocate } from "./allocate";
 import { functionDefaults, normaliseName } from "./presets";
 import { addDays, dueDate } from "./schedule";
+import { templateBlueprint } from "./templates";
 import {
   BlueprintBudgetSchema,
   BlueprintFunctionSchema,
@@ -61,6 +62,23 @@ export function cleanBlueprint(raw: unknown): Blueprint | null {
     ideas: keepValid(src.ideas, IdeaDraftSchema, LIMITS.ideas),
   };
   return bp.budget.length ? bp : null;
+}
+
+/**
+ * Fills any section a model left too thin (common with small local models) from the curated
+ * template, so every plan has a usable budget, timeline, vendor list and ideas.
+ */
+export function withFallbacks(bp: Blueprint, brief: Brief): Blueprint {
+  const template = templateBlueprint(brief);
+  const fns = brief.functions.length;
+  return {
+    functions: bp.functions,
+    budget: bp.budget.length < Math.max(4, fns * 2) ? template.budget : bp.budget,
+    tasks: bp.tasks.length < 5 ? template.tasks : bp.tasks,
+    runSheet: bp.runSheet.length < fns ? template.runSheet : bp.runSheet,
+    vendors: bp.vendors.length < 3 ? template.vendors : bp.vendors,
+    ideas: bp.ideas.length < 3 ? template.ideas : bp.ideas,
+  };
 }
 
 interface AssembleContext {

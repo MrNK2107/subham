@@ -1,0 +1,22 @@
+- generic [active] [ref=f4e1]:
+  - link "Skip to main content" [ref=f4e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f4e4]:
+    - generic [ref=f4e5]:
+      - link "Subham" [ref=f4e6] [cursor=pointer]:
+        - /url: /
+      - navigation "Home" [ref=f4e12]:
+        - link "My plans" [ref=f4e13] [cursor=pointer]:
+          - /url: /plans
+        - link "New plan" [ref=f4e14] [cursor=pointer]:
+          - /url: /plan/new
+      - generic [ref=f4e16]:
+        - generic [ref=f4e17]: Language
+        - combobox "Language" [ref=f4e21]:
+          - option "English" [selected]
+          - option "हिन्दी"
+          - option "தமிழ்"
+          - option "తెలుగు"
+  - main [ref=f4e22]:
+    - paragraph [ref=f4e23]: Loading…
+  - button "Open Next.js Dev Tools" [ref=f4e29] [cursor=pointer]

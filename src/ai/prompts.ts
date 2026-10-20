@@ -24,7 +24,8 @@ Draft a practical first plan as JSON that matches the response schema:
 - vendors: 5-8 vendor categories, each with 2-3 sharp questions to ask before paying an advance (GST, cancellation, what is included).
 - ideas: 5-8 ideas across theme, decor, food, activity and gift that fit the region's customs, the city, the food preference, the vibe and the budget. Be specific; avoid generic advice.
 
-Keep function names exactly as given, even when writing in another language. ${UNTRUSTED}`;
+Example items (shape only): budget {"fn":"Reception","category":"Catering","percent":14}, task {"title":"Book the caterer","daysBefore":90,"fn":"Reception"}. A category is always a name such as Venue, Catering, Decor or Photography, never a number. Give each function 3-5 budget categories.
+Never mention internal ids to the person. Keep function names exactly as given, even when writing in another language. ${UNTRUSTED}`;
 
 export function blueprintPrompt(brief: Brief, today: string): string {
   return `Today is ${today}. Write every category, title, activity, question and description in ${languageName(brief)}.

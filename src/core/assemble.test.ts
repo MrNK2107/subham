@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { assemblePlan, cleanBlueprint } from "./assemble";
+import { assemblePlan, cleanBlueprint, withFallbacks } from "./assemble";
 import { templateBlueprint } from "./templates";
 import { PRESETS } from "./presets";
 import { birthdayBrief, TODAY, weddingBrief } from "@/test/fixtures";
@@ -94,5 +94,42 @@ describe("cleanBlueprint", () => {
     expect(cleanBlueprint({ budget: [] })).toBeNull();
     expect(cleanBlueprint("hello")).toBeNull();
     expect(cleanBlueprint(null)).toBeNull();
+  });
+});
+
+describe("cleanBlueprint categories", () => {
+  it("drops budget lines whose category is just a number or percentage", () => {
+    const bp = cleanBlueprint({
+      budget: [
+        { fn: "Haldi", category: "5%", percent: 5 },
+        { fn: "Haldi", category: "Decor", percent: 5 },
+      ],
+    });
+    expect(bp!.budget.map((b) => b.category)).toEqual(["Decor"]);
+  });
+});
+
+describe("withFallbacks", () => {
+  const template = templateBlueprint(weddingBrief);
+
+  it("fills thin sections from the template and keeps rich ones", () => {
+    const thin = {
+      functions: [],
+      budget: [{ fn: "Haldi", category: "Decor", percent: 100 }],
+      tasks: template.tasks.slice(0, 8),
+      runSheet: [],
+      vendors: [],
+      ideas: template.ideas.slice(0, 1),
+    };
+    const bp = withFallbacks(thin, weddingBrief);
+    expect(bp.budget).toEqual(template.budget);
+    expect(bp.tasks).toEqual(thin.tasks);
+    expect(bp.runSheet).toEqual(template.runSheet);
+    expect(bp.vendors).toEqual(template.vendors);
+    expect(bp.ideas).toEqual(template.ideas);
+  });
+
+  it("leaves a complete blueprint untouched", () => {
+    expect(withFallbacks(template, weddingBrief)).toEqual(template);
   });
 });

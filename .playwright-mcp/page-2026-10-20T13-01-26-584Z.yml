@@ -1,0 +1,87 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "Subham" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - navigation "Home" [ref=e12]:
+        - link "My plans" [ref=e13] [cursor=pointer]:
+          - /url: /plans
+        - link "New plan" [ref=e14] [cursor=pointer]:
+          - /url: /plan/new
+      - generic [ref=e16]:
+        - generic [ref=e17]: Language
+        - combobox "Language" [ref=e21]:
+          - option "English" [selected]
+          - option "हिन्दी"
+          - option "தமிழ்"
+          - option "తెలుగు"
+  - main [ref=e22]:
+    - generic [ref=e110]:
+      - heading "Plan a new celebration" [level=1] [ref=e111]
+      - paragraph [ref=e112]: Step 3 of 3
+      - paragraph [ref=e115]: We filled in what we understood. Check the details and continue.
+      - generic [ref=e116]:
+        - generic [ref=e117]:
+          - heading "The details" [level=2] [ref=e118]
+          - generic [ref=e119]:
+            - generic [ref=e120]:
+              - generic [ref=e121]: Name of the celebration
+              - textbox "Name of the celebration" [ref=e122]:
+                - /placeholder: e.g. Ananya's 1st birthday
+            - generic [ref=e123]:
+              - generic [ref=e124]: City or town
+              - textbox "City or town" [ref=e125]:
+                - /placeholder: e.g. Coimbatore
+            - generic [ref=e126]:
+              - generic [ref=e127]: City type
+              - combobox "City type" [ref=e128]:
+                - option "Metro city"
+                - option "Tier-2 city"
+                - option "Town / tier-3" [selected]
+              - paragraph [ref=e129]: Guessed from the city. It shapes the cost estimates.
+            - generic [ref=e130]:
+              - generic [ref=e131]: Main date
+              - textbox "Main date" [ref=e132]
+            - generic [ref=e133]:
+              - generic [ref=e134]: Number of guests
+              - textbox "Number of guests" [ref=e135]
+            - generic [ref=e136]:
+              - generic [ref=e137]: Total budget
+              - textbox "Total budget" [ref=e138]: "1200000"
+              - paragraph [ref=e139]: That's ₹12,00,000
+            - group "Food" [ref=e140]:
+              - generic [ref=e142]:
+                - generic [ref=e143] [cursor=pointer]:
+                  - radio "Pure veg" [checked] [ref=e144]
+                  - text: Pure veg
+                - generic [ref=e145] [cursor=pointer]:
+                  - radio "Jain" [ref=e146]
+                  - text: Jain
+                - generic [ref=e147] [cursor=pointer]:
+                  - radio "Veg & non-veg" [ref=e148]
+                  - text: Veg & non-veg
+            - generic [ref=e149]:
+              - generic [ref=e150]: Plan language
+              - combobox "Plan language" [ref=e151]:
+                - option "English"
+                - option "हिन्दी (Hindi)"
+                - option "தமிழ் (Tamil)" [selected]
+                - option "తెలుగు (Telugu)"
+                - option "ಕನ್ನಡ (Kannada)"
+                - option "മലയാളം (Malayalam)"
+                - option "বাংলা (Bengali)"
+                - option "मराठी (Marathi)"
+                - option "ગુજરાતી (Gujarati)"
+                - option "ਪੰਜਾਬੀ (Punjabi)"
+              - paragraph [ref=e152]: The AI writes your plan in this language.
+            - generic [ref=e153]:
+              - generic [ref=e154]: Vibe or theme (optional)
+              - textbox "Vibe or theme (optional)" [ref=e155]:
+                - /placeholder: e.g. Traditional Chettinad, pastel garden, superheroes
+        - generic [ref=e156]:
+          - button "Back" [ref=e157] [cursor=pointer]
+          - button "Create my plan" [ref=e158] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=e105] [cursor=pointer]
+  - alert [ref=e109]: Plan a new celebration
