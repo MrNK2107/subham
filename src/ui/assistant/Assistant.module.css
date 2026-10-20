@@ -1,0 +1,119 @@
+.fab {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 30;
+  box-shadow: 0 10px 30px rgb(158 27 50 / 30%);
+}
+.panel {
+  position: sticky;
+  top: 80px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  max-height: calc(100vh - 100px);
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.head h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+.log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 120px;
+  flex: 1;
+}
+.bot,
+.user {
+  padding: 0.65rem 0.85rem;
+  border-radius: 14px;
+  max-width: 92%;
+  white-space: pre-wrap;
+}
+.bot {
+  background: var(--surface-2);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.user {
+  background: var(--primary);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.text {
+  margin: 0;
+}
+.proposals {
+  margin-top: 0.6rem;
+  border-top: 1px dashed var(--line);
+  padding-top: 0.5rem;
+}
+.proposals ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.5rem;
+  display: grid;
+  gap: 0.5rem;
+}
+.proposedTitle {
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin: 0 0 0.35rem;
+  color: var(--ink-2);
+}
+.proposal {
+  display: grid;
+  gap: 0.35rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.5rem 0.65rem;
+}
+.proposalActions {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.form {
+  display: grid;
+  gap: 0.5rem;
+}
+.form textarea {
+  min-height: 64px;
+}
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+@media (max-width: 960px) {
+  .panel {
+    position: fixed;
+    inset: auto 0.5rem 0.5rem 0.5rem;
+    top: auto;
+    max-height: 80vh;
+    z-index: 40;
+  }
+}

@@ -1,4 +1,5 @@
-import type { Guest } from "./types";
+import { nextId } from "./changes";
+import { PlanSchema, type Guest, type Plan } from "./types";
 
 export interface GuestSummary {
   invited: number;
@@ -33,4 +34,29 @@ export function guestSummary(guests: Guest[]): GuestSummary {
   }
   s.expected = s.confirmed + s.pending;
   return s;
+}
+
+const touch = (plan: Plan, guests: Guest[]): Plan =>
+  PlanSchema.parse({ ...plan, guests, updatedAt: new Date().toISOString() });
+
+/** Adds a guest or family; throws if the entry is invalid (e.g. empty name). */
+export function addGuest(plan: Plan, guest: Omit<Guest, "id">): Plan {
+  return touch(plan, [
+    ...plan.guests,
+    { ...guest, name: guest.name.trim(), id: nextId("g", plan.guests) },
+  ]);
+}
+
+export function updateGuest(plan: Plan, id: string, patch: Partial<Omit<Guest, "id">>): Plan {
+  return touch(
+    plan,
+    plan.guests.map((g) => (g.id === id ? { ...g, ...patch } : g)),
+  );
+}
+
+export function removeGuest(plan: Plan, id: string): Plan {
+  return touch(
+    plan,
+    plan.guests.filter((g) => g.id !== id),
+  );
 }

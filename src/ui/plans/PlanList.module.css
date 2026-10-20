@@ -1,0 +1,37 @@
+.wrap {
+  padding-block: 2rem 4rem;
+}
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+.list h2 {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 1.25rem;
+}
+/* The whole card is clickable through the title link. */
+.list li {
+  position: relative;
+}
+.link {
+  color: var(--ink);
+  text-decoration: none;
+}
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+}
+.list li:hover {
+  border-color: var(--primary);
+}
+.meta {
+  color: var(--ink-2);
+  margin: 0;
+  font-size: 0.95rem;
+}
