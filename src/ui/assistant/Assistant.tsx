@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import { Icon } from "@/ui/common/Icon";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { describeChange } from "@/core/changes";
 import { AI_LANGS, type Change, type Plan } from "@/core/types";
@@ -195,7 +196,7 @@ export function Assistant({ plan, actions, open, onOpenChange, seed, onSeedUsed 
           aria-label={t("assistant.close")}
           onClick={() => onOpenChange(false)}
         >
-          ×
+          <Icon name="close" size={18} />
         </button>
       </div>
 

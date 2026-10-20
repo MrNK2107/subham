@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { Icon } from "@/ui/common/Icon";
 import { addGuest, guestSummary, removeGuest, updateGuest } from "@/core/guests";
 import type { Guest, Plan } from "@/core/types";
 import { useI18n } from "@/i18n";
@@ -187,7 +188,7 @@ export function GuestsTab({ plan, actions }: { plan: Plan; actions: PlanActions 
                       aria-label={t("guests.remove", { name: g.name })}
                       onClick={() => actions.replace(removeGuest(plan, g.id))}
                     >
-                      ×
+                      <Icon name="close" size={18} />
                     </button>
                   </td>
                 </tr>

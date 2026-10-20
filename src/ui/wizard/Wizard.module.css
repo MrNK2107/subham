@@ -13,12 +13,7 @@
   font-weight: 600;
 }
 .bar {
-  flex: 1;
-  height: 6px;
-  background: var(--night-2);
-  border-radius: 999px;
-  overflow: hidden;
-  max-width: 240px;
+  width: 90px;
 }
 .fill1,
 .fill2,

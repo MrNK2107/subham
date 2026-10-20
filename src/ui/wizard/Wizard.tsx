@@ -1,6 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { BulbStrand } from "@/ui/common/BulbStrand";
+import { Icon } from "@/ui/common/Icon";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { formatINR, parseAmount } from "@/core/money";
 import { extraFunctions } from "@/core/presets";
@@ -125,7 +127,7 @@ export function Wizard() {
       <p className={styles.progress}>
         {t("wizard.step", { n: step, total: 3 })}
         <span className={styles.bar} aria-hidden="true">
-          <span className={styles[`fill${step}`]} />
+          <BulbStrand value={step} max={3} bulbs={3} label="" valueText="" />
         </span>
       </p>
       {prefilled && <p className="notice">{t("wizard.prefilled")}</p>}
@@ -185,7 +187,7 @@ export function Wizard() {
                       aria-label={t("wizard.removeFunction", { name: fn })}
                       onClick={() => update({ functions: draft.functions.filter((f) => f !== fn) })}
                     >
-                      ×
+                      <Icon name="close" size={18} />
                     </button>
                   </li>
                 ))}
