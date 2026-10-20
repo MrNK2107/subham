@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { chase, layoutStrands, pointOnStrand, type StrandSpec } from "./strands";
+import { chase, pointOnStrand, type StrandSpec } from "./strands";
 
 const strand: StrandSpec = { from: [-2, 1, 0], to: [2, 1, 0], sag: 1, bulbs: 10, phase: 0 };
 
@@ -21,13 +21,5 @@ describe("strands", () => {
       expect(b).toBeGreaterThanOrEqual(0.18);
       expect(b).toBeLessThanOrEqual(1);
     }
-  });
-
-  it("lays out five strands that get wider with distance", () => {
-    const strands = layoutStrands(16 / 9);
-    expect(strands).toHaveLength(5);
-    const width = (s: StrandSpec) => s.to[0] - s.from[0];
-    expect(width(strands[4]!)).toBeGreaterThan(width(strands[0]!));
-    strands.forEach((s) => expect(s.bulbs).toBeGreaterThan(8));
   });
 });

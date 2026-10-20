@@ -1,3 +1,18 @@
 {
-  "buildPath": "code"
+  "buildPath": "code",
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "yatra one",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-20T14:53:31.590Z",
+        "reason": "Claude: decision-round sketch of the unchosen Laser-cut Invitation direction, not shipped UI"
+      }
+    ]
+  }
 }

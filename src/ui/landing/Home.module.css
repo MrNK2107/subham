@@ -17,18 +17,16 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(
-    180deg,
-    rgb(7 10 34 / 0%) 40%,
-    rgb(7 10 34 / 50%) 70%,
-    rgb(7 10 34 / 92%) 100%
-  );
   pointer-events: none;
+  /* Darkest where the words sit (lower left); the lane stays bright where the lights converge. */
+  background:
+    linear-gradient(90deg, rgb(6 5 22 / 88%) 0%, rgb(6 5 22 / 55%) 34%, rgb(6 5 22 / 0%) 62%),
+    linear-gradient(0deg, rgb(7 10 34 / 100%) 0%, rgb(7 10 34 / 40%) 22%, rgb(7 10 34 / 0%) 45%);
 }
 .heroInner {
-  padding-block: 9rem 3.5rem;
+  padding-block: 10rem 4rem;
   display: grid;
-  grid-template-columns: minmax(0, 900px);
+  grid-template-columns: minmax(0, 860px);
   gap: 1.25rem;
 }
 .title {
@@ -90,83 +88,6 @@
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 0.35rem;
-}
-
-/* Function tags hanging from the nearest strand, swaying on their strings. */
-.tags {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-}
-.tags li {
-  position: absolute;
-  top: 9%;
-  transform-origin: 50% 0;
-  animation: sway 5s ease-in-out infinite alternate;
-}
-.tags li::before {
-  content: "";
-  display: block;
-  width: 1.5px;
-  height: 46px;
-  margin: 0 auto;
-  background: var(--wire-bright);
-}
-.tags span {
-  display: block;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--on-amber);
-  background: var(--warm);
-  padding: 0.2rem 0.75rem 0.15rem;
-  border-radius: 6px 6px 10px 10px;
-  box-shadow: 0 8px 24px -6px rgb(255 183 3 / 55%);
-}
-.tags li:nth-child(1) {
-  left: 44%;
-  top: 7%;
-  animation-delay: -1s;
-}
-.tags li:nth-child(2) {
-  left: 54%;
-  top: 9.5%;
-}
-.tags li:nth-child(2) span {
-  background: var(--rani);
-}
-.tags li:nth-child(3) {
-  left: 64%;
-  top: 10.5%;
-  animation-delay: -2.5s;
-}
-.tags li:nth-child(3) span {
-  background: var(--amber);
-}
-.tags li:nth-child(4) {
-  left: 74%;
-  top: 9.5%;
-  animation-delay: -0.5s;
-}
-.tags li:nth-child(4) span {
-  background: var(--leaf);
-}
-.tags li:nth-child(5) {
-  left: 88%;
-  top: 7.5%;
-  animation-delay: -3.5s;
-}
-@keyframes sway {
-  from {
-    transform: rotate(-3deg);
-  }
-  to {
-    transform: rotate(3deg);
-  }
 }
 
 /* ---------- Demo: one strand per function ---------- */
@@ -560,13 +481,10 @@
   .heroShade {
     background: linear-gradient(
       180deg,
-      rgb(7 10 34 / 10%) 8%,
-      rgb(7 10 34 / 78%) 30%,
-      rgb(7 10 34 / 94%) 100%
+      rgb(6 5 22 / 0%) 0%,
+      rgb(6 5 22 / 70%) 34%,
+      rgb(6 5 22 / 95%) 100%
     );
-  }
-  .tags {
-    display: none;
   }
   .demoGrid {
     grid-template-columns: 1fr;

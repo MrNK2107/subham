@@ -3,129 +3,227 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
+import { buildLane, LANE_HALF, type Lane } from "./lane";
 import { sceneSignal } from "./signal";
-import { BULB_COLORS, chase, layoutStrands, pointOnStrand } from "./strands";
+import { chase, pointOnStrand } from "./strands";
 
-const WIRE_SEGMENTS = 48;
+const CROSS_COLORS = ["#ffb347", "#ff5c9a", "#3ff0a6", "#fff1cc", "#ffb347", "#7ec8ff"];
+const CURTAIN_COLORS = {
+  warm: ["#fff1cc", "#ffe2a8"],
+  amber: ["#ffb347", "#ffc970"],
+  mixed: ["#fff1cc", "#ff5c9a", "#ffb347", "#3ff0a6"],
+};
+const CURTAIN_SPACING = 0.36;
 
-function glowTexture(): THREE.Texture {
-  const size = 128;
-  const canvas = document.createElement("canvas");
-  canvas.width = canvas.height = size;
-  const ctx = canvas.getContext("2d")!;
-  const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-  g.addColorStop(0, "rgba(255,255,255,1)");
-  g.addColorStop(0.18, "rgba(255,255,255,0.85)");
-  g.addColorStop(0.45, "rgba(255,255,255,0.18)");
-  g.addColorStop(1, "rgba(255,255,255,0)");
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, size, size);
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  return texture;
+interface Bulb {
+  kind: "cross" | "curtain";
+  /** Index along its strand (for the chase). */
+  i: number;
+  phase: number;
+  base: THREE.Color;
 }
 
-/** A vertical fade from clear to the night colour, laid over the base of the rooftops. */
-function hazeTexture(): THREE.Texture {
-  const canvas = document.createElement("canvas");
-  canvas.width = 4;
-  canvas.height = 256;
-  const ctx = canvas.getContext("2d")!;
-  const g = ctx.createLinearGradient(0, 0, 0, 256);
-  g.addColorStop(0, "rgba(7,10,34,0)");
-  g.addColorStop(0.55, "rgba(7,10,34,0.55)");
-  g.addColorStop(1, "rgba(7,10,34,1)");
+function skyTexture(): THREE.Texture {
+  const c = document.createElement("canvas");
+  c.width = 2;
+  c.height = 512;
+  const ctx = c.getContext("2d")!;
+  const g = ctx.createLinearGradient(0, 0, 0, 512);
+  g.addColorStop(0, "#04041a");
+  g.addColorStop(0.45, "#0b0a26");
+  g.addColorStop(0.6, "#140e30");
+  g.addColorStop(0.72, "#1f1233");
+  g.addColorStop(1, "#0a0819");
   ctx.fillStyle = g;
-  ctx.fillRect(0, 0, 4, 256);
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  return texture;
+  ctx.fillRect(0, 0, 2, 512);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
 }
 
-function Street({ still }: { still: boolean }) {
-  const { size, camera } = useThree();
-  const aspect = size.width / Math.max(size.height, 1);
-  const strands = useMemo(() => layoutStrands(aspect), [aspect]);
-  const glow = useMemo(() => glowTexture(), []);
-  const haze = useMemo(() => hazeTexture(), []);
+function labelTexture(text: string, font: string): THREE.CanvasTexture {
+  const scale = 3;
+  const measure = document.createElement("canvas").getContext("2d")!;
+  measure.font = `700 ${28 * scale}px ${font}`;
+  const c = document.createElement("canvas");
+  c.width = Math.ceil(measure.measureText(text).width) + 40 * scale;
+  c.height = 56 * scale;
+  const g = c.getContext("2d")!;
+  // A dark signboard with warm lettering: only the letters are bright enough to glow.
+  g.fillStyle = "#1a1438";
+  g.strokeStyle = "#8a6a2a";
+  g.lineWidth = 3 * scale;
+  g.beginPath();
+  g.roundRect(2 * scale, 2 * scale, c.width - 4 * scale, c.height - 4 * scale, [
+    6 * scale,
+    6 * scale,
+    12 * scale,
+    12 * scale,
+  ]);
+  g.fill();
+  g.stroke();
+  g.fillStyle = "#ffd58a";
+  g.font = `700 ${28 * scale}px ${font}`;
+  g.textAlign = "center";
+  g.textBaseline = "middle";
+  g.fillText(text, c.width / 2, c.height / 2 + 2 * scale);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 4;
+  return t;
+}
+
+/** A soft warm streak down the middle of the road: light from the strands on worn stone. */
+function roadTexture(): THREE.Texture {
+  const c = document.createElement("canvas");
+  c.width = 128;
+  c.height = 512;
+  const ctx = c.getContext("2d")!;
+  const across = ctx.createLinearGradient(0, 0, 128, 0);
+  across.addColorStop(0, "rgba(255,170,80,0)");
+  across.addColorStop(0.5, "rgba(255,170,80,0.55)");
+  across.addColorStop(1, "rgba(255,170,80,0)");
+  ctx.fillStyle = across;
+  ctx.fillRect(0, 0, 128, 512);
+  ctx.globalCompositeOperation = "destination-in";
+  const along = ctx.createLinearGradient(0, 0, 0, 512);
+  along.addColorStop(0, "rgba(0,0,0,0.15)");
+  along.addColorStop(0.7, "rgba(0,0,0,1)");
+  along.addColorStop(1, "rgba(0,0,0,0.2)");
+  ctx.fillStyle = along;
+  ctx.fillRect(0, 0, 128, 512);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
+/** Bloom post-processing: the bulbs read as light, not dots. */
+function Bloom({ strength }: { strength: number }) {
+  const { gl, scene, camera, size } = useThree();
+  const composer = useMemo(() => {
+    const c = new EffectComposer(gl);
+    c.addPass(new RenderPass(scene, camera));
+    c.addPass(new UnrealBloomPass(new THREE.Vector2(256, 256), strength, 0.42, 0.85));
+    c.addPass(new OutputPass());
+    return c;
+  }, [gl, scene, camera, strength]);
+  useEffect(() => {
+    composer.setPixelRatio(gl.getPixelRatio());
+    composer.setSize(size.width, size.height);
+  }, [composer, size, gl]);
+  useEffect(() => () => composer.dispose(), [composer]);
+  useFrame(() => composer.render(), 1);
+  return null;
+}
+
+function Street({ still, labels, mobile }: { still: boolean; labels: string[]; mobile: boolean }) {
+  const { camera } = useThree();
+  const lane: Lane = useMemo(
+    () => buildLane({ depth: mobile ? 45 : 64, curtains: mobile ? 6 : 11 }),
+    [mobile],
+  );
+  const sky = useMemo(() => skyTexture(), []);
+  const roadGlow = useMemo(() => roadTexture(), []);
   const pointer = useRef({ x: 0, y: 0 });
-  const bokehRef = useRef<THREE.Points>(null);
+  const bulbsRef = useRef<THREE.InstancedMesh>(null);
 
-  const { wires, lines, bulbs, colors, base } = useMemo(() => {
-    const total = strands.reduce((n, s) => n + s.bulbs, 0);
-    const positions = new Float32Array(total * 3);
-    const colors = new Float32Array(total * 3);
-    const base = new Float32Array(total * 3);
-    let k = 0;
-    strands.forEach((s, si) => {
-      for (let i = 0; i < s.bulbs; i++, k++) {
-        const c = new THREE.Color(BULB_COLORS[(i + si) % BULB_COLORS.length]);
-        base.set([c.r, c.g, c.b], k * 3);
+  // Every bulb in the street, in one instanced mesh.
+  const { bulbs, positions, scales } = useMemo(() => {
+    const bulbs: Bulb[] = [];
+    const positions: THREE.Vector3[] = [];
+    const scales: number[] = [];
+    lane.crossings.forEach((s, ci) => {
+      for (let i = 0; i < s.bulbs; i++) {
+        bulbs.push({
+          kind: "cross",
+          i,
+          phase: s.phase,
+          base: new THREE.Color(CROSS_COLORS[(i + ci) % CROSS_COLORS.length]),
+        });
+        const [x, y, z] = pointOnStrand(s, (i + 0.5) / s.bulbs);
+        positions.push(new THREE.Vector3(x, y - 0.08, z));
+        scales.push(1);
       }
     });
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-    const wireMaterial = new THREE.LineBasicMaterial({
-      color: "#3d4686",
-      transparent: true,
-      opacity: 0.85,
-    });
-    const wires = strands.map(() => {
-      const g = new THREE.BufferGeometry();
-      g.setAttribute(
-        "position",
-        new THREE.BufferAttribute(new Float32Array((WIRE_SEGMENTS + 1) * 3), 3),
-      );
-      return g;
-    });
-    const lines = wires.map((g) => new THREE.Line(g, wireMaterial));
-    return { wires, lines, bulbs: geometry, colors, base };
-  }, [strands]);
-
-  // Rooftops, windows and stars: generated once, deterministic.
-  const backdrop = useMemo(() => {
-    const roofs: { x: number; w: number; h: number; z: number; shade: string }[] = [];
-    const windows: number[] = [];
-    let seed = 7;
-    const rand = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
-    for (const [z, shade] of [
-      [-7, "#1c2366"],
-      [-12, "#151b52"],
-    ] as const) {
-      let x = -16;
-      while (x < 16) {
-        const w = 1.4 + rand() * 2.2;
-        const h = 1.2 + rand() * (z === -7 ? 2.4 : 3.6);
-        const tone = new THREE.Color(shade).multiplyScalar(0.7 + rand() * 0.45);
-        roofs.push({ x: x + w / 2, w, h, z, shade: `#${tone.getHexString()}` });
-        for (let wy = 0.4; wy < h - 0.3; wy += 0.55) {
-          for (let wx = -w / 2 + 0.35; wx < w / 2 - 0.2; wx += 0.5) {
-            if (rand() > 0.62) windows.push(x + w / 2 + wx, -2.2 + wy, z + 0.05);
-          }
+    lane.curtains.forEach((c, k) => {
+      const colors = CURTAIN_COLORS[c.palette];
+      for (let s = 0; s < c.strings; s++) {
+        const z = c.zFrom + ((c.zTo - c.zFrom) * (s + 0.5)) / c.strings;
+        // Strings vary a little in length, like real jhalar.
+        const bottom = c.bottom + ((s * 37) % 7) * 0.12;
+        let i = 0;
+        for (
+          let y = c.top - (s % 3) * (CURTAIN_SPACING / 3);
+          y > bottom;
+          y -= CURTAIN_SPACING, i++
+        ) {
+          bulbs.push({
+            kind: "curtain",
+            i,
+            phase: k * 1.3 + s * 0.15,
+            base: new THREE.Color(colors[(s + i) % colors.length]),
+          });
+          positions.push(new THREE.Vector3(c.x, y, z));
+          scales.push(0.62);
         }
-        x += w + 0.08;
       }
-    }
-    // Out-of-focus bulbs close to the camera give the street depth, like a lens wide open.
-    const bokeh: number[] = [];
-    const bokehColors: number[] = [];
-    for (let i = 0; i < 34; i++) {
-      bokeh.push((rand() - 0.5) * 16, -1 + rand() * 6, 2.5 + rand() * 2.5);
-      const c = new THREE.Color(BULB_COLORS[i % BULB_COLORS.length]);
-      bokehColors.push(c.r, c.g, c.b);
-    }
-    const stars: number[] = [];
-    for (let i = 0; i < 260; i++)
-      stars.push((rand() - 0.5) * 50, 2 + rand() * 12, -20 - rand() * 6);
-    return {
-      roofs,
-      windows: new Float32Array(windows),
-      stars: new Float32Array(stars),
-      bokeh: new Float32Array(bokeh),
-      bokehColors: new Float32Array(bokehColors),
-    };
-  }, []);
+    });
+    return { bulbs, positions, scales };
+  }, [lane]);
+
+  // Wires across the street.
+  const wires = useMemo(() => {
+    const material = new THREE.LineBasicMaterial({ color: "#2a2550" });
+    return lane.crossings.map((s) => {
+      const points = Array.from({ length: 33 }, (_, j) => {
+        const [x, y, z] = pointOnStrand(s, j / 32);
+        return new THREE.Vector3(x, y, z);
+      });
+      return new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), material);
+    });
+  }, [lane]);
+
+  // Function names hang as tags from the nearest visible strands.
+  const tags = useMemo(() => {
+    const font =
+      getComputedStyle(document.documentElement).getPropertyValue("--font-baloo").trim() ||
+      "sans-serif";
+    return labels.slice(0, 5).map((text, k) => {
+      const s = lane.crossings[k + 1] ?? lane.crossings[0]!;
+      const [x, y, z] = pointOnStrand(s, 0.62 + (k % 3) * 0.1);
+      const map = labelTexture(text, font);
+      const aspect =
+        (map.image as HTMLCanvasElement).width / (map.image as HTMLCanvasElement).height;
+      return {
+        map,
+        position: new THREE.Vector3(x, y - 0.85, z),
+        scale: new THREE.Vector3(0.55 * aspect, 0.55, 1),
+        string: new THREE.Line(
+          new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(x, y - 0.08, z),
+            new THREE.Vector3(x, y - 0.6, z),
+          ]),
+          new THREE.LineBasicMaterial({ color: "#4a4380" }),
+        ),
+      };
+    });
+  }, [labels, lane]);
+
+  useEffect(() => {
+    const mesh = bulbsRef.current;
+    if (!mesh) return;
+    const m = new THREE.Matrix4();
+    positions.forEach((p, k) => {
+      const sc = scales[k] ?? 1;
+      m.makeScale(sc, sc, sc).setPosition(p.x, p.y, p.z);
+      mesh.setMatrixAt(k, m);
+    });
+    mesh.instanceMatrix.needsUpdate = true;
+  }, [positions, scales]);
 
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
@@ -138,141 +236,124 @@ function Street({ still }: { still: boolean }) {
     return () => window.removeEventListener("pointermove", onMove);
   }, []);
 
+  const houseColors = useMemo(
+    () =>
+      lane.houses.map((h) => new THREE.Color("#100d26").lerp(new THREE.Color("#241c48"), h.tone)),
+    [lane],
+  );
+  const color = useMemo(() => new THREE.Color(), []);
+
   useFrame(({ clock }) => {
-    const t = still ? 2.4 : clock.elapsedTime;
-    const sinceBurst = performance.now() - sceneSignal.burstAt;
-    const burst = sinceBurst < 1800 ? 1 - sinceBurst / 1800 : 0;
-    const position = bulbs.getAttribute("position") as THREE.BufferAttribute;
-    let k = 0;
-    strands.forEach((s, si) => {
-      const sway = still ? 0 : 0.18 * Math.sin(t * 0.9 + s.phase) + 0.05 * Math.sin(t * 2.3 + si);
-      const wire = wires[si]!.getAttribute("position") as THREE.BufferAttribute;
-      for (let j = 0; j <= WIRE_SEGMENTS; j++) {
-        const [x, y, z] = pointOnStrand(s, j / WIRE_SEGMENTS, sway);
-        wire.setXYZ(j, x, y, z);
-      }
-      wire.needsUpdate = true;
-      for (let i = 0; i < s.bulbs; i++, k++) {
-        const [x, y, z] = pointOnStrand(s, (i + 0.5) / s.bulbs, sway);
-        position.setXYZ(k, x, y - 0.09, z);
-        const b = Math.min(1, chase(i, t, s.phase, 2.2 + burst * 9) + burst * 0.6);
-        colors[k * 3] = base[k * 3]! * b;
-        colors[k * 3 + 1] = base[k * 3 + 1]! * b;
-        colors[k * 3 + 2] = base[k * 3 + 2]! * b;
-      }
-    });
-    position.needsUpdate = true;
-    (bulbs.getAttribute("color") as THREE.BufferAttribute).needsUpdate = true;
+    const mesh = bulbsRef.current;
+    if (!mesh) return;
+    const t = still ? 3.1 : clock.elapsedTime;
+    const since = performance.now() - sceneSignal.burstAt;
+    const burst = since < 1600 ? 1 - since / 1600 : 0;
+    for (let k = 0; k < bulbs.length; k++) {
+      const b = bulbs[k]!;
+      const level =
+        b.kind === "cross"
+          ? chase(b.i, t, b.phase, 2.4 + burst * 8)
+          : // Curtains pour downward like a waterfall.
+            0.45 + 0.55 * Math.max(0, Math.sin(t * 3.2 - b.i * 0.42 + b.phase));
+      // Values above 1 feed the bloom; tungsten never goes fully dark.
+      const intensity = (0.35 + level * 1.9 + burst * 1.2) * (b.kind === "curtain" ? 0.62 : 1);
+      color.copy(b.base).multiplyScalar(intensity);
+      mesh.setColorAt(k, color);
+    }
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
 
-    if (bokehRef.current && !still) bokehRef.current.position.x = Math.sin(t * 0.12) * 0.8;
-
-    // Gentle parallax towards the pointer.
-    camera.position.x += (pointer.current.x * 0.7 - camera.position.x) * 0.04;
-    camera.position.y += (1.1 - pointer.current.y * 0.35 - camera.position.y) * 0.04;
-    camera.lookAt(0, 1.4, -6);
+    // A slow walk into the lane, plus parallax towards the pointer.
+    const walk = still ? 0 : Math.sin(t * 0.05) * 1.2;
+    camera.position.x += (0.9 + pointer.current.x * 0.6 - camera.position.x) * 0.04;
+    camera.position.y += (1.7 - pointer.current.y * 0.25 - camera.position.y) * 0.04;
+    camera.position.z = 9 - walk;
+    camera.lookAt(-1.9, 3.6, -30);
   });
 
   return (
     <>
-      <color attach="background" args={["#070a22"]} />
-      <fog attach="fog" args={["#070a22", 8, 26]} />
-      <points>
-        <bufferGeometry>
-          <bufferAttribute attach="attributes-position" args={[backdrop.stars, 3]} />
-        </bufferGeometry>
-        <pointsMaterial
-          size={0.05}
-          color="#c9c6ff"
+      <primitive attach="background" object={sky} />
+      <fogExp2 attach="fog" args={["#0a0822", 0.024]} />
+
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -25]}>
+        <planeGeometry args={[LANE_HALF * 2 + 10, 90]} />
+        <meshBasicMaterial color="#0c0a1e" />
+      </mesh>
+
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, -18]}>
+        <planeGeometry args={[LANE_HALF * 2, 60]} />
+        <meshBasicMaterial
+          map={roadGlow}
           transparent
-          opacity={0.7}
-          sizeAttenuation
-          fog={false}
+          opacity={0.5}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
         />
-      </points>
-      {backdrop.roofs.map((r, i) => (
-        <mesh key={i} position={[r.x, -2.2 + r.h / 2, r.z]}>
-          <planeGeometry args={[r.w, r.h]} />
-          <meshBasicMaterial color={r.shade} />
+      </mesh>
+
+      {lane.houses.map((h, k) => (
+        <mesh key={k} position={[h.x, h.height / 2, h.z]}>
+          <boxGeometry args={[h.width, h.height, h.depth]} />
+          <meshBasicMaterial color={houseColors[k]} />
         </mesh>
       ))}
-      {[-11.8, -6.8].map((z) => (
-        <mesh key={z} position={[0, -1.4, z]}>
-          <planeGeometry args={[44, 3.2]} />
-          <meshBasicMaterial map={haze} transparent depthWrite={false} />
+
+      {/* Lit windows: warm panes, dimmer than the bulbs. */}
+      {lane.windows.map(([x, y, z], k) => (
+        <mesh key={k} position={[x, y, z]} rotation={[0, x < 0 ? Math.PI / 2 : -Math.PI / 2, 0]}>
+          <planeGeometry args={[0.42, 0.6]} />
+          <meshBasicMaterial color={k % 3 === 0 ? "#3a2420" : "#6e4524"} />
         </mesh>
       ))}
-      <points>
-        <bufferGeometry>
-          <bufferAttribute attach="attributes-position" args={[backdrop.windows, 3]} />
-        </bufferGeometry>
-        <pointsMaterial size={0.17} color="#ffcf7a" transparent opacity={0.95} sizeAttenuation />
-      </points>
-      <points ref={bokehRef}>
-        <bufferGeometry>
-          <bufferAttribute attach="attributes-position" args={[backdrop.bokeh, 3]} />
-          <bufferAttribute attach="attributes-color" args={[backdrop.bokehColors, 3]} />
-        </bufferGeometry>
-        <pointsMaterial
-          size={2.6}
-          map={glow}
-          vertexColors
-          transparent
-          opacity={0.16}
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-          sizeAttenuation
-          fog={false}
-        />
-      </points>
-      {lines.map((line, i) => (
-        <primitive key={i} object={line} />
+
+      {wires.map((line, k) => (
+        <primitive key={k} object={line} />
       ))}
-      {/* Halo and filament share one geometry; additive blending makes overlaps glow. */}
-      <points geometry={bulbs}>
-        <pointsMaterial
-          size={1.35}
-          map={glow}
-          vertexColors
-          transparent
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-          opacity={0.7}
-          sizeAttenuation
-        />
-      </points>
-      <points geometry={bulbs}>
-        <pointsMaterial
-          size={0.3}
-          map={glow}
-          vertexColors
-          transparent
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-          sizeAttenuation
-        />
-      </points>
+
+      <instancedMesh ref={bulbsRef} args={[undefined, undefined, positions.length]}>
+        <sphereGeometry args={[0.075, 10, 8]} />
+        <meshBasicMaterial toneMapped={false} />
+      </instancedMesh>
+
+      {tags.map((tag, k) => (
+        <group key={k}>
+          <primitive object={tag.string} />
+          <sprite position={tag.position} scale={tag.scale}>
+            <spriteMaterial map={tag.map} fog={false} />
+          </sprite>
+        </group>
+      ))}
     </>
   );
 }
 
 /**
- * The night street with strands of chasing serial lights. Decorative: hidden from assistive tech,
- * paused when off screen, and a single still frame for people who prefer reduced motion.
+ * A night lane dressed for a wedding: strands of serial lights across the street, jhalar curtains
+ * down the houses, haze in the distance. Decorative: hidden from assistive tech, paused off screen,
+ * a single still frame for people who prefer reduced motion.
  */
-export default function StreetLights() {
+export default function StreetLights({ labels = [] }: { labels?: string[] }) {
   const wrap = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
   const [still, setStill] = useState(false);
+  const [mobile, setMobile] = useState(false);
 
   useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setStill(media.matches);
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const narrow = window.matchMedia("(max-width: 700px)");
+    const update = () => {
+      setStill(motion.matches);
+      setMobile(narrow.matches);
+    };
     update();
-    media.addEventListener("change", update);
+    motion.addEventListener("change", update);
+    narrow.addEventListener("change", update);
     const io = new IntersectionObserver(([entry]) => setVisible(Boolean(entry?.isIntersecting)));
     if (wrap.current) io.observe(wrap.current);
     return () => {
-      media.removeEventListener("change", update);
+      motion.removeEventListener("change", update);
+      narrow.removeEventListener("change", update);
       io.disconnect();
     };
   }, []);
@@ -280,12 +361,13 @@ export default function StreetLights() {
   return (
     <div ref={wrap} aria-hidden="true" className="street-canvas">
       <Canvas
-        dpr={[1, 1.75]}
-        camera={{ position: [0, 1.1, 7], fov: 50 }}
-        gl={{ antialias: true, powerPreference: "high-performance" }}
+        dpr={[1, mobile ? 1.25 : 1.6]}
+        camera={{ position: [0.9, 1.7, 9], fov: mobile ? 62 : 52, near: 0.1, far: 120 }}
+        gl={{ antialias: false, powerPreference: "high-performance" }}
         frameloop={still ? "demand" : visible ? "always" : "never"}
       >
-        <Street still={still} />
+        <Street still={still} labels={labels} mobile={mobile} />
+        <Bloom strength={mobile ? 1.1 : 1.35} />
       </Canvas>
     </div>
   );

@@ -107,16 +107,8 @@ export function Home() {
   return (
     <>
       <section className={styles.hero} aria-labelledby="hero-title">
-        <StreetLights />
+        <StreetLights labels={presetFunctions("wedding", lang)} />
         <div className={styles.heroShade} aria-hidden="true" />
-        {/* Each function hangs as a tag from the nearest strand. */}
-        <ul className={styles.tags} aria-hidden="true">
-          {presetFunctions("wedding", lang).map((name) => (
-            <li key={name}>
-              <span>{name}</span>
-            </li>
-          ))}
-        </ul>
         <div className={`container ${styles.heroInner}`}>
           <Reveal immediate>
             <h1 id="hero-title" className={styles.title}>
