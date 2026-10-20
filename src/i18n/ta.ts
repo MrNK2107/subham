@@ -303,4 +303,12 @@ export const ta: Messages = {
   "common.loading": "ஏற்றுகிறது…",
   "common.cancel": "ரத்து செய்",
   "common.saved": "சேமிக்கப்பட்டது",
+  "family.title": "குடும்பத்துடன் பகிருங்கள்",
+  "family.email": "அவர்களின் Google மின்னஞ்சல்",
+  "family.role": "அவர்களால் முடிவது",
+  "family.editor": "திட்டத்தைத் திருத்தலாம்",
+  "family.viewer": "பார்க்க மட்டும்",
+  "family.send": "பகிர்",
+  "family.done": "{email} உடன் பகிரப்பட்டது. உள்நுழைந்த பின் அவர்கள் பார்க்கலாம்.",
+  "family.signIn": "பகிர முதலில் Google மூலம் உள்நுழையுங்கள்.",
 };

@@ -298,4 +298,12 @@ export const te: Messages = {
   "common.loading": "లోడ్ అవుతోంది…",
   "common.cancel": "రద్దు చేయి",
   "common.saved": "సేవ్ అయింది",
+  "family.title": "కుటుంబంతో పంచుకోండి",
+  "family.email": "వారి Google ఇమెయిల్",
+  "family.role": "వారు చేయగలిగేది",
+  "family.editor": "ప్లాన్‌ను మార్చగలరు",
+  "family.viewer": "చూడడం మాత్రమే",
+  "family.send": "పంచుకోండి",
+  "family.done": "{email} తో పంచుకున్నాం. సైన్ ఇన్ చేసిన తర్వాత వారికి కనిపిస్తుంది.",
+  "family.signIn": "పంచుకోవడానికి ముందు Google తో సైన్ ఇన్ చేయండి.",
 };

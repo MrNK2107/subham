@@ -9,6 +9,30 @@ export type Role = "editor" | "viewer";
  * Firestore layout: plans/{planId} = { ownerId, editors: [emails], viewers: [emails], data, updatedAt }.
  * Rules let the owner and editors write `data`, viewers read, and only the owner change sharing.
  */
+export interface PlanRecord {
+  ownerId: string;
+  editors: string[];
+  viewers: string[];
+  data: Plan;
+  updatedAt: string;
+}
+
+/** The Firestore document for a plan. JSON round-trip drops undefined fields, which Firestore rejects. */
+export function toRecord(
+  ownerId: string,
+  plan: Plan,
+  editors: string[] = [],
+  viewers: string[] = [],
+): PlanRecord {
+  return {
+    ownerId,
+    editors,
+    viewers,
+    data: JSON.parse(JSON.stringify(plan)),
+    updatedAt: plan.updatedAt,
+  };
+}
+
 async function firestore() {
   const fb = await getFirebase();
   if (!fb) throw new Error("Firebase isn't configured");
@@ -20,15 +44,10 @@ export async function pushPlan(uid: string, plan: Plan): Promise<void> {
   const ref = fs.doc(db, "plans", plan.id);
   const snap = await fs.getDoc(ref);
   if (snap.exists()) {
-    await fs.updateDoc(ref, { data: plan, updatedAt: plan.updatedAt });
+    const { data, updatedAt } = toRecord(uid, plan);
+    await fs.updateDoc(ref, { data, updatedAt });
   } else {
-    await fs.setDoc(ref, {
-      ownerId: uid,
-      editors: [],
-      viewers: [],
-      data: plan,
-      updatedAt: plan.updatedAt,
-    });
+    await fs.setDoc(ref, toRecord(uid, plan));
   }
 }
 

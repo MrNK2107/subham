@@ -298,4 +298,12 @@ export const hi: Messages = {
   "common.loading": "लोड हो रहा है…",
   "common.cancel": "रद्द करें",
   "common.saved": "सेव हो गया",
+  "family.title": "परिवार के साथ साझा करें",
+  "family.email": "उनका Google ईमेल",
+  "family.role": "वे क्या कर सकते हैं",
+  "family.editor": "योजना बदल सकते हैं",
+  "family.viewer": "सिर्फ़ देख सकते हैं",
+  "family.send": "साझा करें",
+  "family.done": "{email} के साथ साझा किया गया। साइन इन करने पर उन्हें दिखेगा।",
+  "family.signIn": "साझा करने के लिए पहले Google से साइन इन करें।",
 };

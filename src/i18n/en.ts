@@ -294,6 +294,14 @@ export const en = {
   "common.loading": "Loading…",
   "common.cancel": "Cancel",
   "common.saved": "Saved",
+  "family.title": "Share with family",
+  "family.email": "Their Google email",
+  "family.role": "They can",
+  "family.editor": "Edit the plan",
+  "family.viewer": "View only",
+  "family.send": "Share",
+  "family.done": "Shared with {email}. They'll see it after signing in.",
+  "family.signIn": "Sign in with Google first to share this plan.",
 } as const;
 
 export type MessageKey = keyof typeof en;

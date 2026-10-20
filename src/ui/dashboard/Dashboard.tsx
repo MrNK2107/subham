@@ -18,6 +18,7 @@ import { BudgetTab } from "./BudgetTab";
 import { GuestsTab } from "./GuestsTab";
 import { IdeasTab } from "./IdeasTab";
 import { Overview } from "./Overview";
+import { ShareFamily } from "./ShareFamily";
 import { Tabs } from "./Tabs";
 import { TimelineTab } from "./TimelineTab";
 import { VendorsTab } from "./VendorsTab";
@@ -195,6 +196,8 @@ export function Dashboard({ id }: { id: string }) {
             </button>
           </div>
         )}
+
+        <ShareFamily planId={plan.id} />
 
         <Tabs tabs={tabs} active={tab} onChange={setTab} label={plan.brief.title} />
       </div>

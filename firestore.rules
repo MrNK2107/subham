@@ -1,0 +1,80 @@
+rules_version = '2';
+
+// plans/{planId} = { ownerId, editors: [emails], viewers: [emails], data: Plan, updatedAt }
+// Owner: full control. Editors (family): may change the plan itself, not who it is shared with.
+// Viewers: read only. Everyone else: nothing. The app also validates `data` with zod.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function verifiedEmail() {
+      return signedIn() && request.auth.token.email_verified == true
+        ? request.auth.token.email.lower()
+        : '';
+    }
+
+    function isOwner(doc) {
+      return signedIn() && doc.ownerId == request.auth.uid;
+    }
+
+    function isEditor(doc) {
+      return verifiedEmail() != '' && verifiedEmail() in doc.editors;
+    }
+
+    function isViewer(doc) {
+      return verifiedEmail() != '' && verifiedEmail() in doc.viewers;
+    }
+
+    function validPlan(plan, planId) {
+      return plan is map
+        && plan.id == planId
+        && plan.brief is map
+        && plan.brief.type in ['wedding', 'birthday', 'community', 'festival']
+        && plan.brief.title is string && plan.brief.title.size() > 0 && plan.brief.title.size() <= 80
+        && plan.brief.guests is int && plan.brief.guests >= 1 && plan.brief.guests <= 5000
+        && plan.brief.budget is int && plan.brief.budget >= 5000
+        && plan.functions is list && plan.functions.size() >= 1 && plan.functions.size() <= 8
+        && plan.budget is list && plan.budget.size() >= 1 && plan.budget.size() <= 60
+        && plan.tasks is list && plan.tasks.size() <= 80
+        && plan.runSheet is list && plan.runSheet.size() <= 60
+        && plan.vendors is list && plan.vendors.size() <= 30
+        && plan.guests is list && plan.guests.size() <= 1000
+        && plan.ideas is list && plan.ideas.size() <= 40;
+    }
+
+    function validDoc(doc, planId) {
+      return doc.keys().hasOnly(['ownerId', 'editors', 'viewers', 'data', 'updatedAt'])
+        && doc.keys().hasAll(['ownerId', 'editors', 'viewers', 'data', 'updatedAt'])
+        && doc.ownerId is string
+        && doc.editors is list && doc.editors.size() <= 20
+        && doc.viewers is list && doc.viewers.size() <= 20
+        && doc.updatedAt is string
+        && validPlan(doc.data, planId);
+    }
+
+    match /plans/{planId} {
+      allow get, list: if isOwner(resource.data) || isEditor(resource.data) || isViewer(resource.data);
+
+      allow create: if signedIn()
+        && request.resource.data.ownerId == request.auth.uid
+        && validDoc(request.resource.data, planId);
+
+      allow update: if validDoc(request.resource.data, planId)
+        && (
+          (isOwner(resource.data) && request.resource.data.ownerId == resource.data.ownerId)
+          || (isEditor(resource.data)
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['data', 'updatedAt']))
+        );
+
+      allow delete: if isOwner(resource.data);
+    }
+
+    // Everything else is closed.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
