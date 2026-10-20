@@ -7,7 +7,7 @@ import { Home } from "./Home";
 const push = vi.fn();
 vi.mock("next/navigation", () => ({ useRouter: () => ({ push }) }));
 // WebGL isn't available in jsdom; the scene is decorative and covered by end-to-end tests.
-vi.mock("@/ui/scene/StreetLights", () => ({ default: () => null }));
+vi.mock("@/ui/scene/StreetLights", () => ({ default: () => <div data-testid="scene" /> }));
 
 const respond = (body: unknown, status = 200) =>
   vi.fn().mockResolvedValue(
@@ -56,5 +56,18 @@ describe("Home", () => {
   it("lists the six features", () => {
     render(<Home />);
     expect(screen.getAllByRole("heading", { level: 3 }).length).toBeGreaterThanOrEqual(6);
+  });
+
+  it("mounts the decorative scene only once the page is idle", async () => {
+    render(<Home />);
+    expect(screen.queryByTestId("scene")).toBeNull();
+    expect(await screen.findByTestId("scene")).toBeInTheDocument();
+  });
+
+  it("keeps the static backdrop for Data Saver users", async () => {
+    vi.stubGlobal("navigator", { ...navigator, connection: { saveData: true } });
+    render(<Home />);
+    await new Promise((r) => setTimeout(r, 400));
+    expect(screen.queryByTestId("scene")).toBeNull();
   });
 });

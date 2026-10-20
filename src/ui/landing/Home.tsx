@@ -14,10 +14,12 @@ import { Icon, type IconName } from "@/ui/common/Icon";
 import { LitOnView, Reveal } from "@/ui/common/Reveal";
 import { presetFunctions } from "@/core/presets";
 import { sceneSignal } from "@/ui/scene/signal";
+import { useIdle } from "@/ui/common/useIdle";
 import { savePrefill } from "@/ui/wizard/prefill";
 import styles from "./Home.module.css";
 
-// The WebGL street loads after the page is interactive and never on the server.
+// The WebGL street loads after the page is interactive and idle, and never on the server, so the
+// headline paints and hydrates first.
 const StreetLights = dynamic(() => import("@/ui/scene/StreetLights"), { ssr: false });
 
 const FEATURES: IconName[] = ["budget", "timeline", "vendors", "ideas", "guests", "assistant"];
@@ -69,12 +71,20 @@ const DEMO = [
   },
 ];
 
+function saveData(): boolean {
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  return connection?.saveData === true;
+}
+
 const SCRIPTS = ["शुभ आरंभ", "சுப ஆரம்பம்", "శుభారంభం", "A good beginning"];
 
 export function Home() {
   const { t, lang } = useI18n();
   const router = useRouter();
   const reduce = useReducedMotion();
+  // Idle is only ever true in the browser, so reading navigator here can't cause a hydration
+  // mismatch. Data Saver users keep the static night-sky gradient instead of the WebGL scene.
+  const sceneReady = useIdle() && !saveData();
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -107,14 +117,14 @@ export function Home() {
   return (
     <>
       <section className={styles.hero} aria-labelledby="hero-title">
-        <StreetLights labels={presetFunctions("wedding", lang)} />
+        {sceneReady && <StreetLights labels={presetFunctions("wedding", lang)} />}
         <div className={styles.heroShade} aria-hidden="true" />
         <div className={`container ${styles.heroInner}`}>
-          <Reveal immediate>
-            <h1 id="hero-title" className={styles.title}>
-              {t("home.title")}
-            </h1>
-          </Reveal>
+          {/* Not wrapped in Reveal: the headline is the largest paint, and fading it in from
+              opacity 0 after hydration would push LCP back by seconds on phones. */}
+          <h1 id="hero-title" className={styles.title}>
+            {t("home.title")}
+          </h1>
           <Reveal immediate delay={0.12}>
             <p className={styles.lead}>{t("home.lead")}</p>
           </Reveal>
