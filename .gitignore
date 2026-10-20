@@ -13,3 +13,5 @@ firebase-debug.log
 firestore-debug.log
 ui-debug.log
 .playwright-mcp/
+.impeccable/hook.cache.json
+.impeccable/questions/
