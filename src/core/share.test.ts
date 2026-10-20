@@ -32,3 +32,26 @@ describe("whatsappUrl", () => {
     expect(whatsappUrl("a b&c")).toBe("https://wa.me/?text=a%20b%26c");
   });
 });
+
+describe("whatsappText edge cases", () => {
+  it("shows a dash when every vendor is booked and lists at most five open tasks", () => {
+    const booked = {
+      ...plan,
+      vendors: plan.vendors.map((v) => ({ ...v, status: "booked" as const })),
+    };
+    const text = whatsappText(booked, labels);
+    expect(text).toContain("Vendors to book: —");
+    expect(text.split("\n").filter((l) => l.startsWith("☐")).length).toBeLessThanOrEqual(5);
+  });
+
+  it("totals spending across budget lines and skips finished tasks", () => {
+    const spent = {
+      ...plan,
+      budget: plan.budget.map((l, i) => (i < 2 ? { ...l, spent: 1000 } : l)),
+      tasks: plan.tasks.map((t, i) => (i === 0 ? { ...t, done: true } : t)),
+    };
+    const text = whatsappText(spent, labels);
+    expect(text).toContain("Spent: ₹2,000");
+    expect(text).not.toContain(`☐ ${plan.tasks[0]!.title} (`);
+  });
+});
