@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+coverage
+playwright-report
+test-results
+.playwright-mcp
+.superpowers
+.env*
+!.env.example
+e2e
+rules
+docs
+*.log
