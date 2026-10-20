@@ -1,4 +1,4 @@
-# Aayojan — design
+# Subham — design
 
 ## Intent
 
@@ -6,7 +6,7 @@ PromptWars Virtual, Challenge 5:
 
 > Create a GenAI-powered planning assistant that helps users organize weddings, birthdays, and community events with budgets, timelines, vendor checklists, and personalized ideas.
 
-Aayojan (आयोजन, "arranging an event") is that assistant for **Indian** celebrations. The goal is the highest
+Subham (शुभम् / சுபம் / శుభం, "auspicious") is that assistant for **Indian** celebrations. The goal is the highest
 possible score from the PromptWars AI ranker, which judges: problem-statement alignment, code quality,
 security, efficiency, testing, accessibility and use of Google services. Usability matters most to the user.
 
