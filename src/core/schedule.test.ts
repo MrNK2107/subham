@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addDays, daysUntil, dueDate } from "./schedule";
+import { addDays, daysUntil, dueDate, trustedToday } from "./schedule";
 
 describe("schedule", () => {
   it("counts back from the event date", () => {
@@ -22,5 +22,19 @@ describe("schedule", () => {
   it("counts days until a date", () => {
     expect(daysUntil("2026-10-27", "2026-10-20")).toBe(7);
     expect(daysUntil("2026-10-19", "2026-10-20")).toBe(-1);
+  });
+});
+
+describe("trustedToday", () => {
+  const now = new Date("2026-10-20T20:00:00Z"); // 21 Oct, 01:30 in India
+
+  it("accepts the browser's date when it is within a day of India's date", () => {
+    expect(trustedToday("2026-10-20", now)).toBe("2026-10-20");
+    expect(trustedToday("2026-10-22", now)).toBe("2026-10-22");
+  });
+
+  it("ignores missing or far-off dates", () => {
+    expect(trustedToday(undefined, now)).toBe("2026-10-21");
+    expect(trustedToday("2020-01-01", now)).toBe("2026-10-21");
   });
 });

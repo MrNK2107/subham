@@ -21,3 +21,9 @@ export function dueDate(target: string, today: string, daysBefore: number): stri
 export function todayInIndia(now = new Date()): string {
   return new Date(now.getTime() + 330 * 60_000).toISOString().slice(0, 10);
 }
+
+/** The browser's idea of today, if it is within a day of India's date (time zones); else the server's. */
+export function trustedToday(client: string | undefined, now = new Date()): string {
+  const server = todayInIndia(now);
+  return client && Math.abs(daysUntil(client, server)) <= 1 ? client : server;
+}
