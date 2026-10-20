@@ -8,14 +8,12 @@ const push = vi.fn();
 vi.mock("next/navigation", () => ({ useRouter: () => ({ push }) }));
 
 const respond = (body: unknown, status = 200) =>
-  vi
-    .fn()
-    .mockResolvedValue(
-      new Response(JSON.stringify(body), {
-        status,
-        headers: { "content-type": "application/json" },
-      }),
-    );
+  vi.fn().mockResolvedValue(
+    new Response(JSON.stringify(body), {
+      status,
+      headers: { "content-type": "application/json" },
+    }),
+  );
 
 beforeEach(() => {
   push.mockReset();
