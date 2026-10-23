@@ -124,12 +124,12 @@ export function Wizard() {
   return (
     <div className={`container ${styles.wrap}`}>
       <h1 className={styles.title}>{t("wizard.title")}</h1>
-      <p className={styles.progress}>
+      <div className={styles.progress}>
         {t("wizard.step", { n: step, total: 3 })}
         <span className={styles.bar} aria-hidden="true">
           <BulbStrand value={step} max={3} bulbs={3} label="" valueText="" />
         </span>
-      </p>
+      </div>
       {prefilled && <p className="notice">{t("wizard.prefilled")}</p>}
 
       <form className={`card ${styles.form}`} onSubmit={submit} noValidate>
