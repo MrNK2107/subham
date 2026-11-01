@@ -311,6 +311,12 @@ optgroup {
   border: 1px solid var(--wire);
   white-space: nowrap;
 }
+/* For a full sentence: wraps on narrow screens instead of pushing the page sideways. */
+.badge-wrap {
+  white-space: normal;
+  max-width: 100%;
+  border-radius: var(--radius-sm);
+}
 .badge-good {
   color: var(--leaf);
   border-color: rgb(46 229 157 / 40%);

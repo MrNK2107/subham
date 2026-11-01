@@ -58,7 +58,7 @@ export function Overview({ plan }: { plan: Plan }) {
         <section className="card" aria-labelledby="date-check">
           <h2 id="date-check">{t("overview.dateCheck")}</h2>
           {risks.length === 0 ? (
-            <p className="badge badge-good">✓ {t("overview.noRisks")}</p>
+            <p className="badge badge-good badge-wrap">✓ {t("overview.noRisks")}</p>
           ) : (
             <ul className={styles.risks}>
               {risks.map((r) => (
