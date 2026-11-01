@@ -1,7 +1,8 @@
 import { GoogleGenAI, ThinkingLevel, type GenerateContentParameters } from "@google/genai";
 import { AiUnavailable, parseJsonText, type Engine, type Source } from "./contracts";
 
-export const DEFAULT_MODELS = ["gemini-3.8-flash", "gemini-flash-lite-latest"];
+/** Fast and reliable on the free tier; 3.5 Flash covers overload or quota on the lite model. */
+export const DEFAULT_MODELS = ["gemini-3.5-flash-lite", "gemini-3.5-flash"];
 
 interface GeminiResult {
   text?: string;
