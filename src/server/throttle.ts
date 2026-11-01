@@ -42,8 +42,8 @@ export function createThrottle({
 }
 
 /**
- * Client address for rate limiting. Google's front end appends the real client address to any
- * x-forwarded-for the client sent, so only the last entry can be trusted; earlier ones are spoofable.
+ * Client address for rate limiting. The hosting proxy sets the real client address as the last entry of
+ * x-forwarded-for (Vercel overwrites the header, Google front ends append), so only that entry is trusted.
  */
 export function ipOf(req: Request): string {
   return req.headers.get("x-forwarded-for")?.split(",").at(-1)?.trim() || "unknown";

@@ -15,3 +15,8 @@ ui-debug.log
 .playwright-mcp/
 .impeccable/hook.cache.json
 .impeccable/questions/
+
+# Vercel
+.vercel
+.env*
+!.env.example

@@ -6,6 +6,8 @@ for **every function** (haldi, mehendi, sangeet, muhurtham, reception, puja, com
 **budget**, **timeline and run sheet**, **vendor checklist**, **guest list** and **personalised ideas**. An
 assistant then helps you adjust it, and only changes what you approve.
 
+**Live:** https://subham-planner.vercel.app
+
 Built for PromptWars Virtual, Challenge 5.
 
 > _Create a GenAI-powered planning assistant that helps users organize weddings, birthdays, and community
@@ -44,10 +46,10 @@ Screenshots come from a production build with the mock AI (`AI_PROVIDER=mock`); 
 
 Every Indian celebration starts the same way: the lights go up. Subham's whole interface is a night street strung with serial lights.
 
-- **Landing page:** a live Three.js scene of a narrow Indian lane at night, dressed for a wedding. Strands of serial lights cross the street and chase, jhalar curtains of lights pour down the houses, and warm haze fills the distance. A bloom pass makes the bulbs glow like real light. The nearest five strands each carry a function's name (Haldi, Mehendi, Sangeet and so on) as a hanging signboard. The camera drifts slowly into the lane, follows the pointer, and the whole street flashes when you submit. [`StreetLights.tsx`](src/ui/scene/StreetLights.tsx) draws it; the geometry is pure and tested in [`lane.ts`](src/ui/scene/lane.ts) and [`strands.ts`](src/ui/scene/strands.ts).
+- **Landing page:** a path-traced photograph of a narrow Indian lane at night, dressed for a wedding: painted plaster houses, serial lights across the street, jhalar curtains down the fronts, damp road catching every bulb. It is built and lit in Blender ([`scripts/blender/lane.py`](scripts/blender/lane.py)) and baked as one image per light group. The page adds those layers back together in WebGL2 with changing weights, so the strands chase, flash and glow like a real controller box and the light they throw on the walls and puddles changes with them. [`StreetLights.tsx`](src/ui/scene/StreetLights.tsx) composites and tone maps; the light modes are pure and tested in [`controller.ts`](src/ui/scene/controller.ts). The whole street flares when you submit.
 - **Progress is light:** every function is a strand, and its bulbs come on as tasks get done. The same [`BulbStrand`](src/ui/common/BulbStrand.tsx) meter shows tasks, budget, vendors and guests in the app. Tabs carry a bulb that lights when selected.
 - **Motion:** Motion (Framer Motion) springs drive the reveals, tab changes, wizard steps and the assistant. Animations run through the CSSOM, so the strict nonce CSP needs no inline-style exemption. Content is visible by default.
-- **Performance and comfort:** the WebGL scene is lazy-loaded and only mounts once the page has loaded and the browser is idle, so the headline paints and hydrates first (the headline itself is never faded in, since it is the largest paint). It renders at a capped pixel ratio, pauses when off screen, is a single still frame under `prefers-reduced-motion`, and is skipped entirely for Data Saver users.
+- **Performance and comfort:** the scene is lazy-loaded and only mounts once the page has loaded and the browser is idle, so the headline paints and hydrates first (the headline itself is never faded in, since it is the largest paint). It needs no 3D library: one full-screen shader over seven ~100-240 KB JPEG layers, with a baked poster shown while they load. It pauses when off screen or in a background tab, is a single still frame under `prefers-reduced-motion`, and is skipped entirely for Data Saver users.
 
 ## Built for India, in Indian languages
 
@@ -86,7 +88,6 @@ offsets and proposed changes. Pure, tested code turns that into the plan:
 - **Gemini API**: structured output, function calling and Google Search grounding.
 - **Firebase Authentication**: Google sign-in to sync plans across devices.
 - **Cloud Firestore**: synced plans with family sharing. [Security rules](firestore.rules) enforce owner, editor and viewer roles and the document shape, and are tested on the emulator.
-- **Google Cloud Run**: a container deployment ([`Dockerfile`](Dockerfile)) with a health check at `/api/health`.
 - **Google Calendar**: `.ics` export and one-click "add to Google Calendar" links.
 - **Google Fonts**: Baloo and Hind families (Latin, Devanagari, Tamil, Telugu) via `next/font`, self-hosted at build time.
 
@@ -99,7 +100,7 @@ flowchart LR
     LS[(localStorage, zod-validated)]
     UI <--> LS
   end
-  subgraph CloudRun[Cloud Run · Next.js]
+  subgraph Server[Next.js server · Vercel]
     PX[proxy.ts · nonce CSP]
     API[/api/brief · plan · assistant · ideas/<br/>guard · throttle · cache]
     AI[AiProvider<br/>Gemini | Ollama | mock]
@@ -130,7 +131,7 @@ Details and threat model in [SECURITY.md](SECURITY.md).
 
 - **Secrets:** API keys stay on the server. The Firebase web config is public by design, and Firestore rules enforce access.
 - **Content Security Policy:** a per-request nonce with `strict-dynamic` and no `unsafe-inline` or `unsafe-eval` in production. Plus HSTS, `X-Frame-Options: DENY`, `nosniff`, Referrer-Policy and Permissions-Policy (microphone for this site only).
-- **API requests:** every AI route checks the content type and body size, validates with zod, applies a per-client rate limit keyed on the address Google's front end appends (so it can't be spoofed), never caches responses, and returns error messages that reveal nothing internal.
+- **API requests:** every AI route checks the content type and body size, validates with zod, applies a per-client rate limit keyed on the client address the hosting proxy sets (so it can't be spoofed), never caches responses, and returns error messages that reveal nothing internal.
 - **Prompt injection:** user text only ever reaches the model inside fenced tags with `<` escaped (prompts refer to fields by name, never inline them), model output is schema-validated, and tool calls are allow-listed, re-checked against the real plan, and applied only after approval.
 - **Dependencies:** `npm audit --omit=dev` reports 0 vulnerabilities, and CI checks it on every push.
 
@@ -175,15 +176,35 @@ npm run dev            # http://localhost:3000
 Without any AI configured, Subham still works from its built-in templates. Without Firebase config, sign-in
 is hidden and plans stay on the device.
 
-## Deploy to Cloud Run
+## Deploy
+
+### Vercel (live deployment)
+
+```bash
+npx vercel login
+npx vercel link                 # create or link the project
+npx vercel env add GEMINI_API_KEY production      # marked sensitive; never in the repo
+npx vercel env add AI_PROVIDER production         # gemini
+npx vercel env add NEXT_PUBLIC_FIREBASE_API_KEY production   # and the other three NEXT_PUBLIC_FIREBASE_* values
+npx vercel env add NEXT_PUBLIC_SITE_URL production           # https://<project>.vercel.app
+npx vercel --prod
+firebase deploy --only firestore:rules
+```
+
+`NEXT_PUBLIC_*` values are inlined at build time, so redeploy after changing them. Add the Vercel domain
+to Firebase Authentication → Settings → Authorized domains so Google sign-in works there.
+
+### Google Cloud Run (container; needs a billing-enabled project)
 
 ```bash
 REGION=asia-south1
 IMAGE=$REGION-docker.pkg.dev/$PROJECT_ID/subham/web
-docker build -t $IMAGE   --build-arg NEXT_PUBLIC_FIREBASE_API_KEY=... --build-arg NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...   --build-arg NEXT_PUBLIC_FIREBASE_PROJECT_ID=... --build-arg NEXT_PUBLIC_FIREBASE_APP_ID=... .
+docker build -t $IMAGE   --build-arg NEXT_PUBLIC_FIREBASE_API_KEY=... --build-arg NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...   --build-arg NEXT_PUBLIC_FIREBASE_PROJECT_ID=... --build-arg NEXT_PUBLIC_FIREBASE_APP_ID=... --build-arg NEXT_PUBLIC_SITE_URL=https://... .
 docker push $IMAGE
 gcloud run deploy subham --image $IMAGE --region $REGION --allow-unauthenticated   --set-env-vars AI_PROVIDER=gemini --set-secrets GEMINI_API_KEY=gemini-api-key:latest
 firebase deploy --only firestore:rules
 ```
 
-Tech: Next.js 16 (App Router), React 19, TypeScript (strict), zod 4, `@google/genai`, Firebase, Three.js + React Three Fiber, Motion, Vitest, Playwright, axe-core.
+On Windows, [`scripts/deploy.ps1`](scripts/deploy.ps1) runs the build, push and deploy steps in one go.
+
+Tech: Next.js 16 (App Router), React 19, TypeScript (strict), zod 4, `@google/genai`, Firebase, WebGL2 (baked Blender light layers), Motion, Vitest, Playwright, axe-core.

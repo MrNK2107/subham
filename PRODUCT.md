@@ -30,7 +30,7 @@ Planned over weeks or months, revisited often, shared with family on WhatsApp, p
 - Next.js 16 App Router, React 19, TypeScript, CSS modules; strict nonce-based CSP (no inline scripts).
 - UI in English, Hindi, Tamil, Telugu; AI content in 10 Indian languages; voice input.
 - AI: Gemini in production, local Ollama (Gemma 4) for development, template fallback without AI.
-- Firebase Auth + Firestore sync and family sharing; Cloud Run deployment.
+- Firebase Auth + Firestore sync and family sharing; deployed on Vercel (Cloud Run-ready Dockerfile).
 - Judged by an AI ranker on problem alignment, code quality, security, efficiency, testing, accessibility and Google services; axe WCAG 2.2 AA end-to-end audits must keep passing.
 
 ## Brand Commitments
