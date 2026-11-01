@@ -1,0 +1,59 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{width:1440px;height:900px;overflow:hidden;background:#0b0807;color:#f3eedf;font-family:Hind,sans-serif}
+/* the pinned lane, half switched on */
+.lane{position:absolute;inset:0;background:
+ radial-gradient(40% 55% at 63% 52%,rgba(255,170,80,.42),transparent 70%),
+ radial-gradient(14% 60% at 84% 40%,rgba(255,214,150,.55),transparent 70%),
+ radial-gradient(10% 50% at 49% 45%,rgba(255,190,110,.35),transparent 70%),
+ linear-gradient(180deg,#0a0a1a 0%,#120c0a 55%,#0b0807 100%)}
+.strand{position:absolute;left:30%;right:4%;height:120px;border-bottom:2px dotted rgba(255,214,150,.0)}
+.bulbs{position:absolute;left:38%;right:6%;display:flex;justify-content:space-between}
+.bulbs i{width:7px;height:7px;border-radius:50%;background:#ffd28a;box-shadow:0 0 12px 3px rgba(255,190,100,.8)}
+.bulbs.off i{background:#3a2c26;box-shadow:none}
+.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,7,8,.92) 0%,rgba(9,7,8,.7) 36%,rgba(9,7,8,0) 62%)}
+.rail{position:absolute;left:96px;top:120px;display:grid;gap:22px}
+.rail span{display:flex;gap:14px;align-items:center;font:600 15px Hind;color:rgba(243,238,223,.45)}
+.rail span b{width:12px;height:12px;border-radius:50%;background:#3a2c26}
+.rail span.on{color:#fff1cc}.rail span.on b{background:#ffb347;box-shadow:0 0 14px 4px rgba(255,180,70,.7)}
+.copy{position:absolute;left:96px;top:300px;width:520px}
+.kick{font:600 15px Hind;letter-spacing:.12em;text-transform:uppercase;color:#ffb347}
+h2{font:800 64px/1 'Baloo 2';margin:14px 0 18px}
+p{font-size:20px;line-height:1.55;color:rgba(243,238,223,.82)}
+.glass{position:absolute;right:120px;top:190px;width:500px;padding:26px;border-radius:22px;background:linear-gradient(180deg,rgba(24,18,16,.6),rgba(10,8,9,.72));border:1px solid rgba(255,236,205,.14);backdrop-filter:blur(18px)}
+.glass h3{font:700 26px 'Baloo 2';margin-bottom:6px}
+.glass small{color:rgba(243,238,223,.6);font-size:14px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid rgba(255,236,205,.1);font-size:17px}
+.row em{font-style:normal;font-size:14px;color:#2ee59d}
+.row em.wait{color:rgba(243,238,223,.5)}
+.cta{position:absolute;left:96px;bottom:90px;display:flex;gap:14px}
+.btn{height:52px;padding:0 26px;border-radius:999px;display:flex;align-items:center;font:600 18px Hind}
+.p{background:#ffb703;color:#1a1206}.s{border:1px solid rgba(255,236,205,.3)}
+.prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#ffb347 0 46%,rgba(255,255,255,.08) 46%)}
+</style></head><body>
+<div class="lane"></div>
+<div class="bulbs" style="top:140px"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="bulbs" style="top:250px;left:44%;right:12%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="bulbs off" style="top:340px;left:48%;right:18%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="bulbs off" style="top:410px;left:51%;right:22%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="shade"></div>
+<div class="rail"><span class="on"><b></b>Describe</span><span class="on"><b></b>Plan every function</span><span><b></b>Celebrate together</span></div>
+<div class="copy">
+ <div class="kick">Chapter two</div>
+ <h2>Every function gets its own strand</h2>
+ <p>Haldi, mehendi, sangeet, muhurtham, reception. Each one is planned on its own: tasks, run sheet, vendors and food, in your language.</p>
+</div>
+<div class="glass">
+ <small>Example plan · Mehendi, Saturday evening</small>
+ <h3>Mehendi at home</h3>
+ <div class="row">Mehendi artist booked <em>Done</em></div>
+ <div class="row">Seating on the terrace planned <em>Done</em></div>
+ <div class="row">Folk singers for the evening <em class="wait">This week</em></div>
+ <div class="row">Snacks: chaat counter, jaljeera <em class="wait">Ask caterer</em></div>
+</div>
+<div class="cta"><div class="btn p">Light up my celebration</div><div class="btn s">See an example plan</div></div>
+<div class="prog"></div>
+</body></html>

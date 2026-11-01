@@ -1,0 +1,474 @@
+/* ---------- The evening: one celebration told as its own run sheet ---------- */
+/* Registered so the night air can fade from one hour's colour to the next. */
+@property --ground {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0b0807;
+}
+.evening {
+  --ground: #0b0807;
+  --cream: rgb(243 238 223);
+  --hairline: rgb(255 236 205 / 13%);
+  position: relative;
+  background: var(--ground);
+  color: var(--cream);
+}
+/* The air between the photographs cools as the clock moves: gold, dusk, lamp-light, night. */
+.evening[data-hour="haldi"] {
+  --ground: #170e07;
+}
+.evening[data-hour="sangeet"] {
+  --ground: #0f0a10;
+}
+.evening[data-hour="ceremony"] {
+  --ground: #100806;
+}
+.evening[data-hour="sendoff"] {
+  --ground: #07070b;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .evening {
+    transition: --ground 1400ms var(--ease-out);
+  }
+}
+.intro {
+  padding-block: clamp(5rem, 12vh, 8rem) clamp(2.5rem, 6vh, 4rem);
+}
+.intro h2 {
+  font-size: clamp(2.2rem, 4.6vw, 4rem);
+  line-height: 1.02;
+  max-width: 18ch;
+  margin: 0 0 1rem;
+  text-wrap: balance;
+}
+.intro p {
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  color: rgb(243 238 223 / 80%);
+  max-width: 52ch;
+  margin: 0;
+}
+
+.body {
+  position: relative;
+}
+
+/* The clock: a strand down the left edge, one bulb per hour, lit for the hour on screen. */
+.railWrap {
+  position: sticky;
+  top: calc(64px + 22vh);
+  height: 0;
+  z-index: 3;
+}
+.rail {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0 var(--gutter, 1.25rem);
+  max-width: var(--max);
+  display: grid;
+  gap: 1.6rem;
+  position: relative;
+}
+.rail::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--gutter, 1.25rem) + 6px);
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgb(255 236 205 / 28%) 15%,
+    rgb(255 236 205 / 28%) 85%,
+    transparent
+  );
+}
+.rail a {
+  display: grid;
+  grid-template-columns: 13px auto;
+  column-gap: 0.85rem;
+  align-items: center;
+  width: max-content;
+  color: rgb(243 238 223 / 52%);
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 0.15rem 0.4rem 0.15rem 0;
+  transition: color 400ms var(--ease-out);
+}
+.rail a:hover {
+  color: var(--cream);
+}
+.rail a:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 4px;
+}
+.bulb {
+  grid-row: span 2;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #2c211d;
+  border: 1px solid #5a463b;
+  transition:
+    background-color 400ms var(--ease-out),
+    box-shadow 400ms var(--ease-out);
+}
+.railTime {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.railName {
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+.rail li[data-active] a {
+  color: var(--cream);
+}
+/* Now: the current hour grows and burns brighter than the ones around it. */
+.railTime {
+  transform-origin: left center;
+  transition:
+    transform 500ms var(--ease-out),
+    color 500ms var(--ease-out);
+}
+.rail li[data-active] .railTime {
+  transform: scale(1.45);
+  color: #fff1d6;
+}
+.rail li[data-active] .railName {
+  margin-top: 0.3rem;
+  color: var(--amber);
+}
+/* A bulb is a light source: its halo is the subject, not decoration. */
+.rail li[data-active] .bulb {
+  background: #ffcf7a;
+  border-color: #ffe2a8;
+  box-shadow:
+    0 0 0 3px rgb(255 183 3 / 18%),
+    0 0 18px 4px rgb(255 170 60 / 55%);
+}
+
+/* ---------- Chapters ---------- */
+.chapter {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: grid;
+  align-items: end;
+  padding-block: 22vh 12vh;
+  overflow: hidden;
+  background: var(--ground);
+  scroll-margin-top: 64px;
+}
+/* Golden hour needs its sun: the first hour's night air is thinner. */
+@media (min-width: 901px) {
+  .chapter[data-hour="haldi"] .plateWrap::after {
+    background:
+      linear-gradient(90deg, rgb(11 8 7 / 72%) 0%, rgb(11 8 7 / 30%) 34%, rgb(11 8 7 / 0%) 58%),
+      linear-gradient(0deg, rgb(11 8 7 / 62%) 0%, rgb(11 8 7 / 0%) 36%),
+      linear-gradient(
+        180deg,
+        var(--ground) 0%,
+        rgb(11 8 7 / 0%) 12%,
+        rgb(11 8 7 / 0%) 86%,
+        var(--ground) 100%
+      );
+  }
+}
+/* Inset a few pixels over solid ground, so no fractional edge can show a sliver of photograph. */
+.plateWrap {
+  position: absolute;
+  inset: 3px 0;
+  z-index: -1;
+  overflow: hidden;
+}
+.plate {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 58% 50%;
+  display: block;
+}
+/* Warm-black night air over the photograph: darkest where the words sit, open where the light is,
+   and fading into the next hour at the top and bottom. */
+.plateWrap::after {
+  content: "";
+  position: absolute;
+  /* Bleeds past the edge so fractional heights never show a seam of photo. */
+  inset: -2px;
+  background:
+    linear-gradient(90deg, rgb(11 8 7 / 82%) 0%, rgb(11 8 7 / 48%) 34%, rgb(11 8 7 / 0%) 62%),
+    linear-gradient(0deg, rgb(11 8 7 / 70%) 0%, rgb(11 8 7 / 0%) 40%),
+    linear-gradient(
+      180deg,
+      var(--ground) 0%,
+      rgb(11 8 7 / 0%) 14%,
+      rgb(11 8 7 / 0%) 82%,
+      var(--ground) 100%
+    );
+}
+.chapterInner {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 34rem) minmax(0, 1fr);
+  column-gap: 2rem;
+  align-items: end;
+}
+.copy {
+  grid-column: 2;
+}
+.hour {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  column-gap: 1rem;
+  margin: 0 0 0.75rem;
+}
+.time {
+  flex: none;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(3rem, 6.4vw, 5.75rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: #fff1d6;
+  text-shadow: 0 4px 30px rgb(0 0 0 / 55%);
+}
+/* One lockup with the time on every screen: never wrapped, never above the heading on its own. */
+.fn {
+  flex: none;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: var(--amber);
+}
+.copy h3 {
+  font-size: clamp(1.6rem, 2.8vw, 2.5rem);
+  line-height: 1.08;
+  max-width: 20ch;
+  margin: 0 0 0.9rem;
+  text-wrap: balance;
+  text-shadow: 0 2px 20px rgb(0 0 0 / 60%);
+}
+.lead {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgb(243 238 223 / 86%);
+  max-width: 46ch;
+  margin: 0;
+  text-shadow: 0 1px 14px rgb(0 0 0 / 80%);
+}
+
+/* A slice of the real plan for this hour, in the same smoked glass as the describe form. */
+.slice {
+  grid-column: 3;
+  justify-self: end;
+  width: min(27rem, 100%);
+  background: linear-gradient(180deg, rgb(26 19 16 / 60%), rgb(10 8 9 / 76%));
+  backdrop-filter: blur(16px) saturate(130%);
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+  padding: 1.1rem 1.25rem 0.5rem;
+  box-shadow:
+    inset 0 1px 0 rgb(255 244 225 / 7%),
+    0 30px 60px -24px rgb(0 0 0 / 85%);
+}
+.sliceHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.sliceTag {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: rgb(243 238 223 / 72%);
+  border: 1px dashed rgb(255 236 205 / 30%);
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+  white-space: nowrap;
+}
+.slice ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.slice li {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, auto) 1fr;
+  column-gap: 0.9rem;
+  padding: 0.7rem 0;
+  border-top: 1px solid rgb(255 236 205 / 10%);
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+.rowLead {
+  font-weight: 600;
+  color: var(--amber);
+  font-variant-numeric: tabular-nums;
+}
+.rowText {
+  color: rgb(243 238 223 / 90%);
+}
+
+/* ---------- Scroll: each hour settles in as it arrives ---------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .plate {
+      animation: settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 55%;
+    }
+    .copy {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 90%;
+    }
+    .slice {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 20% entry 100%;
+    }
+  }
+}
+@keyframes settle {
+  from {
+    transform: scale(1.14);
+    filter: brightness(0.4) saturate(0.75);
+  }
+  to {
+    transform: scale(1);
+    filter: none;
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(44px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* ---------- Narrow screens: the clock lives in each chapter's own hour ---------- */
+@media (max-width: 900px) {
+  /* On a phone the clock becomes a strip under the header: the hour on screen, and a bulb for
+     every hour of the evening. */
+  .intro {
+    padding-top: 3rem;
+  }
+  .railWrap {
+    top: var(--header-h, 0px);
+    height: auto;
+    margin-bottom: -3.25rem;
+    pointer-events: none;
+  }
+  .rail {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: max-content;
+    margin: 0 0 0 1.25rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    background: rgb(11 8 7 / 72%);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--hairline);
+    pointer-events: auto;
+  }
+  .rail::before {
+    display: none;
+  }
+  .rail a {
+    grid-template-columns: 11px;
+    column-gap: 0.5rem;
+    place-items: center;
+    min-width: 24px;
+    min-height: 24px;
+    padding: 0;
+  }
+  /* The other hours shrink to their bulb; their names stay for screen readers. */
+  .rail li:not([data-active]) .railTime,
+  .rail li:not([data-active]) .railName {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .rail li[data-active] a {
+    grid-template-columns: 11px auto auto;
+    place-items: center start;
+  }
+  .rail li[data-active] .railTime {
+    transform: none;
+    font-size: 1rem;
+  }
+  .rail li[data-active] .railName {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  .bulb {
+    width: 11px;
+    height: 11px;
+    grid-row: auto;
+  }
+  .time {
+    font-size: clamp(2.1rem, 9.6vw, 3.25rem);
+  }
+  .fn {
+    font-size: 1rem;
+  }
+  .chapter {
+    min-height: 0;
+    padding-block: 0 4.5rem;
+    align-items: start;
+  }
+  .plateWrap {
+    position: relative;
+    inset: auto;
+    z-index: 0;
+    aspect-ratio: 4 / 3;
+  }
+  .plate {
+    object-position: 62% 50%;
+  }
+  .plateWrap::after {
+    background: linear-gradient(
+      180deg,
+      var(--ground) 0%,
+      rgb(11 8 7 / 0%) 18%,
+      rgb(11 8 7 / 0%) 55%,
+      var(--ground) 100%
+    );
+  }
+  .chapterInner {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 1.75rem;
+    margin-top: -3.5rem;
+    position: relative;
+  }
+  .copy,
+  .slice {
+    grid-column: 1;
+  }
+  .slice {
+    justify-self: stretch;
+    width: 100%;
+  }
+}

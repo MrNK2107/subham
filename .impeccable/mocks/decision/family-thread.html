@@ -1,0 +1,48 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Hind:wght@400;500;600&family=Hind+Madurai:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{width:1440px;height:900px;overflow:hidden;background:#0b0807;color:#f3eedf;font-family:Hind,sans-serif}
+.lane{position:absolute;inset:0;background:
+ radial-gradient(18% 70% at 88% 40%,rgba(255,206,140,.4),transparent 70%),
+ radial-gradient(30% 40% at 60% 50%,rgba(255,170,80,.22),transparent 70%),
+ linear-gradient(180deg,#0a0a1a,#120c0a 60%,#0b0807)}
+.lane:after{content:"";position:absolute;inset:0;background:rgba(9,7,8,.55)}
+.copy{position:absolute;left:96px;top:150px;width:440px}
+.kick{font:600 15px Hind;letter-spacing:.12em;text-transform:uppercase;color:#ffb347}
+h2{font:800 60px/1.02 'Baloo 2';margin:12px 0 18px}
+p{font-size:20px;line-height:1.55;color:rgba(243,238,223,.82)}
+.thread{position:absolute;left:640px;top:90px;width:640px;display:grid;gap:16px}
+.msg{max-width:420px;padding:14px 18px;border-radius:18px 18px 18px 6px;background:rgba(255,244,225,.08);border:1px solid rgba(255,236,205,.1);font-size:18px}
+.msg small{display:block;font:600 13px Hind;color:#ffb347;margin-bottom:4px}
+.msg.ta{font-family:'Hind Madurai'}
+.card{justify-self:end;width:480px;padding:22px;border-radius:20px 20px 6px 20px;background:linear-gradient(180deg,rgba(24,18,16,.75),rgba(10,8,9,.85));border:1px solid rgba(255,183,3,.35);box-shadow:0 -10px 40px -20px rgba(255,183,3,.5)}
+.card small{color:rgba(243,238,223,.6);font-size:13px}
+.card h3{font:700 22px 'Baloo 2';margin:4px 0 10px}
+.card li{list-style:none;padding:8px 0;border-top:1px solid rgba(255,236,205,.1);font-size:16px}
+.acts{display:flex;gap:10px;margin-top:14px}
+.btn{height:44px;padding:0 20px;border-radius:999px;display:flex;align-items:center;font:600 16px Hind}
+.p{background:#ffb703;color:#1a1206}.s{border:1px solid rgba(255,236,205,.3)}
+.cta{position:absolute;left:96px;bottom:110px;display:flex;gap:14px}
+.cta .btn{height:52px;font-size:18px;padding:0 26px}
+</style></head><body>
+<div class="lane"></div>
+<div class="copy">
+ <div class="kick">How families plan</div>
+ <h2>Everyone asks. Subham answers. You approve.</h2>
+ <p>Share the plan with the family. Questions come in any language; changes are proposed, never applied until you say yes.</p>
+</div>
+<div class="thread">
+ <div class="msg ta"><small>Amma</small>மெஹந்திக்கு எவ்வளவு செலவாகும்?</div>
+ <div class="msg"><small>Karthik</small>Can we move the sangeet to the terrace?</div>
+ <div class="card">
+  <small>Subham · proposed change</small>
+  <h3>Sangeet moves to the terrace</h3>
+  <li>Hall booking released, saves the advance on chairs</li>
+  <li>Adds lighting and a canopy in case of rain</li>
+  <div class="acts"><div class="btn p">Approve</div><div class="btn s">Not now</div></div>
+ </div>
+</div>
+<div class="cta"><div class="btn p">Start your family's plan</div><div class="btn s">Start step by step</div></div>
+</body></html>

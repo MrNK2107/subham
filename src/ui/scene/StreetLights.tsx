@@ -1,374 +1,268 @@
 "use client";
 
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useEffect, useMemo, useRef, useState } from "react";
-import * as THREE from "three";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
-import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
-import { buildLane, LANE_HALF, type Lane } from "./lane";
+import { useEffect, useRef, useState } from "react";
+import { GROUPS, groupLevels, stillLevels } from "./controller";
 import { sceneSignal } from "./signal";
-import { chase, pointOnStrand } from "./strands";
 
-const CROSS_COLORS = ["#ffb347", "#ff5c9a", "#3ff0a6", "#fff1cc", "#ffb347", "#7ec8ff"];
-const CURTAIN_COLORS = {
-  warm: ["#fff1cc", "#ffe2a8"],
-  amber: ["#ffb347", "#ffc970"],
-  mixed: ["#fff1cc", "#ff5c9a", "#ffb347", "#3ff0a6"],
-};
-const CURTAIN_SPACING = 0.36;
+/**
+ * The hero is a path-traced photograph of a lane dressed for a wedding (scripts/blender/lane.py),
+ * baked as one image per light group. Light adds linearly, so summing the layers with changing
+ * weights re-lights the street: as a strand chases, its glow on the plaster, the puddles and the
+ * glass of neighbouring bulbs chases with it.
+ */
+const BASE = "/scene/lane";
+/** Where to centre the crop: the vanishing point on wide screens, the lit facades in portrait. */
+const FOCUS: [number, number] = [0.59, 0.5];
+const FOCUS_PORTRAIT: [number, number] = [0.8, 0.5];
+const IMAGE_ASPECT = 16 / 9;
 
-interface Bulb {
-  kind: "cross" | "curtain";
-  /** Index along its strand (for the chase). */
-  i: number;
-  phase: number;
-  base: THREE.Color;
+const VERTEX = `#version 300 es
+in vec2 aPos;
+out vec2 vUv;
+void main() {
+  vUv = aPos * 0.5 + 0.5;
+  vUv.y = 1.0 - vUv.y;
+  gl_Position = vec4(aPos, 0.0, 1.0);
+}`;
+
+const FRAGMENT = `#version 300 es
+precision highp float;
+in vec2 vUv;
+out vec4 outColor;
+uniform sampler2D uL0, uL1, uL2, uL3, uL4, uL5, uL6;
+uniform float uW[7];
+uniform vec2 uScale;
+uniform vec2 uOffset;
+uniform float uTime;
+
+// Layers are stored as (x / (1 + x)) ^ (1 / 2.2) so filaments keep their headroom in a JPEG.
+vec3 decode(vec3 v) {
+  vec3 y = pow(v, vec3(2.2));
+  return y / max(1.0 - y, vec3(1e-3));
 }
 
-function skyTexture(): THREE.Texture {
-  const c = document.createElement("canvas");
-  c.width = 2;
-  c.height = 512;
-  const ctx = c.getContext("2d")!;
-  const g = ctx.createLinearGradient(0, 0, 0, 512);
-  g.addColorStop(0, "#04041a");
-  g.addColorStop(0.45, "#0b0a26");
-  g.addColorStop(0.6, "#140e30");
-  g.addColorStop(0.72, "#1f1233");
-  g.addColorStop(1, "#0a0819");
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, 2, 512);
-  const t = new THREE.CanvasTexture(c);
-  t.colorSpace = THREE.SRGBColorSpace;
-  return t;
+// Minimal AgX (Benjamin Wrensch's fit): the same view transform the scene was lit under.
+vec3 agx(vec3 v) {
+  const mat3 m = mat3(0.842479062253094, 0.0423282422610123, 0.0423756549057051,
+    0.0784335999999992, 0.878468636469772, 0.0784336,
+    0.0792237451477643, 0.0791661274605434, 0.879142973793104);
+  const mat3 inv = mat3(1.19687900512017, -0.0528968517574562, -0.0529716355144438,
+    -0.0980208811401368, 1.15190312990417, -0.0980434501171241,
+    -0.0990297440797205, -0.0989611768448433, 1.15107367264116);
+  const float lo = -12.47393;
+  const float hi = 4.026069;
+  v = m * v;
+  v = (clamp(log2(max(v, vec3(1e-10))), lo, hi) - lo) / (hi - lo);
+  vec3 v2 = v * v;
+  vec3 v4 = v2 * v2;
+  v = 15.5 * v4 * v2 - 40.14 * v4 * v + 31.96 * v4 - 6.868 * v2 * v + 0.4298 * v2 + 0.1191 * v - 0.00232;
+  return clamp(inv * v, 0.0, 1.0);
 }
 
-function labelTexture(text: string, font: string): THREE.CanvasTexture {
-  const scale = 3;
-  const measure = document.createElement("canvas").getContext("2d")!;
-  measure.font = `700 ${28 * scale}px ${font}`;
-  const c = document.createElement("canvas");
-  c.width = Math.ceil(measure.measureText(text).width) + 40 * scale;
-  c.height = 56 * scale;
-  const g = c.getContext("2d")!;
-  // A dark signboard with warm lettering: only the letters are bright enough to glow.
-  g.fillStyle = "#1a1438";
-  g.strokeStyle = "#8a6a2a";
-  g.lineWidth = 3 * scale;
-  g.beginPath();
-  g.roundRect(2 * scale, 2 * scale, c.width - 4 * scale, c.height - 4 * scale, [
-    6 * scale,
-    6 * scale,
-    12 * scale,
-    12 * scale,
-  ]);
-  g.fill();
-  g.stroke();
-  g.fillStyle = "#ffd58a";
-  g.font = `700 ${28 * scale}px ${font}`;
-  g.textAlign = "center";
-  g.textBaseline = "middle";
-  g.fillText(text, c.width / 2, c.height / 2 + 2 * scale);
-  const t = new THREE.CanvasTexture(c);
-  t.colorSpace = THREE.SRGBColorSpace;
-  t.anisotropy = 4;
-  return t;
+float hash(vec2 p) {
+  return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
 }
 
-/** A soft warm streak down the middle of the road: light from the strands on worn stone. */
-function roadTexture(): THREE.Texture {
-  const c = document.createElement("canvas");
-  c.width = 128;
-  c.height = 512;
-  const ctx = c.getContext("2d")!;
-  const across = ctx.createLinearGradient(0, 0, 128, 0);
-  across.addColorStop(0, "rgba(255,170,80,0)");
-  across.addColorStop(0.5, "rgba(255,170,80,0.55)");
-  across.addColorStop(1, "rgba(255,170,80,0)");
-  ctx.fillStyle = across;
-  ctx.fillRect(0, 0, 128, 512);
-  ctx.globalCompositeOperation = "destination-in";
-  const along = ctx.createLinearGradient(0, 0, 0, 512);
-  along.addColorStop(0, "rgba(0,0,0,0.15)");
-  along.addColorStop(0.7, "rgba(0,0,0,1)");
-  along.addColorStop(1, "rgba(0,0,0,0.2)");
-  ctx.fillStyle = along;
-  ctx.fillRect(0, 0, 128, 512);
-  const t = new THREE.CanvasTexture(c);
-  t.colorSpace = THREE.SRGBColorSpace;
-  return t;
+void main() {
+  vec2 uv = uOffset + vUv * uScale;
+  vec3 c = vec3(0.0);
+  vec3 glow = vec3(0.0);
+  #define LAYER(i, tex) { \\
+    c += uW[i] * decode(texture(tex, uv).rgb); \\
+    glow += uW[i] * (decode(textureLod(tex, uv, 3.0).rgb) * 0.6 + decode(textureLod(tex, uv, 5.0).rgb)); \\
+  }
+  LAYER(0, uL0) LAYER(1, uL1) LAYER(2, uL2) LAYER(3, uL3) LAYER(4, uL4) LAYER(5, uL5) LAYER(6, uL6)
+  // Light scattering in the evening air and the lens: a soft halo around everything bright.
+  c += glow * 0.07;
+  vec3 col = agx(c);
+  // A lens falls off towards the corners, and film is never perfectly clean.
+  vec2 d = vUv - 0.5;
+  col *= 1.0 - dot(d, d) * 0.55;
+  col += (hash(vUv * 1024.0 + fract(uTime) * 61.0) - 0.5) * 0.018;
+  outColor = vec4(col, 1.0);
+}`;
+
+function compile(gl: WebGL2RenderingContext, type: number, source: string): WebGLShader {
+  const shader = gl.createShader(type)!;
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    throw new Error(gl.getShaderInfoLog(shader) ?? "shader failed to compile");
+  }
+  return shader;
 }
 
-/** Bloom post-processing: the bulbs read as light, not dots. */
-function Bloom({ strength }: { strength: number }) {
-  const { gl, scene, camera, size } = useThree();
-  const composer = useMemo(() => {
-    const c = new EffectComposer(gl);
-    c.addPass(new RenderPass(scene, camera));
-    c.addPass(new UnrealBloomPass(new THREE.Vector2(256, 256), strength, 0.42, 0.85));
-    c.addPass(new OutputPass());
-    return c;
-  }, [gl, scene, camera, strength]);
-  useEffect(() => {
-    composer.setPixelRatio(gl.getPixelRatio());
-    composer.setSize(size.width, size.height);
-  }, [composer, size, gl]);
-  useEffect(() => () => composer.dispose(), [composer]);
-  useFrame(() => composer.render(), 1);
-  return null;
-}
-
-function Street({ still, labels, mobile }: { still: boolean; labels: string[]; mobile: boolean }) {
-  const { camera } = useThree();
-  const lane: Lane = useMemo(
-    () => buildLane({ depth: mobile ? 45 : 64, curtains: mobile ? 6 : 11 }),
-    [mobile],
-  );
-  const sky = useMemo(() => skyTexture(), []);
-  const roadGlow = useMemo(() => roadTexture(), []);
-  const pointer = useRef({ x: 0, y: 0 });
-  const bulbsRef = useRef<THREE.InstancedMesh>(null);
-
-  // Every bulb in the street, in one instanced mesh.
-  const { bulbs, positions, scales } = useMemo(() => {
-    const bulbs: Bulb[] = [];
-    const positions: THREE.Vector3[] = [];
-    const scales: number[] = [];
-    lane.crossings.forEach((s, ci) => {
-      for (let i = 0; i < s.bulbs; i++) {
-        bulbs.push({
-          kind: "cross",
-          i,
-          phase: s.phase,
-          base: new THREE.Color(CROSS_COLORS[(i + ci) % CROSS_COLORS.length]),
-        });
-        const [x, y, z] = pointOnStrand(s, (i + 0.5) / s.bulbs);
-        positions.push(new THREE.Vector3(x, y - 0.08, z));
-        scales.push(1);
-      }
-    });
-    lane.curtains.forEach((c, k) => {
-      const colors = CURTAIN_COLORS[c.palette];
-      for (let s = 0; s < c.strings; s++) {
-        const z = c.zFrom + ((c.zTo - c.zFrom) * (s + 0.5)) / c.strings;
-        // Strings vary a little in length, like real jhalar.
-        const bottom = c.bottom + ((s * 37) % 7) * 0.12;
-        let i = 0;
-        for (
-          let y = c.top - (s % 3) * (CURTAIN_SPACING / 3);
-          y > bottom;
-          y -= CURTAIN_SPACING, i++
-        ) {
-          bulbs.push({
-            kind: "curtain",
-            i,
-            phase: k * 1.3 + s * 0.15,
-            base: new THREE.Color(colors[(s + i) % colors.length]),
-          });
-          positions.push(new THREE.Vector3(c.x, y, z));
-          scales.push(0.62);
-        }
-      }
-    });
-    return { bulbs, positions, scales };
-  }, [lane]);
-
-  // Wires across the street.
-  const wires = useMemo(() => {
-    const material = new THREE.LineBasicMaterial({ color: "#2a2550" });
-    return lane.crossings.map((s) => {
-      const points = Array.from({ length: 33 }, (_, j) => {
-        const [x, y, z] = pointOnStrand(s, j / 32);
-        return new THREE.Vector3(x, y, z);
-      });
-      return new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), material);
-    });
-  }, [lane]);
-
-  // Function names hang as tags from the nearest visible strands.
-  const tags = useMemo(() => {
-    const font =
-      getComputedStyle(document.documentElement).getPropertyValue("--font-baloo").trim() ||
-      "sans-serif";
-    return labels.slice(0, 5).map((text, k) => {
-      const s = lane.crossings[k + 1] ?? lane.crossings[0]!;
-      const [x, y, z] = pointOnStrand(s, 0.62 + (k % 3) * 0.1);
-      const map = labelTexture(text, font);
-      const aspect =
-        (map.image as HTMLCanvasElement).width / (map.image as HTMLCanvasElement).height;
-      return {
-        map,
-        position: new THREE.Vector3(x, y - 0.85, z),
-        scale: new THREE.Vector3(0.55 * aspect, 0.55, 1),
-        string: new THREE.Line(
-          new THREE.BufferGeometry().setFromPoints([
-            new THREE.Vector3(x, y - 0.08, z),
-            new THREE.Vector3(x, y - 0.6, z),
-          ]),
-          new THREE.LineBasicMaterial({ color: "#4a4380" }),
-        ),
-      };
-    });
-  }, [labels, lane]);
-
-  useEffect(() => {
-    const mesh = bulbsRef.current;
-    if (!mesh) return;
-    const m = new THREE.Matrix4();
-    positions.forEach((p, k) => {
-      const sc = scales[k] ?? 1;
-      m.makeScale(sc, sc, sc).setPosition(p.x, p.y, p.z);
-      mesh.setMatrixAt(k, m);
-    });
-    mesh.instanceMatrix.needsUpdate = true;
-  }, [positions, scales]);
-
-  useEffect(() => {
-    const onMove = (e: PointerEvent) => {
-      pointer.current = {
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: (e.clientY / window.innerHeight) * 2 - 1,
-      };
-    };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    return () => window.removeEventListener("pointermove", onMove);
-  }, []);
-
-  const houseColors = useMemo(
-    () =>
-      lane.houses.map((h) => new THREE.Color("#100d26").lerp(new THREE.Color("#241c48"), h.tone)),
-    [lane],
-  );
-  const color = useMemo(() => new THREE.Color(), []);
-
-  useFrame(({ clock }) => {
-    const mesh = bulbsRef.current;
-    if (!mesh) return;
-    const t = still ? 3.1 : clock.elapsedTime;
-    const since = performance.now() - sceneSignal.burstAt;
-    const burst = since < 1600 ? 1 - since / 1600 : 0;
-    for (let k = 0; k < bulbs.length; k++) {
-      const b = bulbs[k]!;
-      const level =
-        b.kind === "cross"
-          ? chase(b.i, t, b.phase, 2.4 + burst * 8)
-          : // Curtains pour downward like a waterfall.
-            0.45 + 0.55 * Math.max(0, Math.sin(t * 3.2 - b.i * 0.42 + b.phase));
-      // Values above 1 feed the bloom; tungsten never goes fully dark.
-      const intensity = (0.35 + level * 1.9 + burst * 1.2) * (b.kind === "curtain" ? 0.62 : 1);
-      color.copy(b.base).multiplyScalar(intensity);
-      mesh.setColorAt(k, color);
-    }
-    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
-
-    // A slow walk into the lane, plus parallax towards the pointer.
-    const walk = still ? 0 : Math.sin(t * 0.05) * 1.2;
-    camera.position.x += (0.9 + pointer.current.x * 0.6 - camera.position.x) * 0.04;
-    camera.position.y += (1.7 - pointer.current.y * 0.25 - camera.position.y) * 0.04;
-    camera.position.z = 9 - walk;
-    camera.lookAt(-1.9, 3.6, -30);
+function loadImage(src: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.decoding = "async";
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
   });
+}
 
-  return (
-    <>
-      <primitive attach="background" object={sky} />
-      <fogExp2 attach="fog" args={["#0a0822", 0.024]} />
-
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -25]}>
-        <planeGeometry args={[LANE_HALF * 2 + 10, 90]} />
-        <meshBasicMaterial color="#0c0a1e" />
-      </mesh>
-
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, -18]}>
-        <planeGeometry args={[LANE_HALF * 2, 60]} />
-        <meshBasicMaterial
-          map={roadGlow}
-          transparent
-          opacity={0.5}
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
-
-      {lane.houses.map((h, k) => (
-        <mesh key={k} position={[h.x, h.height / 2, h.z]}>
-          <boxGeometry args={[h.width, h.height, h.depth]} />
-          <meshBasicMaterial color={houseColors[k]} />
-        </mesh>
-      ))}
-
-      {/* Lit windows: warm panes, dimmer than the bulbs. */}
-      {lane.windows.map(([x, y, z], k) => (
-        <mesh key={k} position={[x, y, z]} rotation={[0, x < 0 ? Math.PI / 2 : -Math.PI / 2, 0]}>
-          <planeGeometry args={[0.42, 0.6]} />
-          <meshBasicMaterial color={k % 3 === 0 ? "#3a2420" : "#6e4524"} />
-        </mesh>
-      ))}
-
-      {wires.map((line, k) => (
-        <primitive key={k} object={line} />
-      ))}
-
-      <instancedMesh ref={bulbsRef} args={[undefined, undefined, positions.length]}>
-        <sphereGeometry args={[0.075, 10, 8]} />
-        <meshBasicMaterial toneMapped={false} />
-      </instancedMesh>
-
-      {tags.map((tag, k) => (
-        <group key={k}>
-          <primitive object={tag.string} />
-          <sprite position={tag.position} scale={tag.scale}>
-            <spriteMaterial map={tag.map} fog={false} />
-          </sprite>
-        </group>
-      ))}
-    </>
-  );
+/** UV scale and offset for object-fit: cover around the focal point, with room for parallax. */
+function cover(width: number, height: number, zoom: number): { scale: number[]; offset: number[] } {
+  const aspect = width / height;
+  let sx = 1 / zoom;
+  let sy = 1 / zoom;
+  if (aspect > IMAGE_ASPECT) sy *= IMAGE_ASPECT / aspect;
+  else sx *= aspect / IMAGE_ASPECT;
+  const focus = aspect < 1 ? FOCUS_PORTRAIT : FOCUS;
+  const ox = Math.min(1 - sx, Math.max(0, focus[0] - sx / 2));
+  const oy = Math.min(1 - sy, Math.max(0, focus[1] - sy / 2));
+  return { scale: [sx, sy], offset: [ox, oy] };
 }
 
 /**
- * A night lane dressed for a wedding: strands of serial lights across the street, jhalar curtains
- * down the houses, haze in the distance. Decorative: hidden from assistive tech, paused off screen,
- * a single still frame for people who prefer reduced motion.
+ * A night lane dressed for a wedding. Decorative: hidden from assistive tech, paused off screen
+ * and in background tabs, a single still frame for people who prefer reduced motion, and the
+ * baked poster if WebGL2 isn't available.
  */
-export default function StreetLights({ labels = [] }: { labels?: string[] }) {
+export default function StreetLights() {
   const wrap = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(true);
-  const [still, setStill] = useState(false);
-  const [mobile, setMobile] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const narrow = window.matchMedia("(max-width: 700px)");
-    const update = () => {
-      setStill(motion.matches);
-      setMobile(narrow.matches);
+    const canvas = canvasRef.current;
+    const gl = canvas?.getContext("webgl2", { antialias: false, alpha: false });
+    if (!canvas || !gl) return;
+    let disposed = false;
+    let frame = 0;
+    let visible = true;
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+
+    const program = gl.createProgram()!;
+    try {
+      gl.attachShader(program, compile(gl, gl.VERTEX_SHADER, VERTEX));
+      gl.attachShader(program, compile(gl, gl.FRAGMENT_SHADER, FRAGMENT));
+      gl.linkProgram(program);
+    } catch {
+      // The poster stays.
+      return;
+    }
+    gl.useProgram(program);
+    const textures: WebGLTexture[] = [];
+    const quad = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    const aPos = gl.getAttribLocation(program, "aPos");
+    gl.enableVertexAttribArray(aPos);
+    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+    const uW = gl.getUniformLocation(program, "uW");
+    const uScale = gl.getUniformLocation(program, "uScale");
+    const uOffset = gl.getUniformLocation(program, "uOffset");
+    const uTime = gl.getUniformLocation(program, "uTime");
+
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(canvas.clientWidth * dpr);
+      canvas.height = Math.round(canvas.clientHeight * dpr);
+      gl.viewport(0, 0, canvas.width, canvas.height);
     };
-    update();
-    motion.addEventListener("change", update);
-    narrow.addEventListener("change", update);
-    const io = new IntersectionObserver(([entry]) => setVisible(Boolean(entry?.isIntersecting)));
-    if (wrap.current) io.observe(wrap.current);
+
+    const draw = (now: number) => {
+      const t = now / 1000;
+      const since = performance.now() - sceneSignal.burstAt;
+      const burst = since < 1600 ? 1 - since / 1600 : 0;
+      const levels = still.matches ? stillLevels() : groupLevels(t, burst);
+      // Ease towards the pointer: the camera drifts a few centimetres, never jumps.
+      pointer.x += (pointer.tx - pointer.x) * 0.05;
+      pointer.y += (pointer.ty - pointer.y) * 0.05;
+      const { scale, offset } = cover(canvas.width, canvas.height, 1.05);
+      const slack = [(1 - scale[0]!) * 0.5, (1 - scale[1]!) * 0.5];
+      gl.uniform1fv(uW, levels);
+      gl.uniform2f(uScale, scale[0]!, scale[1]!);
+      gl.uniform2f(
+        uOffset,
+        Math.min(1 - scale[0]!, Math.max(0, offset[0]! + pointer.x * slack[0]! * 0.5)),
+        Math.min(1 - scale[1]!, Math.max(0, offset[1]! + pointer.y * slack[1]! * 0.5)),
+      );
+      gl.uniform1f(uTime, t);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    };
+
+    const loop = (now: number) => {
+      if (disposed) return;
+      draw(now);
+      frame = visible && !still.matches ? requestAnimationFrame(loop) : 0;
+    };
+    const start = () => {
+      if (!frame && !disposed) frame = requestAnimationFrame(loop);
+    };
+
+    const onMove = (e: PointerEvent) => {
+      pointer.tx = (e.clientX / window.innerWidth) * 2 - 1;
+      pointer.ty = (e.clientY / window.innerHeight) * 2 - 1;
+    };
+    const onVisibility = () => {
+      visible = !document.hidden;
+      if (visible) start();
+    };
+    const io = new IntersectionObserver(([entry]) => {
+      visible = Boolean(entry?.isIntersecting) && !document.hidden;
+      if (visible) start();
+    });
+    const ro = new ResizeObserver(() => {
+      resize();
+      start();
+    });
+
+    Promise.all(GROUPS.map((g) => loadImage(`${BASE}/${g}.jpg`)))
+      .then((images) => {
+        if (disposed) return;
+        images.forEach((img, i) => {
+          const tex = gl.createTexture()!;
+          textures.push(tex);
+          gl.activeTexture(gl.TEXTURE0 + i);
+          gl.bindTexture(gl.TEXTURE_2D, tex);
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB8, gl.RGB, gl.UNSIGNED_BYTE, img);
+          gl.generateMipmap(gl.TEXTURE_2D);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+          gl.uniform1i(gl.getUniformLocation(program, `uL${i}`), i);
+        });
+        resize();
+        if (wrap.current) io.observe(wrap.current);
+        ro.observe(canvas);
+        window.addEventListener("pointermove", onMove, { passive: true });
+        document.addEventListener("visibilitychange", onVisibility);
+        still.addEventListener("change", start);
+        start();
+        setReady(true);
+      })
+      // The poster stays if the layers can't load.
+      .catch(() => undefined);
+
     return () => {
-      motion.removeEventListener("change", update);
-      narrow.removeEventListener("change", update);
+      disposed = true;
+      cancelAnimationFrame(frame);
       io.disconnect();
+      ro.disconnect();
+      window.removeEventListener("pointermove", onMove);
+      document.removeEventListener("visibilitychange", onVisibility);
+      still.removeEventListener("change", start);
+      // Free what we made rather than losing the context: React may mount this canvas again.
+      textures.forEach((tex) => gl.deleteTexture(tex));
+      gl.deleteBuffer(quad);
+      gl.deleteProgram(program);
     };
   }, []);
 
   return (
-    <div ref={wrap} aria-hidden="true" className="street-canvas">
-      <Canvas
-        dpr={[1, mobile ? 1.25 : 1.6]}
-        camera={{ position: [0.9, 1.7, 9], fov: mobile ? 62 : 52, near: 0.1, far: 120 }}
-        gl={{ antialias: false, powerPreference: "high-performance" }}
-        frameloop={still ? "demand" : visible ? "always" : "never"}
-      >
-        <Street still={still} labels={labels} mobile={mobile} />
-        <Bloom strength={mobile ? 1.1 : 1.35} />
-      </Canvas>
+    <div
+      ref={wrap}
+      aria-hidden="true"
+      className="street-canvas"
+      style={{ backgroundImage: `url(${BASE}/poster.jpg)` }}
+      data-ready={ready || undefined}
+    >
+      <canvas ref={canvasRef} />
     </div>
   );
 }

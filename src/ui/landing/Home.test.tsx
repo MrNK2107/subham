@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { takePrefill } from "@/ui/wizard/prefill";
@@ -28,7 +28,7 @@ describe("Home", () => {
     const user = userEvent.setup();
     render(<Home />);
     await user.type(screen.getByLabelText("Describe your celebration"), "Birthday in Salem");
-    await user.click(screen.getByRole("button", { name: "Light it up" }));
+    await user.click(screen.getAllByRole("button", { name: "Light it up" })[0]!);
     expect(push).toHaveBeenCalledWith("/plan/new");
     expect(takePrefill()).toEqual({ type: "birthday", city: "Salem" });
   });
@@ -38,7 +38,7 @@ describe("Home", () => {
     vi.stubGlobal("fetch", fetcher);
     const user = userEvent.setup();
     render(<Home />);
-    await user.click(screen.getByRole("button", { name: "Light it up" }));
+    await user.click(screen.getAllByRole("button", { name: "Light it up" })[0]!);
     expect(screen.getByRole("alert")).toHaveTextContent("Please fill this in.");
     expect(fetcher).not.toHaveBeenCalled();
   });
@@ -48,14 +48,34 @@ describe("Home", () => {
     const user = userEvent.setup();
     render(<Home />);
     await user.type(screen.getByLabelText("Describe your celebration"), "A wedding");
-    await user.click(screen.getByRole("button", { name: "Light it up" }));
+    await user.click(screen.getAllByRole("button", { name: "Light it up" })[0]!);
     expect(await screen.findByRole("alert")).toHaveTextContent("Quick-fill needs AI");
     expect(push).not.toHaveBeenCalled();
   });
 
-  it("lists the six features", () => {
+  it("walks through the evening, one hour per function", () => {
     render(<Home />);
-    expect(screen.getAllByRole("heading", { level: 3 }).length).toBeGreaterThanOrEqual(6);
+    const rail = screen.getByRole("navigation", { name: "The evening, hour by hour" });
+    expect(
+      within(rail)
+        .getAllByRole("link")
+        .map((a) => a.getAttribute("href")),
+    ).toEqual(["#hour-haldi", "#hour-sangeet", "#hour-ceremony", "#hour-sendoff"]);
+    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(4);
+    // Every plan slice is labelled as an example, never passed off as a real customer's plan.
+    expect(screen.getAllByRole("complementary", { name: /^Example plan:/ })).toHaveLength(4);
+  });
+
+  it("fills the closing describe box when an example celebration is picked", async () => {
+    const user = userEvent.setup();
+    render(<Home />);
+    const example = screen.getByRole("button", { name: /Ganesh pandal/ });
+    await user.click(example);
+    const box = screen.getByLabelText("Your celebration, in one line");
+    expect(box).toHaveValue(example.textContent);
+    expect(box).toHaveFocus();
+    // Both forms share one description, so the visitor can submit from either.
+    expect(screen.getByLabelText("Describe your celebration")).toHaveValue(example.textContent);
   });
 
   it("mounts the decorative scene only once the page is idle", async () => {

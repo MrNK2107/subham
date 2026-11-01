@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-20T00:00:00Z",
+  "generatedAt": "2026-10-23T00:00:00Z",
   "title": "Design System: Subham",
   "extensions": {
     "colorMeta": {
@@ -9,42 +9,71 @@
       "rani": { "role": "secondary", "displayName": "Rani Pink", "canonical": "#ff4f8b", "tonalRamp": ["#330004", "#650018", "#8c0032", "#b4004f", "#df2c71", "#ff5b95", "#ff84ba", "#ffbfe2"] },
       "leaf": { "role": "tertiary", "displayName": "Leaf Green", "canonical": "#2ee59d", "tonalRamp": ["#001900", "#003800", "#00581b", "#007839", "#009e5b", "#00c47f", "#3beca4", "#7dffca"] },
       "warm": { "role": "tertiary", "displayName": "Warm White", "canonical": "#fff3d6", "tonalRamp": ["#120a00", "#2c230b", "#483f27", "#675d44", "#8a7f65", "#afa489", "#d5caae", "#faeed1"] },
-      "night": { "role": "neutral", "displayName": "Indigo Night", "canonical": "#070a22", "tonalRamp": ["#060820", "#1c223c", "#373e5a", "#545c7a", "#767f9f", "#9aa3c5", "#c0c9ec", "#e3edff"] },
-      "night-2": { "role": "neutral", "displayName": "Night Two", "canonical": "#0d1236", "tonalRamp": ["#050528", "#192045", "#333d65", "#505b85", "#727eab", "#95a2d1", "#bbc8f9", "#deecff"] },
-      "panel": { "role": "neutral", "displayName": "Lit Panel", "canonical": "#121845", "tonalRamp": ["#04032e", "#171e4c", "#313b6c", "#4d5a8d", "#6f7db3", "#92a2da", "#b7c8ff", "#dbecff"] },
-      "panel-2": { "role": "neutral", "displayName": "Lit Panel Two", "canonical": "#1a2157", "tonalRamp": ["#050033", "#161c52", "#2f3a72", "#4c5994", "#6d7cba", "#90a1e2", "#b5c7ff", "#d8ebff"] },
-      "wire": { "role": "neutral", "displayName": "Wire", "canonical": "#2a3166", "tonalRamp": ["#060131", "#191c4f", "#323a70", "#4e5991", "#707cb7", "#93a0df", "#b8c6ff", "#dcebff"] },
-      "wire-bright": { "role": "neutral", "displayName": "Bright Wire", "canonical": "#3d4686", "tonalRamp": ["#070036", "#181a56", "#313877", "#4d5799", "#6e7abf", "#919fe7", "#b6c5ff", "#d9eaff"] },
-      "unlit-glass": { "role": "neutral", "displayName": "Unlit Glass", "canonical": "#262c5c", "tonalRamp": ["#06022e", "#1a1e4c", "#333b6c", "#50598d", "#717cb3", "#95a1da", "#bac7ff", "#ddebff"] },
-      "unlit-rim": { "role": "neutral", "displayName": "Unlit Rim", "canonical": "#3a4180", "tonalRamp": ["#070036", "#181a56", "#313877", "#4d5799", "#6e7abf", "#919fe7", "#b6c5ff", "#d9eaff"] },
-      "ink": { "role": "neutral", "displayName": "Moon Ink", "canonical": "#f3eedf", "tonalRamp": ["#0e0b03", "#282419", "#444033", "#625d51", "#858073", "#a9a496", "#cfcabc", "#f3eedf"] },
-      "ink-2": { "role": "neutral", "displayName": "Dusk Ink", "canonical": "#c3bfdc", "tonalRamp": ["#0c071b", "#242036", "#403c54", "#5e5a73", "#807c97", "#a4a1bd", "#cac6e4", "#eeeaff"] },
-      "ink-3": { "role": "neutral", "displayName": "Haze Ink", "canonical": "#9a96bd", "tonalRamp": ["#0c0521", "#241f3d", "#3f3a5c", "#5d587c", "#7f7ba1", "#a39fc7", "#c9c5ee", "#ede9ff"] },
+      "ink": { "role": "neutral", "displayName": "Cream Ink / Moon Ink", "canonical": "#f3eedf", "tonalRamp": ["#0e0b03", "#282419", "#444033", "#625d51", "#858073", "#a9a496", "#cfcabc", "#f3eedf"] },
       "on-amber": { "role": "neutral", "displayName": "Lamp Soot", "canonical": "#1a1206", "tonalRamp": ["#110a01", "#2b2216", "#483e30", "#665c4d", "#897f6f", "#aea393", "#d4c9b8", "#f8eddc"] },
-      "danger": { "role": "neutral", "displayName": "Ember Red", "canonical": "#ff7a7a", "tonalRamp": ["#360000", "#5b0000", "#800012", "#a62731", "#cf4f53", "#fa7576", "#ff9c9a", "#ffc1be"] }
+      "danger": { "role": "neutral", "displayName": "Ember Red", "canonical": "#ff7a7a", "tonalRamp": ["#360000", "#5b0000", "#800012", "#a62731", "#cf4f53", "#fa7576", "#ff9c9a", "#ffc1be"] },
+      "ground": { "role": "neutral", "displayName": "Lamp-Black Ground", "canonical": "#0b0807", "tonalRamp": ["#0e0a09", "#272322", "#433f3d", "#615c5b", "#847f7d", "#a5a09e", "#cbc6c4", "#f2edeb"] },
+      "ground-haldi": { "role": "neutral", "displayName": "Golden Hour Ground", "canonical": "#170e07", "tonalRamp": ["#120904", "#2c221a", "#483d35", "#675b52", "#8a7e74", "#ac9f95", "#d2c4ba", "#faece1"] },
+      "ground-sangeet": { "role": "neutral", "displayName": "Dusk Ground", "canonical": "#0f0a10", "tonalRamp": ["#0e090f", "#272229", "#433d45", "#625b63", "#847d86", "#a69fa7", "#ccc4cd", "#f3ebf5"] },
+      "ground-ceremony": { "role": "neutral", "displayName": "Lamp-Lit Ground", "canonical": "#100806", "tonalRamp": ["#110907", "#2b221f", "#483d3a", "#665b57", "#897d7a", "#ab9e9b", "#d1c4c0", "#f9ebe7"] },
+      "ground-sendoff": { "role": "neutral", "displayName": "Late Night Ground", "canonical": "#07070b", "tonalRamp": ["#0b0b0f", "#232329", "#3f3f45", "#5d5d63", "#7f7f86", "#a1a1a7", "#c6c6cd", "#edeef5"] },
+      "glass-top": { "role": "neutral", "displayName": "Smoked Glass (top)", "canonical": "rgb(26 19 16 / 60%)", "tonalRamp": ["#100907", "#2a221f", "#463e3a", "#645b58", "#877e7a", "#a99f9b", "#cfc5c0", "#f7ece7"] },
+      "glass-bottom": { "role": "neutral", "displayName": "Smoked Glass (bottom)", "canonical": "rgb(10 8 9 / 76%)", "tonalRamp": ["#0d0a0c", "#262324", "#423f40", "#605d5e", "#827f81", "#a4a0a2", "#c9c6c8", "#f1edef"] },
+      "hairline": { "role": "neutral", "displayName": "Warm Hairline", "canonical": "rgb(255 236 205 / 13%)", "tonalRamp": ["#130900", "#2f210c", "#4c3d27", "#6b5b44", "#8e7d66", "#b09f86", "#d7c4ab", "#feebd1"] },
+      "hour-white": { "role": "neutral", "displayName": "Hour White", "canonical": "#fff1d6", "tonalRamp": ["#110a00", "#2d220c", "#493e28", "#685c45", "#8b7f66", "#ada087", "#d3c6ac", "#fbedd2"] },
+      "bulb-off": { "role": "neutral", "displayName": "Off Bulb", "canonical": "#2c211d", "tonalRamp": ["#120906", "#2c211d", "#493d38", "#675a56", "#8b7d78", "#ac9e99", "#d3c4be", "#faebe5"] },
+      "bulb-off-rim": { "role": "neutral", "displayName": "Off Rim", "canonical": "#5a463b", "tonalRamp": ["#160701", "#311f15", "#4e3b30", "#6d594d", "#917b6f", "#b39c90", "#dac2b5", "#feeadf"] },
+      "bulb-lit": { "role": "neutral", "displayName": "Lit Bulb", "canonical": "#ffcf7a", "tonalRamp": ["#120900", "#312101", "#543a00", "#7a5601", "#a47718", "#c79943", "#efbf6a", "#feeccd"] },
+      "bulb-lit-rim": { "role": "neutral", "displayName": "Lit Rim", "canonical": "#ffe2a8", "tonalRamp": ["#110a00", "#302101", "#523c02", "#735921", "#977c45", "#b99e66", "#e0c48b", "#ffecc9"] },
+      "night": { "role": "neutral", "displayName": "Indigo Night (app)", "canonical": "#070a22", "tonalRamp": ["#060820", "#1c223c", "#373e5a", "#545c7a", "#767f9f", "#9aa3c5", "#c0c9ec", "#e3edff"] },
+      "night-2": { "role": "neutral", "displayName": "Night Two (app)", "canonical": "#0d1236", "tonalRamp": ["#050528", "#192045", "#333d65", "#505b85", "#727eab", "#95a2d1", "#bbc8f9", "#deecff"] },
+      "panel": { "role": "neutral", "displayName": "Lit Panel (app)", "canonical": "#121845", "tonalRamp": ["#04032e", "#171e4c", "#313b6c", "#4d5a8d", "#6f7db3", "#92a2da", "#b7c8ff", "#dbecff"] },
+      "panel-2": { "role": "neutral", "displayName": "Lit Panel Two (app)", "canonical": "#1a2157", "tonalRamp": ["#050033", "#161c52", "#2f3a72", "#4c5994", "#6d7cba", "#90a1e2", "#b5c7ff", "#d8ebff"] },
+      "wire": { "role": "neutral", "displayName": "Wire (app)", "canonical": "#2a3166", "tonalRamp": ["#060131", "#191c4f", "#323a70", "#4e5991", "#707cb7", "#93a0df", "#b8c6ff", "#dcebff"] },
+      "wire-bright": { "role": "neutral", "displayName": "Bright Wire (app)", "canonical": "#3d4686", "tonalRamp": ["#070036", "#181a56", "#313877", "#4d5799", "#6e7abf", "#919fe7", "#b6c5ff", "#d9eaff"] },
+      "unlit-glass": { "role": "neutral", "displayName": "Unlit Glass (app)", "canonical": "#262c5c", "tonalRamp": ["#06022e", "#1a1e4c", "#333b6c", "#50598d", "#717cb3", "#95a1da", "#bac7ff", "#ddebff"] },
+      "unlit-rim": { "role": "neutral", "displayName": "Unlit Rim (app)", "canonical": "#3a4180", "tonalRamp": ["#070036", "#181a56", "#313877", "#4d5799", "#6e7abf", "#919fe7", "#b6c5ff", "#d9eaff"] },
+      "ink-2": { "role": "neutral", "displayName": "Dusk Ink (app)", "canonical": "#c3bfdc", "tonalRamp": ["#0c071b", "#242036", "#403c54", "#5e5a73", "#807c97", "#a4a1bd", "#cac6e4", "#eeeaff"] },
+      "ink-3": { "role": "neutral", "displayName": "Haze Ink (app)", "canonical": "#9a96bd", "tonalRamp": ["#0c0521", "#241f3d", "#3f3a5c", "#5d587c", "#7f7ba1", "#a39fc7", "#c9c5ee", "#ede9ff"] }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Page h1 and the landing hero headline (hero tightens to clamp(2.4rem, 4.9vw, 4.6rem), 0.98 line-height); script showcase words." },
-      "headline": { "displayName": "Headline", "purpose": "Section h2; shrinks to clamp(1.25rem, 1.9vw, 1.55rem) inside cards." },
-      "title": { "displayName": "Title", "purpose": "h3, strand names, overlay titles." },
-      "body": { "displayName": "Body", "purpose": "All reading text, tabular numerals on; leads cap at 44-60ch." },
-      "label": { "displayName": "Label", "purpose": "Field labels, buttons, nav links and tabs." }
+      "display": { "displayName": "Display", "purpose": "App h1. Landing hero tightens to clamp(2.4rem, 4.9vw, 4.6rem) at 0.98 and 22ch; the midnight close to clamp(2.4rem, 5.4vw, 4.75rem) at 1 and 15ch; both over a black text shade." },
+      "hour": { "displayName": "Hour", "purpose": "Chapter time stamps in Hour White, one unbroken lockup with the amber function name; clamp(2.1rem, 9.6vw, 3.25rem) on phones." },
+      "headline": { "displayName": "Headline", "purpose": "App h2. Landing section heads run larger (evening intro clamp(2.2rem, 4.6vw, 4rem), kinds clamp(2rem, 3.8vw, 3.25rem), chapter h3 clamp(1.6rem, 2.8vw, 2.5rem))." },
+      "title": { "displayName": "Title", "purpose": "App h3; landing panel heads use display 700 at 1.2 to 1.25rem." },
+      "body": { "displayName": "Body", "purpose": "All reading text, tabular numerals on." },
+      "lead": { "displayName": "Lead", "purpose": "Landing leads over photographs, cream at 80 to 86%, capped at 46 to 52ch." },
+      "label": { "displayName": "Label", "purpose": "Field labels, buttons, nav links, tabs." }
     },
     "shadows": [
-      { "name": "lift", "value": "0 18px 40px -18px rgb(0 0 0 / 70%)", "purpose": "Cards, assistant panel, doorway: separates lit glass from the night ground." },
+      { "name": "glass-drop", "value": "inset 0 1px 0 rgb(255 244 225 / 7%), 0 30px 60px -24px rgb(0 0 0 / 85%)", "purpose": "Landing smoked-glass slices (doorway: 8% highlight, 80% drop)." },
+      { "name": "lintel-spill", "value": "0 -14px 44px -22px rgb(255 183 3 / 45%)", "purpose": "Upward amber light from the lit lintel over the doorway." },
+      { "name": "bulb-halo", "value": "0 0 0 3px rgb(255 183 3 / 18%), 0 0 18px 4px rgb(255 170 60 / 55%)", "purpose": "Active time-rail bulb." },
+      { "name": "bulb-halo-hover", "value": "0 0 14px 3px rgb(255 170 60 / 55%)", "purpose": "Kinds-row bulb under pointer or focus." },
+      { "name": "night-text-shade", "value": "0 2px 6px rgb(0 0 0 / 45%), 0 6px 48px rgb(0 0 0 / 70%)", "purpose": "Text-shadow for type over photographs; shade, never glow." },
+      { "name": "lift", "value": "0 18px 40px -18px rgb(0 0 0 / 70%)", "purpose": "App cards and assistant panel." },
       { "name": "glow-amber", "value": "0 0 0 1px rgb(255 183 3 / 55%), 0 6px 24px -4px rgb(255 183 3 / 45%)", "purpose": "Primary button at rest." },
       { "name": "glow-amber-hover", "value": "0 0 0 1px rgb(255 183 3 / 80%), 0 8px 34px -2px rgb(255 183 3 / 60%)", "purpose": "Primary button hover." },
-      { "name": "bulb-glow", "value": "0 3px 12px rgb(255 183 3 / 75%)", "purpose": "Lit bulb; swap the colour for rani, leaf or warm at 70-80%." },
-      { "name": "lintel-glow", "value": "0 -1px 0 rgb(255 183 3 / 60%), 0 -18px 50px -20px rgb(255 183 3 / 55%)", "purpose": "Upward amber spill above the doorway panel." },
+      { "name": "bulb-glow", "value": "0 3px 12px rgb(255 183 3 / 75%)", "purpose": "Lit Bulb Strand bulb in the app; swap colour for rani, leaf or warm at 70-80%." },
       { "name": "field-focus", "value": "0 0 0 3px rgb(255 183 3 / 22%)", "purpose": "Focused input, select, textarea." }
     ],
+    "backdrops": [
+      { "name": "smoked-glass", "value": "linear-gradient(180deg, rgb(26 19 16 / 60%), rgb(10 8 9 / 76%)); backdrop-filter: blur(16px) saturate(130%)", "purpose": "Landing slices; the doorway uses blur(18px) saturate(135%) over rgb(24 18 16 / 58%) to rgb(10 8 9 / 70%)." },
+      { "name": "warm-header", "value": "rgb(11 8 7 / 72%)", "purpose": "Header on / only (body:has(#hero-title)); app header stays rgb(7 10 34 / 72%) with blur(14px) saturate(140%)." },
+      { "name": "night-air", "value": "linear-gradient(90deg, rgb(11 8 7 / 82%) 0%, rgb(11 8 7 / 48%) 34%, rgb(11 8 7 / 0%) 62%), linear-gradient(0deg, rgb(11 8 7 / 70%) 0%, rgb(11 8 7 / 0%) 40%), linear-gradient(180deg, var(--ground) 0%, transparent 14%, transparent 82%, var(--ground) 100%)", "purpose": "Shade over chapter photographs, inset -2px; darkest where words sit, fading into the hour's ground." }
+    ],
     "motion": [
-      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "House ease for state transitions and the reveal." },
-      { "name": "bulb-warm", "value": "background-color 0.4s, box-shadow 0.5s", "purpose": "A bulb switching on." },
-      { "name": "reveal", "value": "opacity 0-1, y 28-0, blur 6px-0, 0.9s", "purpose": "Scroll or mount entrance: content warms up like a bulb." },
-      { "name": "spring-enter", "value": "spring stiffness 120 damping 18", "purpose": "Tab changes, wizard steps, expanding strand rows." },
-      { "name": "sway", "value": "rotate -3deg to 3deg, 5s ease-in-out alternate", "purpose": "Hanging function tags." },
-      { "name": "flicker", "value": "opacity to 0.55, 1.6s alternate", "purpose": "Overspent strand." }
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "House ease for state transitions in both worlds." },
+      { "name": "ground-shift", "value": "--ground 1400ms ease-out (registered @property <color>)", "purpose": "The evening's air changing tint as the hour changes." },
+      { "name": "settle", "value": "scale 1.14 to 1, brightness 0.4 saturate 0.75 to none; view() entry 0% to cover 55%", "purpose": "Chapter photograph arriving." },
+      { "name": "rise", "value": "opacity 0 to 1, translateY 44px to 0, blur 6px to 0; view() entry", "purpose": "Chapter copy and run-sheet slice." },
+      { "name": "pull-back", "value": "scale 1.18 to 1, brightness 0.35 to none; view() entry 0% to cover 60%", "purpose": "The midnight close plate." },
+      { "name": "line-in", "value": "opacity 0 to 1, translateX -24px to 0; view() entry 10% to 90%", "purpose": "Kinds rows." },
+      { "name": "poster-in", "value": "opacity 0 to 1, 900ms ease-out; live canvas fades over 1200ms", "purpose": "Hero poster then live WebGL layers." },
+      { "name": "rail-now", "value": "time scale 1 to 1.45, 500ms; bulb 400ms", "purpose": "Active hour on the desktop time rail." },
+      { "name": "light-modes", "value": "chase / alternate / steady breath, 9s each, 1.2s crossfade; burst on submit", "purpose": "Hero light-group weights (controller.ts); one still frame under reduced motion." },
+      { "name": "spring-enter", "value": "spring stiffness 120 damping 18", "purpose": "App tabs, wizard steps." },
+      { "name": "flicker", "value": "opacity to 0.55, 1.6s alternate", "purpose": "Overspent Bulb Strand." }
     ],
     "breakpoints": [
       { "name": "sm", "value": "560px" },
@@ -58,101 +87,124 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "The one lit action per view: amber pill with a glow, usually led by the bulb icon.",
+      "description": "The one action: amber pill with Lamp Soot text and an amber glow, led by the bulb icon.",
       "html": "<button class=\"ds-btn ds-btn-primary\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 3a5 5 0 0 0-3 9c.6.5 1 1.3 1 2v1h4v-1c0-.7.4-1.5 1-2a5 5 0 0 0-3-9zM10 18h4M11 21h2\"/></svg>Light it up</button>",
       "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 46px; padding: 0.65rem 1.3rem; border-radius: 999px; border: 1px solid transparent; font-family: var(--font-body, Hind, system-ui, sans-serif); font-weight: 600; line-height: 1.15; cursor: pointer; transition: background-color 0.2s cubic-bezier(0.16,1,0.3,1), border-color 0.2s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1), transform 0.2s cubic-bezier(0.16,1,0.3,1); } .ds-btn:active { transform: translateY(1px) scale(0.99); } .ds-btn:focus-visible { outline: 2px solid #fff3d6; outline-offset: 3px; } .ds-btn-primary { background: #ffb703; color: #1a1206; box-shadow: 0 0 0 1px rgb(255 183 3 / 55%), 0 6px 24px -4px rgb(255 183 3 / 45%); } .ds-btn-primary:hover { background: #ffc633; box-shadow: 0 0 0 1px rgb(255 183 3 / 80%), 0 8px 34px -2px rgb(255 183 3 / 60%); }"
     },
     {
-      "name": "Secondary Button",
+      "name": "Secondary Button (app)",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "Bare wire: transparent pill with a bright-wire stroke that turns amber on hover.",
+      "description": "Bare wire on indigo: transparent pill with a bright-wire stroke that turns amber on hover.",
       "html": "<button class=\"ds-btn2\">Start step by step</button>",
       "css": ".ds-btn2 { display: inline-flex; align-items: center; min-height: 46px; padding: 0.65rem 1.3rem; border-radius: 999px; background: transparent; color: #f3eedf; border: 1px solid #3d4686; font-family: var(--font-body, Hind, system-ui, sans-serif); font-weight: 600; cursor: pointer; transition: border-color 0.2s cubic-bezier(0.16,1,0.3,1), color 0.2s; } .ds-btn2:hover { border-color: #ffb703; color: #fff3d6; } .ds-btn2:focus-visible { outline: 2px solid #fff3d6; outline-offset: 3px; }"
     },
     {
-      "name": "Text Field",
+      "name": "Describe Doorway (landing)",
+      "kind": "custom",
+      "refersTo": "doorway",
+      "description": "Smoked-glass describe form over the photograph, with a lit lintel, glass-tuned field and both actions.",
+      "html": "<div class=\"ds-door-bg\"><form class=\"ds-door\"><label class=\"ds-door-label\" for=\"ds-d\">Describe your celebration</label><textarea id=\"ds-d\" class=\"ds-door-field\" rows=\"3\" placeholder=\"My sister's wedding in Madurai next February, about 300 guests\"></textarea><p class=\"ds-door-hint\">Write in English, Hindi, Tamil or Telugu.</p><div class=\"ds-door-actions\"><button type=\"button\" class=\"ds-door-primary\">Light it up</button><a href=\"#\" class=\"ds-door-secondary\">Step by step</a></div></form></div>",
+      "css": ".ds-door-bg { background: radial-gradient(80% 90% at 70% 20%, #6b3a12 0%, #0b0807 70%); padding: 3rem 1.5rem; } .ds-door { position: relative; max-width: 560px; display: grid; gap: 0.6rem; color: #f3eedf; font-family: var(--font-body, Hind, system-ui, sans-serif); background: linear-gradient(180deg, rgb(24 18 16 / 58%), rgb(10 8 9 / 70%)); backdrop-filter: blur(18px) saturate(135%); border: 1px solid rgb(255 236 205 / 13%); border-radius: 22px 22px 18px 18px; padding: 1.4rem; box-shadow: inset 0 1px 0 rgb(255 244 225 / 8%), 0 -14px 44px -22px rgb(255 183 3 / 45%), 0 30px 60px -24px rgb(0 0 0 / 80%); } .ds-door::before { content: ''; position: absolute; left: 12%; right: 12%; top: -1px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, transparent, #ffb703, #fff3d6, #ffb703, transparent); } .ds-door-label { font-family: var(--font-display, 'Baloo 2', system-ui, sans-serif); font-size: 1.25rem; font-weight: 700; } .ds-door-field { font: inherit; color: #f3eedf; background: rgb(0 0 0 / 32%); border: 1px solid rgb(255 236 205 / 16%); border-radius: 12px; padding: 0.65rem 0.85rem; min-height: 96px; caret-color: #ffb703; transition: border-color 0.2s cubic-bezier(0.16,1,0.3,1), box-shadow 0.2s cubic-bezier(0.16,1,0.3,1); } .ds-door-field::placeholder { color: rgb(243 238 223 / 50%); } .ds-door-field:hover { border-color: rgb(255 236 205 / 30%); } .ds-door-field:focus { border-color: #ffb703; box-shadow: 0 0 0 3px rgb(255 183 3 / 22%); outline: none; } .ds-door-hint { margin: 0; font-size: 0.9rem; color: rgb(243 238 223 / 68%); } .ds-door-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.35rem; } .ds-door-primary, .ds-door-secondary { display: inline-flex; align-items: center; min-height: 46px; padding: 0.65rem 1.3rem; border-radius: 999px; font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; transition: background-color 0.2s, border-color 0.2s, box-shadow 0.3s; } .ds-door-primary { background: #ffb703; color: #1a1206; border: 1px solid transparent; box-shadow: 0 0 0 1px rgb(255 183 3 / 55%), 0 6px 24px -4px rgb(255 183 3 / 45%); } .ds-door-primary:hover { background: #ffc633; } .ds-door-secondary { color: #f3eedf; border: 1px solid rgb(255 236 205 / 26%); background: rgb(255 244 225 / 4%); } .ds-door-secondary:hover { border-color: #ffb703; color: #fff3d6; } .ds-door-primary:focus-visible, .ds-door-secondary:focus-visible { outline: 2px solid #fff3d6; outline-offset: 3px; }"
+    },
+    {
+      "name": "Run-Sheet Slice (landing)",
+      "kind": "card",
+      "refersTo": "smoked-glass-panel",
+      "description": "Smoked-glass panel holding one hour's plan: display head, dashed example tag, tabular amber times over cream rows.",
+      "html": "<div class=\"ds-slice-bg\"><aside class=\"ds-slice\"><p class=\"ds-slice-head\"><span>Run sheet</span><span class=\"ds-slice-tag\">Example plan</span></p><ul><li><span class=\"ds-t\">4:30 pm</span><span>Family gathers, haldi paste ready</span></li><li><span class=\"ds-t\">5:00 pm</span><span>Haldi ceremony, elders first</span></li><li><span class=\"ds-t\">6:30 pm</span><span>Snacks and chai, then rest before the sangeet</span></li></ul></aside></div>",
+      "css": ".ds-slice-bg { background: radial-gradient(70% 90% at 30% 30%, #7a4a14 0%, #170e07 75%); padding: 2.5rem 1.5rem; } .ds-slice { width: min(27rem, 100%); color: #f3eedf; font-family: var(--font-body, Hind, system-ui, sans-serif); background: linear-gradient(180deg, rgb(26 19 16 / 60%), rgb(10 8 9 / 76%)); backdrop-filter: blur(16px) saturate(130%); border: 1px solid rgb(255 236 205 / 13%); border-radius: 18px; padding: 1.1rem 1.25rem 0.5rem; box-shadow: inset 0 1px 0 rgb(255 244 225 / 7%), 0 30px 60px -24px rgb(0 0 0 / 85%); } .ds-slice-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin: 0 0 0.35rem; font-family: var(--font-display, 'Baloo 2', system-ui, sans-serif); font-weight: 700; font-size: 1.2rem; } .ds-slice-tag { font-family: var(--font-body, Hind, system-ui, sans-serif); font-weight: 500; font-size: 0.8rem; color: rgb(243 238 223 / 72%); border: 1px dashed rgb(255 236 205 / 30%); border-radius: 999px; padding: 0.1rem 0.6rem; white-space: nowrap; } .ds-slice ul { list-style: none; margin: 0; padding: 0; } .ds-slice li { display: grid; grid-template-columns: minmax(5.5rem, auto) 1fr; column-gap: 0.9rem; padding: 0.7rem 0; border-top: 1px solid rgb(255 236 205 / 10%); font-size: 0.98rem; line-height: 1.45; color: rgb(243 238 223 / 90%); } .ds-t { font-weight: 600; color: #ffb703; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Time Rail (landing)",
+      "kind": "nav",
+      "refersTo": "time-rail",
+      "description": "The evening's sticky clock: one bulb per hour on a fading line; the hour on screen grows, its name turns amber and its bulb lights.",
+      "html": "<nav class=\"ds-rail-bg\" aria-label=\"The evening, hour by hour\"><ol class=\"ds-rail\"><li data-active><a href=\"#\" aria-current=\"step\"><span class=\"ds-rb\"></span><span class=\"ds-rt\">4:30 pm</span><span class=\"ds-rn\">Haldi</span></a></li><li><a href=\"#\"><span class=\"ds-rb\"></span><span class=\"ds-rt\">7:30 pm</span><span class=\"ds-rn\">Sangeet</span></a></li><li><a href=\"#\"><span class=\"ds-rb\"></span><span class=\"ds-rt\">10:00 pm</span><span class=\"ds-rn\">Wedding ceremony</span></a></li></ol></nav>",
+      "css": ".ds-rail-bg { background: #170e07; padding: 1.5rem 1.25rem; font-family: var(--font-body, Hind, system-ui, sans-serif); } .ds-rail { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.6rem; position: relative; } .ds-rail::before { content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(180deg, transparent, rgb(255 236 205 / 28%) 15%, rgb(255 236 205 / 28%) 85%, transparent); } .ds-rail a { display: grid; grid-template-columns: 13px auto; column-gap: 0.85rem; align-items: center; width: max-content; color: rgb(243 238 223 / 52%); text-decoration: none; border-radius: 8px; padding: 0.15rem 0.4rem 0.15rem 0; transition: color 400ms cubic-bezier(0.16,1,0.3,1); } .ds-rail a:hover { color: #f3eedf; } .ds-rail a:focus-visible { outline: 2px solid #ffb703; outline-offset: 4px; } .ds-rb { grid-row: span 2; width: 13px; height: 13px; border-radius: 50%; background: #2c211d; border: 1px solid #5a463b; position: relative; transition: background-color 400ms cubic-bezier(0.16,1,0.3,1), box-shadow 400ms cubic-bezier(0.16,1,0.3,1); } .ds-rt { font-family: var(--font-display, 'Baloo 2', system-ui, sans-serif); font-weight: 700; font-size: 1.05rem; line-height: 1.1; font-variant-numeric: tabular-nums; transform-origin: left center; transition: transform 500ms cubic-bezier(0.16,1,0.3,1); } .ds-rn { font-size: 0.9rem; line-height: 1.2; } .ds-rail li[data-active] a { color: #f3eedf; } .ds-rail li[data-active] .ds-rt { transform: scale(1.45); color: #fff1d6; } .ds-rail li[data-active] .ds-rn { margin-top: 0.3rem; color: #ffb703; } .ds-rail li[data-active] .ds-rb { background: #ffcf7a; border-color: #ffe2a8; box-shadow: 0 0 0 3px rgb(255 183 3 / 18%), 0 0 18px 4px rgb(255 170 60 / 55%); }"
+    },
+    {
+      "name": "Kinds Row (landing)",
+      "kind": "custom",
+      "refersTo": "kinds-row",
+      "description": "An example sentence in its own script that fills the closing form; the bulb lights and the arrow fills amber on hover or focus.",
+      "html": "<ul class=\"ds-kinds\"><li><button type=\"button\" class=\"ds-kind\"><span class=\"ds-kb\" aria-hidden=\"true\"></span><span class=\"ds-kt\" lang=\"hi\">बेटे का पाँचवाँ जन्मदिन, लखनऊ में, 40 बच्चे</span><span class=\"ds-ka\" aria-hidden=\"true\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></span></button></li></ul>",
+      "css": ".ds-kinds { list-style: none; margin: 0; padding: 0; background: #0b0807; border-top: 1px solid rgb(255 236 205 / 12%); } .ds-kinds li { border-bottom: 1px solid rgb(255 236 205 / 12%); } .ds-kind { width: 100%; display: grid; grid-template-columns: 14px minmax(0, 1fr) 2.75rem; align-items: center; gap: 1.25rem; padding: 1.35rem 0.25rem; background: none; border: 0; color: rgb(243 238 223 / 74%); text-align: start; cursor: pointer; transition: color 300ms cubic-bezier(0.16,1,0.3,1); } .ds-kt { font-family: var(--font-display, 'Baloo 2', system-ui, sans-serif); font-weight: 600; font-size: clamp(1.25rem, 2.1vw, 1.75rem); line-height: 1.25; } .ds-kb { width: 12px; height: 12px; border-radius: 50%; background: #2c211d; border: 1px solid #5a463b; transition: background-color 300ms, box-shadow 300ms; } .ds-ka { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 999px; border: 1px solid rgb(255 236 205 / 18%); color: #ffb703; transform: rotate(90deg); transition: background-color 300ms, color 300ms, transform 300ms cubic-bezier(0.16,1,0.3,1); } .ds-kind:hover, .ds-kind:focus-visible { color: #f3eedf; } .ds-kind:focus-visible { outline: 2px solid #ffb703; outline-offset: 2px; border-radius: 8px; } .ds-kind:hover .ds-kb, .ds-kind:focus-visible .ds-kb { background: #ffcf7a; border-color: #ffe2a8; box-shadow: 0 0 14px 3px rgb(255 170 60 / 55%); } .ds-kind:hover .ds-ka, .ds-kind:focus-visible .ds-ka { background: #ffb703; color: #1a1206; transform: rotate(90deg) translateX(3px); }"
+    },
+    {
+      "name": "Text Field (app)",
       "kind": "input",
       "refersTo": "input",
       "description": "Night-2 well with a bright-wire stroke; focus turns the stroke amber with a soft halo.",
-      "html": "<label class=\"ds-field\"><span class=\"ds-label\">Describe your celebration</span><input class=\"ds-input\" placeholder=\"My sister's wedding in Madurai next February\"><span class=\"ds-hint\">Write in English, Hindi, Tamil or Telugu.</span></label>",
+      "html": "<label class=\"ds-field\"><span class=\"ds-label\">Celebration name</span><input class=\"ds-input\" placeholder=\"Priya and Arjun's wedding\"><span class=\"ds-hint\">You can change this later.</span></label>",
       "css": ".ds-field { display: grid; gap: 0.35rem; font-family: var(--font-body, Hind, system-ui, sans-serif); } .ds-label { font-weight: 600; font-size: 0.95rem; color: #f3eedf; } .ds-hint { color: #c3bfdc; font-size: 0.9rem; } .ds-input { font: inherit; color: #f3eedf; background: #0d1236; border: 1px solid #3d4686; border-radius: 12px; padding: 0.65rem 0.85rem; min-height: 46px; caret-color: #ffb703; transition: border-color 0.2s cubic-bezier(0.16,1,0.3,1), box-shadow 0.2s cubic-bezier(0.16,1,0.3,1); } .ds-input::placeholder { color: #9a96bd; } .ds-input:hover { border-color: #59629f; } .ds-input:focus { border-color: #ffb703; box-shadow: 0 0 0 3px rgb(255 183 3 / 22%); outline: none; }"
     },
     {
-      "name": "Header Navigation",
-      "kind": "nav",
-      "refersTo": "nav",
-      "description": "Sticky translucent night glass with a display wordmark and pill links; current page in amber.",
-      "html": "<nav class=\"ds-nav\"><a class=\"ds-brand\" href=\"#\">Subham</a><span class=\"ds-links\"><a class=\"ds-link\" href=\"#\" aria-current=\"page\">My plans</a><a class=\"ds-link\" href=\"#\">New plan</a></span></nav>",
-      "css": ".ds-nav { display: flex; align-items: center; gap: 1.25rem; min-height: 64px; padding: 0 1.25rem; background: rgb(7 10 34 / 72%); backdrop-filter: blur(14px) saturate(140%); border-bottom: 1px solid rgb(61 70 134 / 45%); } .ds-brand { font-family: var(--font-display, 'Baloo 2', system-ui, sans-serif); font-weight: 800; font-size: 1.55rem; letter-spacing: -0.01em; color: #f3eedf; text-decoration: none; } .ds-brand:hover { color: #fff3d6; } .ds-links { display: flex; gap: 0.5rem; margin-left: auto; } .ds-link { color: #c3bfdc; font-weight: 600; text-decoration: none; padding: 0.5rem 0.85rem; border-radius: 999px; min-height: 44px; display: inline-flex; align-items: center; } .ds-link:hover { color: #fff3d6; } .ds-link[aria-current='page'] { color: #ffb703; } .ds-link:focus-visible { outline: 2px solid #fff3d6; outline-offset: 3px; }"
+      "name": "Lit Panel Card (app)",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Indigo lit glass: panel gradient, 1px wire border, 18px radius, deep soft lift.",
+      "html": "<article class=\"ds-card\"><h3 class=\"ds-card-title\">Budget</h3><p class=\"ds-card-body\">Split by function and category to the exact rupee.</p></article>",
+      "css": ".ds-card { background: linear-gradient(180deg, #1a2157, #121845); border: 1px solid #2a3166; border-radius: 18px; padding: 1.35rem; box-shadow: 0 18px 40px -18px rgb(0 0 0 / 70%); color: #f3eedf; font-family: var(--font-body, Hind, system-ui, sans-serif); transition: border-color 0.3s cubic-bezier(0.16,1,0.3,1); } .ds-card:hover { border-color: #3d4686; } .ds-card-title { font-family: var(--font-display, 'Baloo 2', system-ui, sans-serif); font-weight: 700; font-size: clamp(1.25rem, 1.9vw, 1.55rem); line-height: 1.08; margin: 0 0 0.5em; } .ds-card-body { color: #c3bfdc; margin: 0; }"
     },
     {
-      "name": "Badge",
+      "name": "Bulb Strand (app)",
+      "kind": "custom",
+      "refersTo": "bulb-strand",
+      "description": "Signature app progress meter: a sagging wire whose bulbs light in amber, rani, leaf, warm order as work gets done.",
+      "html": "<div class=\"ds-strand\" role=\"meter\" aria-label=\"Tasks done\" aria-valuemin=\"0\" aria-valuemax=\"8\" aria-valuenow=\"3\" aria-valuetext=\"3 of 8\"><span class=\"ds-wire\"></span><span class=\"ds-bulb ds-on ds-amber\"></span><span class=\"ds-bulb ds-on ds-rani\"></span><span class=\"ds-bulb ds-on ds-leaf\"></span><span class=\"ds-bulb\"></span><span class=\"ds-bulb\"></span><span class=\"ds-bulb\"></span><span class=\"ds-bulb\"></span><span class=\"ds-bulb\"></span></div>",
+      "css": ".ds-strand { position: relative; display: flex; justify-content: space-between; align-items: flex-start; padding: 6px 2px 2px; min-height: 26px; width: 280px; background: #070a22; } .ds-wire { position: absolute; left: 0; right: 0; top: 2px; height: 14px; border-bottom: 1.5px solid #3d4686; border-radius: 0 0 50% 50% / 0 0 100% 100%; } .ds-bulb { position: relative; width: 10px; height: 14px; border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%; background: #262c5c; border: 1px solid #3a4180; transition: background-color 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s cubic-bezier(0.16,1,0.3,1); } .ds-bulb:nth-child(n+4):nth-last-child(n+3) { top: 5px; } .ds-bulb::before { content: ''; position: absolute; left: 50%; top: -4px; width: 4px; height: 4px; transform: translateX(-50%); background: #4a5293; border-radius: 1px; } .ds-on.ds-amber { background: #ffb703; border-color: #ffd36b; box-shadow: 0 3px 12px rgb(255 183 3 / 75%); } .ds-on.ds-rani { background: #ff4f8b; border-color: #ff8db4; box-shadow: 0 3px 12px rgb(255 79 139 / 75%); } .ds-on.ds-leaf { background: #2ee59d; border-color: #8af5c9; box-shadow: 0 3px 12px rgb(46 229 157 / 70%); } .ds-strand:hover .ds-bulb:not(.ds-on) { border-color: #4a5293; }"
+    },
+    {
+      "name": "Badge (app)",
       "kind": "chip",
       "refersTo": "badge",
       "description": "Status pill; neutral, good (leaf), warn (amber) and bad (rani) tints.",
       "html": "<span class=\"ds-badge\">Draft</span> <span class=\"ds-badge ds-badge-good\">Booked</span> <span class=\"ds-badge ds-badge-warn\">Due soon</span> <span class=\"ds-badge ds-badge-bad\">Over budget</span>",
       "css": ".ds-badge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.15rem 0.65rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600; background: rgb(255 255 255 / 7%); color: #c3bfdc; border: 1px solid #2a3166; white-space: nowrap; font-family: var(--font-body, Hind, system-ui, sans-serif); } .ds-badge-good { color: #2ee59d; border-color: rgb(46 229 157 / 40%); background: rgb(46 229 157 / 10%); } .ds-badge-warn { color: #ffb703; border-color: rgb(255 183 3 / 40%); background: rgb(255 183 3 / 10%); } .ds-badge-bad { color: #ffb3c9; border-color: rgb(255 79 139 / 50%); background: rgb(255 79 139 / 14%); }"
-    },
-    {
-      "name": "Lit Panel Card",
-      "kind": "card",
-      "refersTo": "card",
-      "description": "Dark lit glass: panel gradient, 1px wire border, 18px radius, deep soft lift.",
-      "html": "<article class=\"ds-card\"><h3 class=\"ds-card-title\">Budget</h3><p class=\"ds-card-body\">Split by function and category to the exact rupee.</p></article>",
-      "css": ".ds-card { background: linear-gradient(180deg, #1a2157, #121845); border: 1px solid #2a3166; border-radius: 18px; padding: 1.35rem; box-shadow: 0 18px 40px -18px rgb(0 0 0 / 70%); color: #f3eedf; font-family: var(--font-body, Hind, system-ui, sans-serif); transition: border-color 0.3s cubic-bezier(0.16,1,0.3,1); } .ds-card:hover { border-color: #3d4686; } .ds-card-title { font-family: var(--font-display, 'Baloo 2', system-ui, sans-serif); font-weight: 700; font-size: clamp(1.25rem, 1.9vw, 1.55rem); line-height: 1.08; margin: 0 0 0.5em; } .ds-card-body { color: #c3bfdc; margin: 0; }"
-    },
-    {
-      "name": "Bulb Strand",
-      "kind": "custom",
-      "refersTo": "bulb-strand",
-      "description": "Signature progress meter: a sagging wire whose bulbs light in amber, rani, leaf, warm order as work gets done.",
-      "html": "<div class=\"ds-strand\" role=\"meter\" aria-label=\"Tasks done\" aria-valuemin=\"0\" aria-valuemax=\"8\" aria-valuenow=\"3\" aria-valuetext=\"3 of 8\"><span class=\"ds-wire\"></span><span class=\"ds-bulb ds-on ds-amber\"></span><span class=\"ds-bulb ds-on ds-rani\"></span><span class=\"ds-bulb ds-on ds-leaf\"></span><span class=\"ds-bulb ds-mid\"></span><span class=\"ds-bulb ds-mid\"></span><span class=\"ds-bulb\"></span><span class=\"ds-bulb\"></span><span class=\"ds-bulb\"></span></div>",
-      "css": ".ds-strand { position: relative; display: flex; justify-content: space-between; align-items: flex-start; padding: 6px 2px 2px; min-height: 26px; width: 280px; } .ds-wire { position: absolute; left: 0; right: 0; top: 2px; height: 14px; border-bottom: 1.5px solid #3d4686; border-radius: 0 0 50% 50% / 0 0 100% 100%; } .ds-bulb { position: relative; width: 10px; height: 14px; border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%; background: #262c5c; border: 1px solid #3a4180; transition: background-color 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s cubic-bezier(0.16,1,0.3,1); } .ds-bulb:nth-child(n+4):nth-last-child(n+3) { top: 5px; } .ds-bulb::before { content: ''; position: absolute; left: 50%; top: -4px; width: 4px; height: 4px; transform: translateX(-50%); background: #4a5293; border-radius: 1px; } .ds-on.ds-amber { background: #ffb703; border-color: #ffd36b; box-shadow: 0 3px 12px rgb(255 183 3 / 75%); } .ds-on.ds-rani { background: #ff4f8b; border-color: #ff8db4; box-shadow: 0 3px 12px rgb(255 79 139 / 75%); } .ds-on.ds-leaf { background: #2ee59d; border-color: #8af5c9; box-shadow: 0 3px 12px rgb(46 229 157 / 70%); } .ds-strand:hover .ds-bulb:not(.ds-on) { border-color: #4a5293; }"
-    },
-    {
-      "name": "Bulb Tab",
-      "kind": "nav",
-      "refersTo": "tab-selected",
-      "description": "Underline tab whose small bulb lights amber when selected.",
-      "html": "<div class=\"ds-tabs\" role=\"tablist\"><button class=\"ds-tab\" role=\"tab\" aria-selected=\"true\">Overview</button><button class=\"ds-tab\" role=\"tab\" aria-selected=\"false\">Budget</button><button class=\"ds-tab\" role=\"tab\" aria-selected=\"false\">Guests</button></div>",
-      "css": ".ds-tabs { display: flex; gap: 0.25rem; border-bottom: 2px solid #2a3166; } .ds-tab { font-family: var(--font-body, Hind, system-ui, sans-serif); font-size: 1rem; font-weight: 600; background: transparent; border: 0; border-bottom: 3px solid transparent; margin-bottom: -2px; padding: 0.6rem 1rem; min-height: 44px; cursor: pointer; color: #c3bfdc; white-space: nowrap; } .ds-tab:hover { color: #f3eedf; } .ds-tab:focus-visible { outline: 2px solid #fff3d6; outline-offset: 3px; } .ds-tab[aria-selected='true'] { color: #fff3d6; border-bottom-color: #ffb703; } .ds-tab::before { content: ''; display: inline-block; width: 8px; height: 11px; margin-right: 0.5rem; vertical-align: -1px; border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%; background: #2a3166; transition: background-color 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1); } .ds-tab[aria-selected='true']::before { background: #ffb703; box-shadow: 0 2px 10px rgb(255 183 3 / 80%); }"
     }
   ],
   "narrative": {
-    "northStar": "The Lit Street",
-    "overview": "Subham is a night street strung with serial lights. The ground is a deep indigo night, panels are dark lit glass edged with a single wire line, and colour arrives only as light: marigold, rani pink, leaf green and warm white bulbs. Every function of a celebration is a strand, and progress is shown literally as bulbs coming on. Things that are not yet done are unlit glass, never hidden; things that are done glow.\n\nThe system is dark-only (`color-scheme: dark`) and moderately dense: landing sections breathe on 5 to 6rem bands, while the app (wizard, dashboard, assistant) packs cards on a 1rem rhythm. One rounded, warm type family carries Latin, Devanagari, Tamil and Telugu with the same voice, so a plan in Tamil looks like it belongs to the same street as one in English. Motion is a bulb warming up: a soft blur-and-rise reveal, springs for tabs and steps, a chase along the WebGL strands. All of it falls still under reduced motion, and content is visible without JavaScript.\n\nThe world rejects the cream-and-serif planner page and the split hero over a row of feature cards; the build replaces both with a full-bleed night scene and features hung as tags from a wire.",
+    "northStar": "Lights On",
+    "overview": "Subham is a celebration seen at night by the light of its own decorations. It lives in two connected worlds that share one type family, one marigold action colour and one idea: light means something is happening.\n\n**The landing world** (`/`) is photographic. Its ground is the warm black of a night photograph (ground), never the app's indigo. Path-traced Cycles renders carry the page: the lit lane in the hero (relit live in WebGL), four close still lifes for the hours of one evening (haldi, sangeet, ceremony, send-off), and the lane again at midnight. Type is cream on that warm black, panels are smoked glass the photographs blur through, and the only things that glow are real light sources: a bulb, the lintel over the describe form, the primary action. As the visitor scrolls, the air between photographs shifts from one hour's tint to the next and each photograph settles into place.\n\n**The app world** (wizard, dashboard, plans list, assistant) is the indigo night street: a deep indigo ground, tonal lit-glass panels edged with one wire line, and four bulb colours (marigold, rani, leaf, warm white) used as light. Every function is a strand and progress is bulbs coming on. Both worlds are dark only (`color-scheme: dark`). On the landing page alone, the shared header and footer take the warm ground so the first screen reads as one photograph; everywhere else they stay indigo. Motion in both is a light warming up, and it all falls still under reduced motion.",
     "keyCharacteristics": [
-      "Indigo night ground, tonal panel steps, 1px wire borders.",
-      "Four bulb colours, used as light (glow shadows, lit states), not as flat fills for chrome.",
-      "Progress is a strand of bulbs (lit vs unlit glass), exposed as an ARIA meter.",
-      "Pill-shaped actions; amber is the single primary action colour and it glows.",
-      "Catenary wire curves (a sagging 1.5px line) as the recurring connector between grouped items.",
-      "One Indian-foundry type family (Baloo / Hind) across four scripts."
+      "Landing: warm-black photographic ground with an hour-tinted `--ground`, cream type at opacity steps, smoked-glass panels with a warm hairline.",
+      "App: indigo night ground, tonal panel steps, 1px wire borders, four bulb colours as light.",
+      "Marigold amber is the single action colour in both worlds.",
+      "Glow belongs to light sources only.",
+      "Pill actions; 18px panels; round bulbs.",
+      "One Indian-foundry type family (Baloo / Hind) across Latin, Devanagari, Tamil and Telugu."
     ],
     "rules": [
-      { "name": "The Light Is the Accent Rule", "body": "Bulb colours appear as light: a lit bulb, a glow shadow, a tinted badge at 10 to 14% alpha, a coloured script word. Chrome (panels, borders, nav) stays in the indigo neutrals.", "section": "colors" },
-      { "name": "The One Amber Action Rule", "body": "Amber fill with a glow belongs to the primary action only. Secondary actions are bare wire (transparent with a bright-wire stroke) and turn amber only at the border on hover.", "section": "colors" },
-      { "name": "The Bulb Order Rule", "body": "Multi-bulb patterns cycle amber, rani, leaf, warm in that order (BulbStrand, the WebGL chase, the reprise, script words).", "section": "colors" },
-      { "name": "The One Voice Rule", "body": "Display and body each resolve through their script siblings via the font stack; never set a Latin-only face on text that may be localised.", "section": "typography" },
-      { "name": "The Balanced Head Rule", "body": "Headings use `text-wrap: balance` and slight negative tracking (-0.015em); body text is never tracked.", "section": "typography" },
-      { "name": "The Lit Means Done Rule", "body": "Glow is state. A bulb, tab marker or feature bulb glows only when its thing is active, selected or complete; at rest it is unlit glass.", "section": "elevation" }
+      { "name": "The Two Grounds Rule", "body": "A surface is warm black or indigo, never both. The landing page and its header and footer are warm black (scoped with `body:has(#hero-title)`). The wizard, dashboard, plans list and assistant are indigo. Shades over a photograph are always the warm black, never the UI indigo.", "section": "colors" },
+      { "name": "The One Amber Action Rule", "body": "An amber fill belongs to the primary action. Secondary actions are bare wire (transparent with a stroke) and turn amber only at the border on hover. Elsewhere amber appears as type or light, not as fill.", "section": "colors" },
+      { "name": "The Light Is the Accent Rule", "body": "In the app, the bulb colours appear as light: a lit bulb, a glow, a badge tinted at 10 to 14%. Chrome stays in the neutrals. On the landing page the photographs carry the colour, and the UI adds only amber.", "section": "colors" },
+      { "name": "The Bulb Order Rule", "body": "App multi-bulb patterns (Bulb Strand, the wordmark) cycle amber, rani, leaf, warm in that order.", "section": "colors" },
+      { "name": "The One Voice Rule", "body": "Display and body each resolve through their script siblings via the font stack. Never set a Latin-only face on text that may be localised.", "section": "typography" },
+      { "name": "The Balanced Head Rule", "body": "Headings use `text-wrap: balance` and slight negative tracking (-0.015em; -0.02em on the hour numerals). Body text is never tracked.", "section": "typography" },
+      { "name": "The Light Source Rule", "body": "Glow is emitted only by a light source: a bulb, the doorway lintel, the primary action (drawn as a lit bulb). Panels, type and photographs never glow. Darkening shadows are always black or warm black.", "section": "elevation" },
+      { "name": "The Lit Means Now Rule", "body": "A bulb lights only when its thing is active, selected, hovered or complete: the hour on screen, the example under the pointer, the work that is done. At rest it is an off bulb, visible and unlit.", "section": "elevation" }
     ],
     "dos": [
-      "**Do** show progress as a Bulb Strand (lit vs unlit glass, Bulb Order) with a meter role and spoken value.",
-      "**Do** keep one amber, glowing primary action per view; pair it with a bare-wire secondary.",
-      "**Do** connect grouped items with the 1.5px sagging catenary wire in bright-wire.",
-      "**Do** draw icons from the shared Icon set (24px grid, 1.75 stroke, round caps and joins).",
-      "**Do** use the house ease `cubic-bezier(0.16, 1, 0.3, 1)` for state changes and springs (stiffness 120, damping 18) for tab and step entrances; keep content visible without JS and still under reduced motion.",
-      "**Do** keep every interactive target at least 44px and focus visible with the 2px warm outline."
+      "**Do** set the landing page on the warm-black ground (#0b0807) with cream type at opacity steps. Keep the wizard, dashboard, plans list and assistant on the indigo tokens.",
+      "**Do** make landing panels smoked glass: the glass gradient, a 16 to 18px backdrop blur and the 13% warm hairline, so the photograph shows through.",
+      "**Do** keep one amber primary action per form, paired with a bare-wire secondary. Text on amber is Lamp Soot.",
+      "**Do** let only light sources glow: bulbs, the lintel, the primary action.",
+      "**Do** darken photographs with warm-black gradients that fade into the ground, with overlays bleeding 2px past their box.",
+      "**Do** drive landing motion with CSS scroll timelines behind `@supports` and `prefers-reduced-motion: no-preference`. Use the house ease `cubic-bezier(0.16, 1, 0.3, 1)` for state changes.",
+      "**Do** ship rasters as pre-sized plain `<img>` with `srcset`, explicit width and height, and a provenance sidecar.",
+      "**Do** show app progress as a Bulb Strand with a meter role and spoken value.",
+      "**Do** keep every interactive target at least 44px, with focus visible: the 2px warm outline, or 2px amber on landing rows and rail links."
     ],
     "donts": [
-      "**Don't** use a cream or paper ground with serif display type; the world is the night street.",
-      "**Don't** compose a split hero over a row of feature cards.",
-      "**Don't** glow anything that is not active, selected or complete; unlit is the honest resting state.",
-      "**Don't** fill chrome (panels, nav, borders) with bulb colours; they are light, not paint.",
-      "**Don't** set white text on amber; use Lamp Soot (on-amber).",
-      "**Don't** introduce a Latin-only typeface for localisable text."
+      "**Don't** put the app's indigo on the landing page or warm black in the app. Never shade a photograph with the UI indigo.",
+      "**Don't** glow panels, type or photographs. Text-shadows over photographs are black shade only.",
+      "**Don't** fill landing chrome with any colour but amber. On the landing page the photographs carry the colour.",
+      "**Don't** compose a split hero over a row of feature cards, or a stat strip.",
+      "**Don't** use a cream or paper ground with serif display type.",
+      "**Don't** set white text on amber.",
+      "**Don't** introduce a Latin-only typeface for localisable text.",
+      "**Don't** use `next/image` or server-rendered style attributes; the nonce CSP blocks them."
     ]
   }
 }

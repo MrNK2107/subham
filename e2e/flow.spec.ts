@@ -6,7 +6,7 @@ test("describe in one line, review and create a plan", async ({ page }) => {
   await page
     .getByLabel("Describe your celebration")
     .fill("Wedding in Hyderabad, 250 guests, 12 lakh");
-  await page.getByRole("button", { name: "Light it up" }).click();
+  await page.getByRole("button", { name: "Light it up" }).first().click();
   await expect(page.getByText(/we filled in what we understood/i)).toBeVisible();
   await expect(page.getByLabel("City or town")).toHaveValue("Hyderabad");
   await expect(page.getByLabel("City type")).toHaveValue("metro");

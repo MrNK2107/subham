@@ -16,7 +16,7 @@ export const en = {
   "home.eyebrow": "Weddings · Birthdays · Community events · Festivals",
   "home.title": "Light up every function of your celebration",
   "home.lead":
-    "Tell Subham about your event in one line, in any language. Every function gets its own strand of lights: budget, tasks, vendors and ideas, lighting up as you get things done.",
+    "Tell Subham about your celebration in one line, in any language. Every function gets its own plan: run sheet, vendors, budget and guests, ready to share with the family.",
   "home.describeLabel": "Describe your celebration",
   "home.describePlaceholder":
     "e.g. My sister's wedding in Madurai next February, about 300 guests, budget 15 lakh, pure veg",
@@ -25,32 +25,6 @@ export const en = {
   "home.filling": "Reading your description…",
   "home.or": "or",
   "home.stepByStep": "Start step by step",
-  "home.featuresTitle": "Everything a celebration needs, in one plan",
-  "home.feature.budget.title": "Budget that adds up",
-  "home.feature.budget.body":
-    "Split by function and category to the exact rupee, with cost checks for your city.",
-  "home.feature.timeline.title": "Timeline and run sheet",
-  "home.feature.timeline.body":
-    "To-dos counted back from your date, a schedule for each function, and Google Calendar export.",
-  "home.feature.vendors.title": "Vendor checklist",
-  "home.feature.vendors.body":
-    "Track every vendor from first call to booked, with questions to ask before paying an advance.",
-  "home.feature.ideas.title": "Ideas that fit you",
-  "home.feature.ideas.body":
-    "Themes, decor, food and gifts tuned to your region, city, food preference and budget.",
-  "home.feature.guests.title": "Guests and RSVPs",
-  "home.feature.guests.body":
-    "Keep the guest list by side and diet, and see how many plates to plan for.",
-  "home.feature.assistant.title": "An assistant that asks first",
-  "home.feature.assistant.body":
-    "Ask in any language. It proposes changes in plain words and only applies what you approve.",
-  "home.howTitle": "How it works",
-  "home.how.1.title": "Describe",
-  "home.how.1.body": "One sentence or a short form: type, date, city, guests, budget.",
-  "home.how.2.title": "Review",
-  "home.how.2.body": "Get a full draft for every function in your language.",
-  "home.how.3.title": "Refine together",
-  "home.how.3.body": "Log payments, tick off tasks and let the assistant rebalance.",
   "home.privacy": "Your plans stay on this device unless you sign in to sync them.",
 
   "type.wedding": "Wedding",
@@ -302,16 +276,64 @@ export const en = {
   "family.send": "Share",
   "family.done": "Shared with {email}. They'll see it after signing in.",
   "family.signIn": "Sign in with Google first to share this plan.",
-  "home.closeTitle": "Your street is waiting to light up",
-  "home.langBody":
-    "The app speaks English, हिन्दी, தமிழ் and తెలుగు. Plans and the assistant work in 10 Indian languages, and you can simply speak.",
-  "home.langTitle": "Plan in the language you celebrate in",
-  "home.demoTasks": "{done} of {total} tasks done",
-  "home.demoLabel": "Example plan: a 400-guest Coimbatore wedding",
-  "home.demoBody":
-    "Haldi, sangeet, muhurtham or a community meal: each function has its own budget, tasks and vendors, and its bulbs come on as you finish them.",
-  "home.demoTitle": "One strand for every function",
   "home.cta": "Light it up",
+  "home.evening.title": "One evening, planned function by function",
+  "home.evening.body":
+    "Follow one wedding from the haldi to the send-off, and see what Subham plans for every hour of it.",
+  "home.evening.rail": "The evening, hour by hour",
+  "home.example": "Example plan",
+  "home.ch.haldi.time": "4:30 pm",
+  "home.ch.haldi.name": "Haldi",
+  "home.ch.haldi.title": "Turmeric, marigolds and the whole family in the courtyard",
+  "home.ch.haldi.body":
+    "Every function gets its own run sheet. Subham times each step and adds it to Google Calendar, so everyone knows when to arrive and who brings the turmeric.",
+  "home.ch.haldi.alt":
+    "A brass urli of turmeric paste among marigolds and lemons in late afternoon sun",
+  "home.ch.haldi.slice": "Run sheet",
+  "home.ch.haldi.r1": "4:30 pm|Family gathers, haldi paste ready",
+  "home.ch.haldi.r2": "5:00 pm|Haldi ceremony, elders first",
+  "home.ch.haldi.r3": "6:30 pm|Snacks and chai, then rest before the sangeet",
+  "home.ch.sangeet.time": "7:30 pm",
+  "home.ch.sangeet.name": "Sangeet",
+  "home.ch.sangeet.title": "Ghungroo on. The cousins have rehearsed for weeks",
+  "home.ch.sangeet.body":
+    "For each function Subham lists the vendors you need and the questions to ask before you pay an advance.",
+  "home.ch.sangeet.alt": "Brass ghungroo bells coiled on a cotton dhurrie, floor cushions behind",
+  "home.ch.sangeet.slice": "Vendors",
+  "home.ch.sangeet.r1": "Booked|Choreographer: are three rehearsals included?",
+  "home.ch.sangeet.r2": "Quote in|Sound and DJ: what does overtime after 11 pm cost?",
+  "home.ch.sangeet.r3": "To ask|Caterer: can the chaat counter serve 250?",
+  "home.ch.ceremony.time": "10:00 pm",
+  "home.ch.ceremony.name": "Wedding ceremony",
+  "home.ch.ceremony.title": "Lamps lit for the auspicious hour, nothing left to chance",
+  "home.ch.ceremony.body":
+    "Subham checks your date against the monsoon, Kharmas and peak-season prices, and splits the budget across functions so it always adds up.",
+  "home.ch.ceremony.alt":
+    "A brass kalash with mango leaves and a coconut between two lit brass lamps, marigold strings behind",
+  "home.ch.ceremony.slice": "Checks",
+  "home.ch.ceremony.r1": "Clear|The date falls outside Kharmas and the monsoon",
+  "home.ch.ceremony.r2": "Heads-up|Peak season in your city: book the hall early",
+  "home.ch.ceremony.r3": "Adds up|Budget split across all five functions",
+  "home.ch.sendoff.time": "11:00 pm",
+  "home.ch.sendoff.name": "Dinner and send-off",
+  "home.ch.sendoff.title": "Laddoos packed for every family on the way out",
+  "home.ch.sendoff.body":
+    "Keep the guest list by side and food preference. Ask the assistant in any language: it proposes the change and waits for your yes.",
+  "home.ch.sendoff.alt":
+    "Boondi laddoos in a brass bowl with bananas and pomegranates on a wooden table",
+  "home.ch.sendoff.slice": "Assistant",
+  "home.ch.sendoff.r1": "You|Can we pack sweets for every family?",
+  "home.ch.sendoff.r2":
+    "Subham|Add sweet boxes for 140 families to the send-off, paid from the décor budget?",
+  "home.ch.sendoff.r3": "Waiting|Nothing changes until you approve",
+  "home.kinds.title": "Not a wedding? Say it your way",
+  "home.kinds.body":
+    "Birthdays, society festivals, temple events and community meals are planned by function too. Pick one to try it in the box below.",
+  "home.kinds.try": "Try this description",
+  "home.closeTitle": "Midnight. Every light on the street is lit",
+  "home.closeBody":
+    "Describe your celebration in one line, in your own language, and Subham drafts a plan for every function.",
+  "home.closeLabel": "Your celebration, in one line",
 } as const;
 
 export type MessageKey = keyof typeof en;

@@ -1,0 +1,49 @@
+{
+  "title": "Choose how the landing page unfolds below the street",
+  "question": "The world is settled (the photographed lane, lit night, serial lights). This round picks the page's structure. The roll leads with the scroll-lit lane. None of the six catalog challengers (BBS, nixie counter, brick manual, silk canopy, Massin stage, magazine program) beat these on audience fit or clarity, so none earned a card.",
+  "options": [
+    {
+      "id": "lights-on",
+      "kind": "assigned",
+      "label": "Lights on, street by street",
+      "kicker": "THE ROLL",
+      "lineage": "The baked light groups of the hero, driven by scroll instead of a clock",
+      "thesis": "Scrolling switches the street on: the page's progress is the plan's progress, bulbs coming on group by group.",
+      "palette": ["#0b0807", "#ffb347", "#fff1cc", "#ff5c9a", "#2ee59d"],
+      "materials": ["path-traced lane photograph", "smoked glass panels", "real bulb light"],
+      "viewport": "Below the hero the lane pins and goes dark. Three chapters scroll over it (Describe, Plan by function, Celebrate together); each one switches on another light group in the photo, and the last lights everything. A real product preview rides in smoked glass beside each chapter.",
+      "risk": "A pinned section is a long scroll on phones; the chapters must stay short and the pin must release cleanly.",
+      "comp": ".impeccable/mocks/decision/lights-on.png",
+      "html": ".impeccable/mocks/decision/lights-on.html"
+    },
+    {
+      "id": "one-evening",
+      "kind": "dealt",
+      "label": "One evening, start to finish",
+      "lineage": "A wedding run sheet, the product's own timeline output",
+      "thesis": "The page is one celebration evening told as a run sheet: 4 pm haldi to 11 pm reception, each time stamp a section with its own rendered scene.",
+      "palette": ["#0b0807", "#e8a24a", "#fff1cc", "#2b1d16", "#ff5c9a"],
+      "materials": ["rendered function scenes", "run-sheet time rail", "warm night photography"],
+      "viewport": "A vertical time rail runs down the left edge with glowing time stamps. Each stamp opens a full-bleed rendered scene (haldi courtyard, mehendi, sangeet stage, mandap) with the matching slice of a real plan in glass beside it.",
+      "risk": "Needs four or five more Blender scenes; wedding-heavy, so birthdays and community events must appear in the close.",
+      "comp": ".impeccable/mocks/decision/one-evening.png",
+      "html": ".impeccable/mocks/decision/one-evening.html"
+    },
+    {
+      "id": "family-thread",
+      "kind": "dealt",
+      "label": "The family thread",
+      "lineage": "How Indian families actually plan: a group chat with everyone in it",
+      "thesis": "The page is the family group conversation where the plan gets made: relatives ask, Subham answers with a plan card, and changes wait for approval.",
+      "palette": ["#0b0807", "#1c1512", "#ffb347", "#fff1cc", "#2ee59d"],
+      "materials": ["chat bubbles in smoked glass", "plan cards", "lane photograph behind"],
+      "viewport": "Over a darkened slice of the lane, a wide conversation column builds as you scroll: Amma asks about the budget in Tamil, a cousin asks about Mehendi, and Subham answers each with a live plan card and an Approve button.",
+      "risk": "Chat can read as a messaging-app costume; it must stay generic and never imitate WhatsApp's look.",
+      "comp": ".impeccable/mocks/decision/family-thread.png",
+      "html": ".impeccable/mocks/decision/family-thread.html"
+    }
+  ],
+  "reroll": true,
+  "buildPath": { "value": "code", "toggle": true },
+  "steer": true
+}
